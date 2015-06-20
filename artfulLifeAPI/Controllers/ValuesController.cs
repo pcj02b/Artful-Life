@@ -18,7 +18,7 @@ namespace artfulLifeAPI.Controllers
         // GET api/values/5
         public string Get(int id)
         {
-            return "value";
+            return "some other value";
         }
 
         // POST api/values

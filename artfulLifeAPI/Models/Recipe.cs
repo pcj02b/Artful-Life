@@ -7,7 +7,7 @@ namespace artfulLifeAPI.Models
 {
     public class Recipe
     {
-        public int? RecipeId { get; set; }
+        public int? Id { get; set; }
         public string Name { get; set; }
         public int? PrepTime { get; set; }
         public IEnumerable<Ingredient> Ingredients { get; set; }

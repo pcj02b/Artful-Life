@@ -2,23 +2,39 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <title>Test</title>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>
 </head>
 <body>
-    <section>
-        <button onclick="addRecipe()">add generic recipe</button>
+    <section ng-app="testApp" ng-controller="testCTRL">
+        <button ng-click="addRecipe()">add generic recipe</button>
         <p>recipe name: </p>
         <p id="name"></p>
-        <button onclick="displayName()">show name</button>
+        <button ng-click="displayName()">show name</button>
     </section>
     <script type="text/javascript">
         //test: adding a generic recipe to Mongo and getting one recipe name from Mongo to display
-        function displayName() {
-            var name = "no idea";
-            document.getElementById("name").innerHTML = name;
-        }
-        function addRecipe() {
-            Recipe.Post([{ ID: 0 }, { name: "new recipe name" }]);
-        }
+        var testApp = angular.module("testApp", []);
+        testApp.controller("testCTRL", function ($scope, $http) {
+            $scope.displayName = function () {
+                $scope.recipes = "";
+                $http.get("http://localhost:60864/api/Recipe").
+                success(function (data, status, headers, config) {
+                    $scope.recipes = data;
+                });
+                var name = $scope.recipes.length;
+                document.getElementById("name").innerHTML = name;
+            };
+            $scope.addRecipe = function () {
+                var newRecipe = [{ID:0},{Name: "new fancy recipe"}];
+                $http.post("http://localhost:60864/api/Recipe", newRecipe).success(function (data, status) {
+                    //not sure what to put here
+                })
+                .error(function (data, status) {
+                    window.alert(status);
+                }
+                );
+            };
+        });
     </script>
 </body>
 </html>

@@ -1,0 +1,25 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" ng-app="">
+<head>
+    <title>Test</title>
+</head>
+<body>
+    <section>
+        <button onclick="addRecipe()">add generic recipe</button>
+        <p>recipe name: </p>
+        <p id="name"></p>
+        <button onclick="displayName()">show name</button>
+    </section>
+    <script>
+        //test getting one recipe name from Mongo and displaying it
+        function displayName() {
+            var newRecipe = Recipe.get(0);
+            var name = newRecipe.name;
+            document.getElementById("name").innerHTML = name;
+        }
+        function addRecipe() {
+            Recipe.Post([{ ID: 0 }, { name: "new recipe name" }]);
+        }
+    </script>
+</body>
+</html>

@@ -6,16 +6,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Web.Http;
 
 namespace artfulLifeAPI.Controllers
 {
-    public string dbuser = "pcj02b";
-    public string dbpassword = "cloakd";
 
     public class RecipeController : ApiController
     {
+        public string dbuser = "pcj02b";
+        public string dbpassword = "cloakd";
         // GET api/recipe
         public async Task<IEnumerable<Models.Recipe>> Get()
         {
@@ -34,7 +35,7 @@ namespace artfulLifeAPI.Controllers
             var db = client.GetDatabase("artful-life");
             var recipes = db.GetCollection<Models.Recipe>("Recipes");
 
-            return (from recipe in await recipes.Find(r => r.Id == id).ToListAsync()
+            return (from recipe in await recipes.Find(r => r.ID == id).ToListAsync()
                     select recipe).FirstOrDefault();
         }
 
@@ -65,7 +66,7 @@ namespace artfulLifeAPI.Controllers
             var db = client.GetDatabase("artful-life");
             var recipes = db.GetCollection<Models.Recipe>("Recipes");
 
-            await recipes.DeleteOneAsync(r => r.Id == id);
+            await recipes.DeleteOneAsync(r => r.ID == id);
         }
     }
 }

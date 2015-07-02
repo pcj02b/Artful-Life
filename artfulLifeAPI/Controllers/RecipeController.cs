@@ -12,7 +12,6 @@ using System.Web.Http;
 
 namespace artfulLifeAPI.Controllers
 {
-
     public class RecipeController : ApiController
     {
         public string dbuser = "pcj02b";

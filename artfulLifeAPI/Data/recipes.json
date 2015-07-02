@@ -1,0 +1,76 @@
+﻿{
+    "recipes": [
+        {
+            "name": "Recipe 1",
+            "ingredients": [
+                { "count": 1, "unit": "oz.", "ingredient": "Ingredient 1", "store": 0 },
+                { "count": 1, "unit": "oz.", "ingredient": "Ingredient 2", "store": 1 },
+                { "count": 1, "unit": "oz.", "ingredient": "Ingredient 3", "store": 0 }
+            ],
+            "prep": [
+                { "step": "Prep step 1 Receipe 1" },
+                { "step": "Prep step 2 Receipe 1" }
+            ],
+            "cook": [
+                { "step": "Cook step 1 Receipe 1" },
+                { "step": "Cook step 2 Receipe 1" }
+            ],
+            "included": false,
+            "multiplier": 1
+        },
+        {
+            "name": "Recipe 2",
+            "ingredients": [
+                { "count": 1, "unit": "oz.", "ingredient": "Ingredient 2", "store": 1 },
+                { "count": 1, "unit": "oz.", "ingredient": "Ingredient 3", "store": 0 },
+                { "count": 1, "unit": "oz.", "ingredient": "Ingredient 4", "store": 1 }
+            ],
+            "prep": [
+                { "step": "Prep step 1 Receipe 2" },
+                { "step": "Prep step 2 Receipe 2" }
+            ],
+            "cook": [
+                { "step": "Cook step 1 Receipe 2" },
+                { "step": "Cook step 2 Receipe 2" }
+            ],
+            "included": false,
+            "multiplier": 1
+        },
+        {
+            "name": "Recipe 3",
+            "ingredients": [
+                { "count": 1, "unit": "oz.", "ingredient": "Ingredient 3", "store": 0 },
+                { "count": 1, "unit": "oz.", "ingredient": "Ingredient 4", "store": 1 },
+                { "count": 1, "unit": "oz.", "ingredient": "Ingredient 5", "store": 0 }
+            ],
+            "prep": [
+                { "step": "Prep step 1 Receipe 3" },
+                { "step": "Prep step 2 Receipe 3" }
+            ],
+            "cook": [
+                { "step": "Cook step 1 Receipe 1" },
+                { "step": "Cook step 2 Receipe 1" }
+            ],
+            "included": false,
+            "multiplier": 1
+        },
+        {
+            "name": "Recipe 4",
+            "ingredients": [
+                { "count": 1, "unit": "oz.", "ingredient": "Ingredient 4", "store": 1 },
+                { "count": 1, "unit": "oz.", "ingredient": "Ingredient 5", "store": 0 },
+                { "count": 1, "unit": "oz.", "ingredient": "Ingredient 6", "store": 1 }
+            ],
+            "prep": [
+                { "step": "Prep step 1 Receipe 4" },
+                { "step": "Prep step 2 Receipe 4" }
+            ],
+            "cook": [
+                { "step": "Cook step 1 Receipe 1" },
+                { "step": "Cook step 2 Receipe 1" }
+            ],
+            "included": false,
+            "multiplier": 1
+        }
+    ]
+}

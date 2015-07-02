@@ -9,7 +9,10 @@ namespace artfulLifeAPI.Models
     {
         public int ID { get; set; }
         public string Name { get; set; }
-        //public int PrepTime { get; set; }
-        //public IEnumerable<Ingredient> Ingredients { get; set; }
+        public IEnumerable<Ingredient> Ingredients { get; set; }
+        public IEnumerable<Prep> Prep { get; set; }
+        public IEnumerable<Cook> Cook { get; set; }
+        public Boolean Included { get; set; }
+        public int Multiplier { get; set; }
     }
 }

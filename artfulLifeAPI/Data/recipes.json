@@ -1,6 +1,7 @@
 ﻿{
     "recipes": [
         {
+            "ID": 0,
             "name": "Recipe 1",
             "ingredients": [
                 { "count": 1, "unit": "oz.", "ingredient": "Ingredient 1", "store": 0 },
@@ -19,6 +20,8 @@
             "multiplier": 1
         },
         {
+            
+            "ID": 1,
             "name": "Recipe 2",
             "ingredients": [
                 { "count": 1, "unit": "oz.", "ingredient": "Ingredient 2", "store": 1 },
@@ -37,6 +40,7 @@
             "multiplier": 1
         },
         {
+            "ID": 2,
             "name": "Recipe 3",
             "ingredients": [
                 { "count": 1, "unit": "oz.", "ingredient": "Ingredient 3", "store": 0 },
@@ -55,6 +59,7 @@
             "multiplier": 1
         },
         {
+            "ID": 3,
             "name": "Recipe 4",
             "ingredients": [
                 { "count": 1, "unit": "oz.", "ingredient": "Ingredient 4", "store": 1 },

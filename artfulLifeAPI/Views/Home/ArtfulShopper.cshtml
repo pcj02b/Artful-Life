@@ -14,7 +14,7 @@
                     {{x.name}}
                     <input type="checkbox" ng-model="x.included" ng-click="updateStoreIngredientList()" />
                     <div ng-show="x.included">
-                        multiply by... <input type="number" min="1" value="1" ng-model="x.multiplier" ng-click="updateStoreIngredientList()" style="width:32px;" />
+                        <button ng-click="decrementRecipe($index)" style="height:1.5em;width:1.5em;">-</button><span> {{x.multiplier}} </span><button ng-click="x.multiplier = x.multiplier+1;updateStoreIngredientList()" style="height:1.5em;width:1.5em;"> +</button>
                     </div>
                 </li>
             </ul>

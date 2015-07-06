@@ -3,6 +3,7 @@ using MongoDB.Bson;
 using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -16,13 +17,13 @@ namespace artfulLifeAPI.Controllers
     {
         public string dbuser = "pcj02b";
         public string dbpassword = "cloakd";
+        
         // GET api/recipe
         public async Task<IEnumerable<Models.Recipe>> Get()
         {
-            var client = new MongoClient("mongodb://<"+dbuser+">:<"+dbpassword+">@ds036698.mongolab.com:36698/artful-life");
+            var client = new MongoClient("mongodb://<" + dbuser + ">:<" + dbpassword + ">@ds036698.mongolab.com:36698/artful-life");
             var db = client.GetDatabase("artful-life");
             var recipes = db.GetCollection<Models.Recipe>("Recipes");
-
             return from recipe in await recipes.Find(new BsonDocument()).ToListAsync()
                    select recipe;
         }
@@ -33,7 +34,6 @@ namespace artfulLifeAPI.Controllers
             var client = new MongoClient("mongodb://<"+dbuser+">:<"+dbpassword+">@ds036698.mongolab.com:36698/artful-life");
             var db = client.GetDatabase("artful-life");
             var recipes = db.GetCollection<Models.Recipe>("Recipes");
-
             return (from recipe in await recipes.Find(r => r.ID == id).ToListAsync()
                     select recipe).FirstOrDefault();
         }
@@ -44,7 +44,6 @@ namespace artfulLifeAPI.Controllers
             var client = new MongoClient("mongodb://<"+dbuser+">:<"+dbpassword+">@ds036698.mongolab.com:36698/artful-life");
             var db = client.GetDatabase("artful-life");
             var recipes = db.GetCollection<Models.Recipe>("Recipes");
-            
             await recipes.InsertOneAsync(value);
         }
 

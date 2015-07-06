@@ -50,8 +50,12 @@ storeApp.controller("storeCtrl", function ($scope, $http) {
         };
     };
 
-    $scope.updateStoreIngredientList();
-
+    $scope.decrementRecipe = function(recipeNumber){
+        if($scope.recipes[recipeNumber].multiplier > 1){
+            $scope.recipes[recipeNumber].multiplier--;
+            $scope.updateStoreIngredientList();
+        }
+    };
     /*$scope.save = function () {
         storeIngredients = $scope.newStoreIngredients;
         $http.post("http://localhost:60864/Data/storeIngredients.json", storeIngredients).success(function (data, status) {

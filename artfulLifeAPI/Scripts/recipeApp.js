@@ -1,14 +1,14 @@
 ﻿var recipeApp = angular.module('recipeApp', []);
 
 recipeApp.controller('recipeCtrl', function ($scope, $http) {
-    $scope.recipes = "";
+    defaultRecipes = "";
     $http.get("http://localhost:60864/Data/recipes.json").success(function (response) {
-        $scope.recipes = response.recipes;
+        defaultRecipes = response.recipes;
     });
-    $scope.stores = [];
-    $http.get("http://localhost:60864/Data/stores.json").success(function (response) {
-        $scope.stores = response.stores;
-    });
+    for (var i = 0; i < defaultRecipes.length; i++) {
+        Recipe.post(defaultRecipes[i]);
+    }
+    $scope.recipes = Recipe.get; 
 
     $scope.showDisplayTable = false;
     $scope.showCreationTable = false;

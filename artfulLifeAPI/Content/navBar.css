@@ -1,0 +1,17 @@
+﻿.navbar_fixed{
+    position:fixed;
+    top:0;
+    z-index:2;
+    box-sizing:border-box;
+    opacity:.9;
+}
+
+.section_fixed{
+    position:relative;
+}
+
+.aside_fixed{
+    position:fixed;
+    top:0;
+    box-sizing:border-box;
+}

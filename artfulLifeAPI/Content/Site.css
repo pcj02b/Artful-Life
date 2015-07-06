@@ -1,55 +1,57 @@
 ﻿html {
-    background-color: #e2e2e2;
-    margin: 0;
-    padding: 0;
+    height:100%;
 }
-
 body {
-    background-color: #fff;
-    border-top: solid 10px #000;
-    color: #333;
-    font-size: .85em;
-    font-family: "Segoe UI", Verdana, Helvetica, Sans-Serif;
-    margin: 0;
-    padding: 0;
+    font-family:Josefin Slab;
+    height:100%;
+    position:relative;
+    margin:0px 16px;
 }
 
-a {
-    color: #333;
-    outline: none;
-    padding-left: 3px;
-    padding-right: 3px;
-    text-decoration: underline;
+header{
+    margin:0px; 
+    padding:0px;
+    text-align:center;
 }
 
-    a:link, a:visited,
-    a:active, a:hover {
-        color: #333;
-    }
-
-    a:hover {
-        background-color: #c7d1d6;
-    }
-
-header, footer, hgroup,
-nav, section {
-    display: block;
+nav{
+    background-color:grey;
+    border:1px solid black;
+    margin:0px;
+    min-width:408px; 
+    padding:0px;
 }
-
-mark {
-    background-color: #a6dbed;
-    padding-left: 5px;
-    padding-right: 5px;
+nav ul{
+    text-align:center;
+    list-style-type:none;
+    padding:0;
+    overflow:hidden;
+    margin:0;
+    width:100%;
+    box-sizing:border-box;
 }
-
+nav li {
+    float:left;
+    width:14.28%;
+    min-width:204px;
+}
+nav a{
+    color:white;
+    padding-top:12px;
+    text-decoration:none;
+    font-size:x-large;
+    height:40px;
+    display:block;
+}
+nav a:hover, a:active{
+    background-color:rgba(180, 60, 180, 0.9);
+}
 .float-left {
     float: left;
 }
-
 .float-right {
     float: right;
 }
-
 .clear-fix:after {
     content: ".";
     clear: both;
@@ -57,65 +59,149 @@ mark {
     height: 0;
     visibility: hidden;
 }
-
-h1, h2, h3,
-h4, h5, h6 {
-    color: #000;
-    margin-bottom: 0;
-    padding-bottom: 0;
-}
-
 h1 {
-    font-size: 2em;
+    font-size: 5em;
+    margin:0px; 
 }
 
 h2 {
     font-size: 1.75em;
+    margin:0px; 
 }
-
 h3 {
     font-size: 1.2em;
+    margin:0px; 
 }
 
-h4 {
-    font-size: 1.1em;
+h4{
+    font-family:"Waiting for the Sunrise";
+    font-size:28pt;
+    text-align:center;
+    margin:0;
 }
 
 h5, h6 {
     font-size: 1em;
+    margin:0px; 
 }
 
-    h5 a:link, h5 a:visited, h5 a:active {
-        padding: 0;
-        text-decoration: none;
-    }
+hr{color:rgba(180, 60, 180, 0.5);}
 
 
 /* main layout
 ----------------------------------------------------------*/
+aside{
+    float:left;
+    min-width:180px;
+    max-width:200px;
+    height:100%;
+    background-color:lightgrey;
+    margin:0px 8px 0px 0px;
+    padding:0px;
+    line-height:28px;
+    text-align:center;
+    box-sizing:border-box;
+}
+aside ul{
+    margin:0px;
+    padding:0px;
+    list-style-type:none;
+}
+aside li{
+    width:100%;
+    display:block;
+    color:black;
+    font-size:17pt;
+}
+aside li#lineBottom:last-child{
+    border-bottom:2px solid rgba(180, 60, 180, 0.9);
+    padding-bottom:2px;
+}
+aside li:hover{
+    background-color:rgba(180, 60, 180, 0.9);
+}
+aside a{
+    text-decoration:none;
+    padding:0px 8px;
+    color:black;
+    font-size:17pt;
+}
+article{
+    display:inline;
+}
+section{
+    margin:0px; 
+    padding:0px;
+    box-sizing:border-box;
+    height:100%;
+}
+section textarea{
+    min-width:250px;
+    height:20px;
+}
+section ul{
+    font-size:large;
+}
+
+table#recipe{
+    min-width:600px;
+    box-sizing:border-box;
+    border-collapse:collapse;
+    box-sizing:border-box;
+    font-size:14pt;
+    margin:0px;
+}
+table#recipe p{
+    font-weight:bold;
+}
+table#recipe table,th,tr,td{
+    border:1px solid black;
+}
+table#recipe th{
+    font-size:24pt;
+    padding:8px;
+    text-align:center;
+}
+table#recipe textarea{
+    width:100%; 
+    box-sizing:border-box;
+    font-family:Josefin Slab;
+    height:20px;
+}
+table#recipe textarea#recipeName{
+    font-size:x-large;
+    text-align:center;
+    height:40px;
+    font-weight:inherit;
+}
+table#recipe ul#ingredient{
+    font-weight:normal;
+    text-align:left;
+}
+table.store{
+    float:left;
+}
+table.store th{
+    font-size:x-large;
+}
+table.store p{ 
+    font-weight:bold;
+
+}
+
 .content-wrapper {
     margin: 0 auto;
-    max-width: 960px;
 }
 
-#body {
-    background-color: #efeeef;
-    clear: both;
-    padding-bottom: 35px;
+.main-content {
+    padding-left: 10px;
+    padding-top: 30px;
+
 }
 
-    .main-content {
-        background: url("../Images/accent.png") no-repeat;
-        padding-left: 10px;
-        padding-top: 30px;
-    }
+.featured + .main-content {
+    background: url("../Images/heroAccent.png") no-repeat;
 
-    .featured + .main-content {
-        background: url("../Images/heroAccent.png") no-repeat;
-    }
-
-header .content-wrapper {
-    padding-top: 20px; 
 }
 
 footer {
@@ -129,16 +215,11 @@ footer {
 /* site title
 ----------------------------------------------------------*/
 .site-title {
-    color: #c8c8c8;
-    font-family: Rockwell, Consolas, "Courier New", Courier, monospace;
     font-size: 2.3em;
     margin: 0;
 }
 
 .site-title a, .site-title a:hover, .site-title a:active {
-    background: none;
-    color: #c8c8c8;
-    outline: none;
     text-decoration: none;
 }
 
@@ -181,7 +262,7 @@ footer {
 ----------------------------------------------------------*/
 ul#menu {
     font-size: 1.3em;
-    font-weight: 600;
+    font-weight: bold;
     margin: 0 0 5px;
     padding: 0;
     text-align: right;
@@ -230,20 +311,6 @@ ul#menu {
         .featured p {
             font-size: 1.1em;
         }
-
-/* page titles */
-hgroup.title {
-    margin-bottom: 10px;
-}
-
-hgroup.title h1, hgroup.title h2 {
-    display: inline;
-}
-
-hgroup.title h2 {
-    font-weight: normal;
-    margin-left: 3px;
-}
 
 /* features */
 section.feature {
@@ -301,27 +368,6 @@ ol.round {
 
         ol.round li.nine {
             background: url("../Images/orderedList9.png") no-repeat;
-        }
-
-/* content */
-article {
-    float: left;
-    width: 70%;
-}
-
-aside {
-    float: right;
-    width: 25%;
-}
-
-    aside ul {
-        list-style: none;
-        padding: 0;
-    }
-
-        aside ul li {
-            background: url("../Images/bullet.png") no-repeat 0 50%;
-            padding: 2px 0 2px 20px;
         }
 
 .label {
@@ -423,53 +469,6 @@ label {
 label.checkbox {
     display: inline;
 }
-
-input, textarea {
-    border: 1px solid #e2e2e2;
-    background: #fff;
-    color: #333;
-    font-size: 1.2em;
-    margin: 5px 0 6px 0;
-    padding: 5px;
-    width: 300px;
-}
-
-textarea {
-    font-family: inherit;
-    width: 500px;
-}
-
-    input:focus, textarea:focus {
-        border: 1px solid #7ac0da;
-    }
-
-    input[type="checkbox"] {
-        background: transparent;
-        border: inherit;
-        width: auto;
-    }
-
-    input[type="submit"],
-    input[type="button"],
-    button {
-        background-color: #d3dce0;
-        border: 1px solid #787878;
-        cursor: pointer;
-        font-size: 1.2em;
-        font-weight: 600;
-        padding: 7px;
-        margin-right: 8px;
-        width: auto;
-    }
-
-    td input[type="submit"],
-    td input[type="button"],
-    td button {
-        font-size: 1em;
-        padding: 4px;
-        margin-right: 4px;
-    }
-
 /* info and errors */
 .message-info {
     border: 1px solid;
@@ -527,80 +526,21 @@ input[type="checkbox"].input-validation-error {
 
 /* tables
 ----------------------------------------------------------*/
-table {
-    border-collapse: collapse;
-    border-spacing: 0;
-    margin-top: 0.75em;
-    border: 0 none;
-}
-
-th {
-    font-size: 1.2em;
-    text-align: left;
-    border: none 0px;
-    padding-left: 0;
-}
-
-    th a {
-        display: block;
-        position: relative;
-    }
-
-    th a:link, th a:visited, th a:active, th a:hover {
-        color: #333;
-        font-weight: 600;
-        text-decoration: none;
-        padding: 0;
-    }
-
-    th a:hover {
-        color: #000;
-    }
-
-    th.asc a, th.desc a {
-        margin-right: .75em;
-    }
-
-    th.asc a:after, th.desc a:after {
-        display: block;
-        position: absolute;
-        right: 0em;
-        top: 0;
-        font-size: 0.75em;
-    }
-
-    th.asc a:after {
-        content: '▲';
-    }
-
-    th.desc a:after {
-        content: '▼';
-    }
-
-td {
-    padding: 0.25em 2em 0.25em 0em;
-    border: 0 none;
-}
-
-tr.pager td {
-    padding: 0 0.25em 0 0;
-}
-
 
 /********************
 *   Mobile Styles   *
 ********************/
-@media only screen and (max-width: 850px) {
+@media only screen and (max-width: 800px) {
 
-    /* header
+    /* Nav
     ----------------------------------------------------------*/
-    header .float-left,
-    header .float-right {
+    nav .float-left,
+    nav .float-right {
         float: none;
     }
 
     /* logo */
-    header .site-title {
+    nav .site-title {
         margin: 10px;
         text-align: center;
     }
@@ -666,13 +606,7 @@ tr.pager td {
     }
 
     .featured .content-wrapper {
-        padding: 10px;
-    }
 
-    /* page content */
-    article, aside {
-        float: none;
-        width: 100%;
     }
 
     /* ordered list */
@@ -743,14 +677,11 @@ tr.pager td {
     footer .float-right {
         float: none;
     }
-
     footer {
         text-align: center;
-        height: auto;
         padding: 10px 0;
     }
-
-        footer p {
-            margin: 0;
-        }
+    footer p {
+        margin: 0;
+    }
 }

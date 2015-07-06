@@ -1,0 +1,213 @@
+﻿@{
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>ArtfulRecipes</title>
+</head>
+<body ng-app="recipeApp">
+    <section ng-controller="recipeCtrl">
+        <aside>
+            <ul>
+                <li id="lineBottom" ng-repeat="x in recipes" ng-click="selectRecipe(x.name, x.ingredients, x.prep, x.cook, $index);">
+                    <a href="">{{x.name}}</a>
+                </li>
+            </ul>
+            <ul>
+                <li><a href="" ng-hide="showCreationTable || showEditingTable" ng-click="addRecipe();">Add Recipe</a></li>
+                <li><a href="" ng-show="showDisplayTable" ng-click="editRecipe();">Edit Recipe</a></li>
+                <li><a href="" ng-show="showCreationTable" ng-click="saveNewRecipe();">Save Recipe</a></li>
+                <li><a href="" ng-show="showEditingTable" ng-click="saveEditedRecipe();">Save Recipe</a></li>
+                <li><a href="" ng-show="showDisplayTable" ng-click="removeRecipe()">Remove Recipe</a></li>
+            </ul>
+        </aside>
+        <article>
+            <h4>Artful Recipes</h4>
+            <p><b>The Idea: </b>Click a recipe to view, edit or delete.  Or create a new recipe by using the copy and paste feature or manually inputing a recipe.</p>
+            <br style="height:22px" ng-show="showTable" />
+            <!--Display Table-->
+            <table id="recipe" ng-show="showDisplayTable">
+                <tr>
+                    <th colspan="2">
+                        {{selectedName}}
+                    </th>
+                </tr>
+                <tr>
+                    <td rowspan="2">
+                        <p>Ingredients:</p>
+                        <ul id="ingredient">
+                            <li ng-repeat="x in selectedRecipe.ingredients">
+                                <span>{{x.count}}</span>
+                                <span> </span>
+                                <span>{{x.unit}}</span>
+                                <span> </span>
+                                <span>{{x.ingredient}}</span>
+                            </li>
+                        </ul>
+                    </td>
+                    <td>
+                        <p>Prep Instructions:</p>
+                        <ol>
+                            <li ng-repeat="x in selectedRecipe.prep">
+                                {{x.step}}
+                            </li>
+                        </ol>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <p>Cooking Instructions:</p>
+                        <ol>
+                            <li ng-repeat="x in selectedRecipe.cook">
+                                {{x.step}}
+                            </li>
+                        </ol>
+                    </td>
+                </tr>
+            </table>
+            <!--Creation Table-->
+            <textarea placeholder="Copy and paste recipe here" ng-show="showCreationTable"></textarea>
+            <p ng-show="showCreationTable"><b>or</b></p>
+            <table id="recipe" ng-show="showCreationTable">
+                <tr>
+                    <td colspan="2" id="lable">
+                        <textarea id="recipeName" ng-model="newName" placeholder="New Recipe Name"></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td rowspan="2">
+                        <p>Ingredients:</p>
+                        <ul id="ingredient">
+                            <li ng-repeat="x in newIngredients" ng-mouseenter="showDelete=true" ng-mouseleave="showDelete=false">
+                                <span>{{x.count}}</span>
+                                <span> </span>
+                                <span>{{x.unit}}</span>
+                                <span> </span>
+                                <span>{{x.ingredient}}</span>
+                            </li>
+                        </ul>
+                        <hr />
+                        <form>
+                            <input type="number" style="height:20px" min="1" ng-model="newIngredientCount" value="1" />
+                            <select ng-model="newIngredientUnit">
+                                <option value="" disabled selected style="display:none;">Unit</option>
+                                <option value="oz.">Ounce</option>
+                                <option value="g.">Gram</option>
+                                <option value="fl. oz.">Fluid Ounce</option>
+                                <option value="ml.">Milliliter</option>
+                                <option value="lb.">Pound</option>
+                            </select>
+                            <input type="text" style="height:20px" ng-model="newIngredientName" placeholder="New Ingredient" />
+                            <select ng-options="x.name for x in stores" ng-model="newIngredientStore">
+                                <option value="" disabled selected style="display:none;">Store</option>
+                            </select>
+                            <button ng-click="addIngredient()">add</button>
+                        </form>
+                    </td>
+                    <td>
+                        <p>Prep Instructions:</p>
+                        <ol>
+                            <li ng-repeat="x in newPrep">
+                                {{x.step}}
+                            </li>
+                        </ol>
+                        <hr />
+                        <form>
+                            <input type="text" ng-model="newPrepStep" placeholder="New Prep Step" />
+                            <button ng-click="addPrepStep()">add</button>
+                        </form>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <p>Cooking Instructions:</p>
+                        <ol>
+                            <li ng-repeat="x in newCook">
+                                {{x.step}}
+                            </li>
+                        </ol>
+                        <hr />
+
+                        <form>
+                            <input type="text" ng-model="newCookStep" placeholder="New Cook Step" />
+                            <button ng-click="addCookStep()">add</button>
+                        </form>
+                    </td>
+                </tr>
+            </table>
+            <!--Editing Table-->
+            <table id="recipe" ng-show="showEditingTable">
+                <tr>
+                    <th colspan="2">
+                        {{selectedName}}
+                    </th>
+                </tr>
+                <tr>
+                    <td rowspan="2">
+                        <p>Ingredients:</p>
+                        <ul id="ingredient">
+                            <li ng-repeat="x in editingRecipe.ingredients" ng-mouseenter="showDelete=true" ng-mouseleave="showDelete=false">
+                                <span>{{x.count}}</span>
+                                <span> </span>
+                                <span>{{x.unit}}</span>
+                                <span> </span>
+                                <span>{{x.ingredient}}</span>
+                                <span ng-show="showDelete"><a href="" ng-click="removeIngredient($index);"><img src="../Images/deleteIcon.png" alt="delete item" height="15" width="15" /></a></span>
+                            </li>
+                        </ul>
+                        <hr />
+                        <form>
+                            <input type="number" style="height:20px" min="1" ng-model="newIngredientCount" value="1" />
+                            <select ng-model="newIngredientUnit">
+                                <option value="" disabled selected style="display:none;">Unit</option>
+                                <option value="oz.">Ounce</option>
+                                <option value="g.">Gram</option>
+                                <option value="fl. oz.">Fluid Ounce</option>
+                                <option value="ml.">Milliliter</option>
+                                <option value="lb.">Pound</option>
+                            </select>
+                            <input type="text" style="height:20px" ng-model="newIngredientName" placeholder="New Ingredient" />
+                            <select ng-options="x.name for x in stores" ng-model="newIngredientStore">
+                                <option value="" disabled selected style="display:none;">Store</option>
+                            </select>
+                            <button ng-click="addToEditingIngredients()">add</button>
+                        </form>
+                    </td>
+                    <td>
+                        <p>Prep Instructions:</p>
+                        <ol>
+                            <li ng-repeat="x in editingRecipe.prep" ng-mouseenter="showDelete=true" ng-mouseleave="showDelete=false">
+                                <span>{{x.step}}</span>
+                                <span ng-show="showDelete"><a href="" ng-click="removePrep($index);"><img src="../Images/deleteIcon.png" alt="delete item" height="15" width="15" /></a></span>
+                            </li>
+                        </ol>
+                        <hr />
+                        <form>
+                            <input type="text" ng-model="newPrepStep" placeholder="New Prep Step" />
+                            <button ng-click="addToEditingPrep()">add</button>
+                        </form>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <p>Cooking Instructions:</p>
+                        <ol>
+                            <li ng-repeat="x in editingRecipe.cook" ng-mouseenter="showDelete=true" ng-mouseleave="showDelete=false">
+                                <span>{{x.step}}</span>
+                                <span ng-show="showDelete"><a href="" ng-click="removeCook($index);"><img src="../Images/deleteIcon.png" alt="delete item" height="15" width="15" /></a></span>
+                            </li>
+                        </ol>
+                        <hr />
+
+                        <form>
+                            <input type="text" ng-model="newCookStep" placeholder="New Cook Step" />
+                            <button ng-click="addToEditingCook()">add</button>
+                        </form>
+                    </td>
+                </tr>
+            </table>
+        </article>
+    </section>
+</body>
+</html>

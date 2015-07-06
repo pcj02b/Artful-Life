@@ -53,7 +53,6 @@ namespace artfulLifeAPI.Controllers
             var client = new MongoClient("mongodb://<"+dbuser+">:<"+dbpassword+">@ds036698.mongolab.com:36698/artful-life");
             var db = client.GetDatabase("artful-life");
             var recipes = db.GetCollection<Models.Recipe>("Recipes");
-
             await recipes.InsertOneAsync(value);
         }
 

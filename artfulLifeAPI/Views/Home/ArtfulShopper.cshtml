@@ -42,25 +42,6 @@
                     </td>
                 </tr>
             </table>
-            <table ng-repeat="x in storeIngredientsScope" class="store">
-                <tr>
-                    <th>{{x.name}}</th>
-                </tr>
-                <tr>
-                    <th>storeIngredients</th>
-                </tr>
-                <tr>
-                    <td>
-                        <ul>
-                            <li ng-repeat="x in x.ingredients">
-                                {{x.count}}
-                                {{x.unit}}
-                                {{x.ingredient}}
-                            </li>
-                        </ul>
-                    </td>
-                </tr>
-            </table>
         </article>
     </section>
 </body>

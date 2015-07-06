@@ -1,19 +1,57 @@
 ﻿@{
+    ViewBag.Title = "Artful Cooking";
 }
-
 <!DOCTYPE html>
-
 <html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Artful Cooking</title>
-</head>
-<body>
-    <aside>
-
-    </aside>
-    <section>
-
+<body ng-app="recipeApp">
+    <section ng-controller="recipeCtrl">
+        <aside>
+            <ul>
+                <li ng-repeat="x in recipes">
+                    <span ng-show="x.included">
+                        <span>{{x.name}}
+                        x </span>{{x.multiplier}}
+                    </span>
+                </li>
+            </ul>
+        </aside>
+        <article>
+            <h4>Cooking Instructions</h4>
+            <p><b>The Idea: </b>Prepare any one of the recipes that are ready to be cooked from your freezer.</p>
+            <div ng-repeat="x in recipes">
+                <table id="recipe" ng-show="x.included">
+                    <tr>
+                        <th colspan="2">
+                            {{x.name}}
+                        </th>
+                    </tr>
+                    <tr>
+                        <td rowspan="2">
+                            <p>Ingredients:</p>
+                            <ul id="ingredient">
+                                <li ng-repeat="n in x.ingredients">
+                                    <span>{{n.count * x.multiplier}}</span>
+                                    <span> </span>
+                                    <span>{{n.unit}}</span>
+                                    <span> </span>
+                                    <span>{{n.ingredient}}</span>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <p>Cooking Instructions:</p>
+                            <ol>
+                                <li ng-repeat="x in x.cook">
+                                    {{x.step}}
+                                </li>
+                            </ol>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </article>
     </section>
 </body>
 </html>

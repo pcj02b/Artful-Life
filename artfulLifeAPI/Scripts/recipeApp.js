@@ -34,6 +34,7 @@ recipeApp.controller('recipeCtrl', function ($scope, $http) {
                 break;
             }
         }
+        $scope.recipes[selectedRecipeIndex].included = true;
         $scope.selectedRecipe = $scope.recipes[selectedRecipeIndex];
         $scope.showTable = true;
         $scope.selectedName = name;

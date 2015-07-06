@@ -126,6 +126,11 @@ aside a{
     color:black;
     font-size:17pt;
 }
+
+aside p{
+    margin:0px;
+    padding:0px;
+}
 article{
     display:inline;
 }
@@ -150,6 +155,7 @@ table#recipe{
     box-sizing:border-box;
     font-size:14pt;
     margin:0px;
+    float:left;
 }
 table#recipe p{
     font-weight:bold;

@@ -1,11 +1,8 @@
 ﻿@{
+    ViewBag.Title = "Artful Recipes";
 }
 <!DOCTYPE html>
 <html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>ArtfulRecipes</title>
-</head>
 <body ng-app="recipeApp">
     <section ng-controller="recipeCtrl">
         <aside>
@@ -23,7 +20,7 @@
             </ul>
         </aside>
         <article>
-            <h4>Artful Recipes</h4>
+            <h4>@ViewBag.Title</h4>
             <p><b>The Idea: </b>Click a recipe to view, edit or delete.  Or create a new recipe by using the copy and paste feature or manually inputing a recipe.</p>
             <br style="height:22px" ng-show="showTable" />
             <!--Display Table-->

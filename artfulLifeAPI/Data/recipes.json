@@ -36,7 +36,7 @@
                 { "step": "Cook step 1 Receipe 2" },
                 { "step": "Cook step 2 Receipe 2" }
             ],
-            "included": false,
+            "included": true,
             "multiplier": 1
         },
         {
@@ -55,8 +55,8 @@
                 { "step": "Cook step 1 Receipe 1" },
                 { "step": "Cook step 2 Receipe 1" }
             ],
-            "included": false,
-            "multiplier": 1
+            "included": true,
+            "multiplier": 2
         },
         {
             "ID": 3,

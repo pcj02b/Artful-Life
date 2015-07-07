@@ -1,12 +1,11 @@
 ﻿{
     "recipes": [
         {
-            "_id": 0,
             "name": "Recipe 1",
             "ingredients": [
-                { "count": 1, "unit": "oz.", "ingredient": "Ingredient 1", "store": 0 },
-                { "count": 1, "unit": "oz.", "ingredient": "Ingredient 2", "store": 1 },
-                { "count": 1, "unit": "oz.", "ingredient": "Ingredient 3", "store": 0 }
+                { "count": 1, "unit": "oz.", "name": "Ingredient 1", "store": 0 },
+                { "count": 1, "unit": "oz.", "name": "Ingredient 2", "store": 1 },
+                { "count": 1, "unit": "oz.", "name": "Ingredient 3", "store": 0 }
             ],
             "prep": [
                 { "step": "Prep step 1 Receipe 1" },
@@ -21,12 +20,11 @@
         },
         {
             
-            "_id": 1,
             "name": "Recipe 2",
             "ingredients": [
-                { "count": 1, "unit": "oz.", "ingredient": "Ingredient 2", "store": 1 },
-                { "count": 1, "unit": "oz.", "ingredient": "Ingredient 3", "store": 0 },
-                { "count": 1, "unit": "oz.", "ingredient": "Ingredient 4", "store": 1 }
+                { "count": 1, "unit": "oz.", "name": "Ingredient 2", "store": 1 },
+                { "count": 1, "unit": "oz.", "name": "Ingredient 3", "store": 0 },
+                { "count": 1, "unit": "oz.", "name": "Ingredient 4", "store": 1 }
             ],
             "prep": [
                 { "step": "Prep step 1 Receipe 2" },
@@ -40,12 +38,11 @@
             "multiplier": 1
         },
         {
-            "_id": 2,
             "name": "Recipe 3",
             "ingredients": [
-                { "count": 1, "unit": "oz.", "ingredient": "Ingredient 3", "store": 0 },
-                { "count": 1, "unit": "oz.", "ingredient": "Ingredient 4", "store": 1 },
-                { "count": 1, "unit": "oz.", "ingredient": "Ingredient 5", "store": 0 }
+                { "count": 1, "unit": "oz.", "name": "Ingredient 3", "store": 0 },
+                { "count": 1, "unit": "oz.", "name": "Ingredient 4", "store": 1 },
+                { "count": 1, "unit": "oz.", "name": "Ingredient 5", "store": 0 }
             ],
             "prep": [
                 { "step": "Prep step 1 Receipe 3" },
@@ -59,12 +56,11 @@
             "multiplier": 2
         },
         {
-            "_id": 3,
             "name": "Recipe 4",
             "ingredients": [
-                { "count": 1, "unit": "oz.", "ingredient": "Ingredient 4", "store": 1 },
-                { "count": 1, "unit": "oz.", "ingredient": "Ingredient 5", "store": 0 },
-                { "count": 1, "unit": "oz.", "ingredient": "Ingredient 6", "store": 1 }
+                { "count": 1, "unit": "oz.", "name": "Ingredient 4", "store": 1 },
+                { "count": 1, "unit": "oz.", "name": "Ingredient 5", "store": 0 },
+                { "count": 1, "unit": "oz.", "name": "Ingredient 6", "store": 1 }
             ],
             "prep": [
                 { "step": "Prep step 1 Receipe 4" },

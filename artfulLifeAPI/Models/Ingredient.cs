@@ -7,9 +7,9 @@ namespace artfulLifeAPI.Models
 {
     public class Ingredient
     {
-        public int Count { get; set; }
-        public string Unit { get; set; }
-        public string Name { get; set; }
-        public string Store { get; set; }
+        public int count { get; set; }
+        public string unit { get; set; }
+        public string name { get; set; }
+        public string store { get; set; }
     }
 }

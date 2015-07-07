@@ -20,7 +20,7 @@
             </ul>
         </aside>
         <article>
-            <button ng-click="seedData()"></button>
+            <button ng-click="seedData()">seed data</button>
             <h4>@ViewBag.Title</h4>
             <p><b>The Idea: </b>Click a recipe to view, edit or delete.  Or create a new recipe by using the copy and paste feature or manually inputing a recipe.</p>
             <br style="height:22px" ng-show="showTable" />
@@ -40,7 +40,7 @@
                                 <span> </span>
                                 <span>{{x.unit}}</span>
                                 <span> </span>
-                                <span>{{x.ingredient}}</span>
+                                <span>{{x.name}}</span>
                             </li>
                         </ul>
                     </td>
@@ -82,7 +82,7 @@
                                 <span> </span>
                                 <span>{{x.unit}}</span>
                                 <span> </span>
-                                <span>{{x.ingredient}}</span>
+                                <span>{{x.name}}</span>
                             </li>
                         </ul>
                         <hr />
@@ -97,9 +97,6 @@
                                 <option value="lb.">Pound</option>
                             </select>
                             <input type="text" style="height:20px" ng-model="newIngredientName" placeholder="New Ingredient" />
-                            <select ng-options="x.name for x in stores" ng-model="newIngredientStore">
-                                <option value="" disabled selected style="display:none;">Store</option>
-                            </select>
                             <button ng-click="addIngredient()">add</button>
                         </form>
                     </td>
@@ -150,7 +147,7 @@
                                 <span> </span>
                                 <span>{{x.unit}}</span>
                                 <span> </span>
-                                <span>{{x.ingredient}}</span>
+                                <span>{{x.name}}</span>
                                 <span ng-show="showDelete"><a href="" ng-click="removeIngredient($index);"><img src="../Images/deleteIcon.png" alt="delete item" height="15" width="15" /></a></span>
                             </li>
                         </ul>
@@ -166,9 +163,6 @@
                                 <option value="lb.">Pound</option>
                             </select>
                             <input type="text" style="height:20px" ng-model="newIngredientName" placeholder="New Ingredient" />
-                            <select ng-options="x.name for x in stores" ng-model="newIngredientStore">
-                                <option value="" disabled selected style="display:none;">Store</option>
-                            </select>
                             <button ng-click="addToEditingIngredients()">add</button>
                         </form>
                     </td>

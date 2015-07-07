@@ -1,19 +1,26 @@
 ﻿var recipeApp = angular.module('recipeApp', []);
-
 recipeApp.controller('recipeCtrl', function ($scope, $http) {
-    recipes = [];
+    tempRecipes = [];
+    $http.get("/Data/recipes.json").success(function (response) {
+        tempRecipes = response.recipes;
+    });
     $scope.recipes = [];
-    $http.get("http://localhost:60864/Data/recipes.json").success(function (response) {
-        recipes = response.recipes;
+    $http.get("/api/Recipe").success(function (response) {
+        $scope.recipes = response;
     });
 
+    $scope.showStuff = function () {
+        window.alert($scope.recipes[0].Ingredients[0].Name);
+    }
+
     $scope.seedData = function () {
-        var recipedb = artfulLifeAPI.Models("Recipe");
-        for (var i = 0; i < recipes.length; i++) {
-            recipedb.Post(recipes[i]);
-            console.log("seed data 4");
-            $scope.recipes[i] = recipes[i];
-        }
+        window.alert(tempRecipes.length);
+        for (var i = 0; i < tempRecipes.length; i++) {
+            $http.post("/api/Recipe", tempRecipes[i]);
+        };
+        $http.get("/api/Recipe").success(function (response) {
+            $scope.recipes = response;
+        });
     };
 
     $scope.showDisplayTable = false;
@@ -53,7 +60,7 @@ recipeApp.controller('recipeCtrl', function ($scope, $http) {
         $scope.selectedCook = cook;
     }
     $scope.addIngredient = function () {
-        $scope.newIngredients.push({ count: $scope.newIngredientCount, unit: $scope.newIngredientUnit, ingredient: $scope.newIngredientName, included: false, store: -1 });
+        $scope.newIngredients.push({ count: $scope.newIngredientCount, unit: $scope.newIngredientUnit, name: $scope.newIngredientName, included: false, store: -1 });
         $scope.newIngredient = [];
         $scope.newIngredientCount = 1;
         $scope.newIngredientUnit = "";
@@ -104,7 +111,7 @@ recipeApp.controller('recipeCtrl', function ($scope, $http) {
         $scope.editingRecipe = $scope.recipes[selectedRecipeIndex];
     }
     $scope.addToEditingIngredients = function () {
-        $scope.editingRecipe.ingredients.push({ count: $scope.newIngredientCount, unit: $scope.newIngredientUnit, ingredient: $scope.newIngredientName, included: false, store: -1 });
+        $scope.editingRecipe.ingredients.push({ count: $scope.newIngredientCount, unit: $scope.newIngredientUnit, name: $scope.newIngredientName, included: false, store: -1 });
         $scope.newIngredient = [];
         $scope.newIngredientCount = 1;
         $scope.newIngredientUnit = "";

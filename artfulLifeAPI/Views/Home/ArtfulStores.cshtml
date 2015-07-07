@@ -1,0 +1,13 @@
+﻿@{
+    ViewBag.Title = "Artful Stores";
+}
+<body ng-app="ingredientApp">
+    <section ng-controller="=ingredientCtrl">
+        <aside>
+            <ul ng-repeat="x in masterIngredientList">
+                <li>{{x.name}}</li>
+            </ul>
+        </aside>
+        <article></article>
+    </section>
+</body>

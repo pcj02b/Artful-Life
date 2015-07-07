@@ -1,10 +1,20 @@
 ﻿var recipeApp = angular.module('recipeApp', []);
 
 recipeApp.controller('recipeCtrl', function ($scope, $http) {
-    $scope.recipes = "";
+    recipes = [];
+    $scope.recipes = [];
     $http.get("http://localhost:60864/Data/recipes.json").success(function (response) {
-        $scope.recipes = response.recipes;
+        recipes = response.recipes;
     });
+
+    $scope.seedData = function () {
+        var recipedb = artfulLifeAPI.Models("Recipe");
+        for (var i = 0; i < recipes.length; i++) {
+            recipedb.Post(recipes[i]);
+            console.log("seed data 4");
+            $scope.recipes[i] = recipes[i];
+        }
+    };
 
     $scope.showDisplayTable = false;
     $scope.showCreationTable = false;

@@ -281,6 +281,7 @@
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\navBar.js" />
     <Content Include="Scripts\recipeApp.js" />
+    <Content Include="Scripts\ingredientApp.js" />
     <Content Include="Scripts\storeApp.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -318,6 +319,7 @@
     <Content Include="Views\Home\ArtfulShopper.cshtml" />
     <Content Include="Views\Home\ArtfulResourceful.cshtml" />
     <Content Include="Views\Home\TipsAndAdvise.cshtml" />
+    <Content Include="Views\Home\ArtfulStores.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

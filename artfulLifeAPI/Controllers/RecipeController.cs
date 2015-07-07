@@ -21,7 +21,7 @@ namespace artfulLifeAPI.Controllers
         // GET api/recipe
         public async Task<IEnumerable<Models.Recipe>> Get()
         {
-            var client = new MongoClient("mongodb://<" + dbuser + ">:<" + dbpassword + ">@ds036698.mongolab.com:36698/artful-life");
+            var client = new MongoClient("mongodb://" + dbuser + ":" + dbpassword + ">@ds036698.mongolab.com:36698/artful-life");
             var db = client.GetDatabase("artful-life");
             var recipes = db.GetCollection<Models.Recipe>("Recipes");
             return from recipe in await recipes.Find(new BsonDocument()).ToListAsync()
@@ -31,7 +31,7 @@ namespace artfulLifeAPI.Controllers
         // GET api/recipe/5
         public async Task<Models.Recipe> Get(int id)
         {
-            var client = new MongoClient("mongodb://<"+dbuser+">:<"+dbpassword+">@ds036698.mongolab.com:36698/artful-life");
+            var client = new MongoClient("mongodb://" + dbuser + ":" + dbpassword + ">@ds036698.mongolab.com:36698/artful-life");
             var db = client.GetDatabase("artful-life");
             var recipes = db.GetCollection<Models.Recipe>("Recipes");
             return (from recipe in await recipes.Find(r => r.ID == id).ToListAsync()
@@ -41,7 +41,7 @@ namespace artfulLifeAPI.Controllers
         // POST api/recipe
         public async void Post([FromBody]Models.Recipe value)
         {
-            var client = new MongoClient("mongodb://<"+dbuser+">:<"+dbpassword+">@ds036698.mongolab.com:36698/artful-life");
+            var client = new MongoClient("mongodb://"+dbuser+":"+dbpassword+">@ds036698.mongolab.com:36698/artful-life");
             var db = client.GetDatabase("artful-life");
             var recipes = db.GetCollection<Models.Recipe>("Recipes");
             await recipes.InsertOneAsync(value);
@@ -50,7 +50,7 @@ namespace artfulLifeAPI.Controllers
         // PUT api/recipe/5
         public async void Put(int id, [FromBody]Models.Recipe value)
         {
-            var client = new MongoClient("mongodb://<"+dbuser+">:<"+dbpassword+">@ds036698.mongolab.com:36698/artful-life");
+            var client = new MongoClient("mongodb://" + dbuser + ":" + dbpassword + ">@ds036698.mongolab.com:36698/artful-life");
             var db = client.GetDatabase("artful-life");
             var recipes = db.GetCollection<Models.Recipe>("Recipes");
             await recipes.InsertOneAsync(value);
@@ -59,7 +59,7 @@ namespace artfulLifeAPI.Controllers
         // DELETE api/recipe/5
         public async void Delete(int id)
         {
-            var client = new MongoClient("mongodb://<"+dbuser+">:<"+dbpassword+">@ds036698.mongolab.com:36698/artful-life");
+            var client = new MongoClient("mongodb://" + dbuser + ":" + dbpassword + ">@ds036698.mongolab.com:36698/artful-life");
             var db = client.GetDatabase("artful-life");
             var recipes = db.GetCollection<Models.Recipe>("Recipes");
 

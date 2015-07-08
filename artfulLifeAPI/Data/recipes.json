@@ -49,8 +49,8 @@
                 { "step": "Prep step 2 Receipe 3" }
             ],
             "cook": [
-                { "step": "Cook step 1 Receipe 1" },
-                { "step": "Cook step 2 Receipe 1" }
+                { "step": "Cook step 1 Receipe 3" },
+                { "step": "Cook step 2 Receipe 3" }
             ],
             "included": true,
             "multiplier": 2
@@ -63,12 +63,12 @@
                 { "count": 1, "unit": "oz.", "name": "Ingredient 6", "store": 1 }
             ],
             "prep": [
-                { "step": "Prep step 1 Receipe 4" },
-                { "step": "Prep step 2 Receipe 4" }
+                { "step": "Prep step 1 Recipe 4" },
+                { "step": "Prep step 2 Recipe 4" }
             ],
             "cook": [
-                { "step": "Cook step 1 Receipe 1" },
-                { "step": "Cook step 2 Receipe 1" }
+                { "step": "Cook step 1 Recipe 4" },
+                { "step": "Cook step 2 Recipe 4" }
             ],
             "included": false,
             "multiplier": 1

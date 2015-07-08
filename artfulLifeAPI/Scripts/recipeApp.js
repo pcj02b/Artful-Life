@@ -1,28 +1,28 @@
 ﻿var recipeApp = angular.module('recipeApp', []);
 recipeApp.controller('recipeCtrl', function ($scope, $http) {
-    tempRecipes = [];
-    $http.get("/Data/recipes.json").success(function (response) {
-        tempRecipes = response.recipes;
-    });
-    $scope.recipes = [];
-    $http.get("/api/Recipe").success(function (response) {
-        $scope.recipes = response;
-    });
-
-    $scope.showStuff = function () {
-        window.alert($scope.recipes[0].Ingredients[0].Name);
+    $scope.recipes = "";
+    $scope.getFromJSON = function () {
+        $http.get("/Data/recipes.json")
+            .success(function (data) {
+                $scope.recipes = data.recipes;
+            })
+            .error(function (status) {
+                window.alert(status);
+            });
     }
-
-    $scope.seedData = function () {
-        window.alert(tempRecipes.length);
-        for (var i = 0; i < tempRecipes.length; i++) {
-            $http.post("/api/Recipe", tempRecipes[i]);
-        };
-        $http.get("/api/Recipe").success(function (response) {
+    $scope.getFromMongo = function () {
+        $http.get("/api/Recipe").success(function (response, status) {
             $scope.recipes = response;
         });
+    }
+    $scope.seedData = function () {
+        for (var i = 0; i < $scope.recipes.length; i++) {
+            $http.post("/api/Recipe", $scope.recipes[i]);
+        };
     };
-
+    $scope.showStuff = function () {
+        window.alert($scope.recipes.length);
+    }
     $scope.showDisplayTable = false;
     $scope.showCreationTable = false;
     $scope.showEditingTable = false;
@@ -39,25 +39,13 @@ recipeApp.controller('recipeCtrl', function ($scope, $http) {
     $scope.newCookStep = "";
 
     $scope.editingRecipe = []
-    selectedRecipeIndex = 0;
 
-    $scope.selectRecipe = function (name, ingredients, prep, cook) {
+    $scope.selectRecipe = function (index) {
         $scope.showDisplayTable = true;
         $scope.showCreationTable = false;
         $scope.showEditingTable = false;
-        for (var i = 0; i < $scope.recipes.length; i++) {
-            if (angular.equals(name, $scope.recipes[i].name)) {
-                selectedRecipeIndex = i;
-                break;
-            }
-        }
-        $scope.recipes[selectedRecipeIndex].included = true;
-        $scope.selectedRecipe = $scope.recipes[selectedRecipeIndex];
+        $scope.selectedRecipe = $scope.recipes[index];
         $scope.showTable = true;
-        $scope.selectedName = name;
-        $scope.selectedIngredients = ingredients;
-        $scope.selectedPrep = prep;
-        $scope.selectedCook = cook;
     }
     $scope.addIngredient = function () {
         $scope.newIngredients.push({ count: $scope.newIngredientCount, unit: $scope.newIngredientUnit, name: $scope.newIngredientName, included: false, store: -1 });

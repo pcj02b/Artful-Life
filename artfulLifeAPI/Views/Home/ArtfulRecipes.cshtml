@@ -24,6 +24,7 @@
             <button ng-click="getFromMongo()">get from Mongo</button>
             <button ng-click="seedData()">send data to Mongo</button>
             <button ng-click="showStuff()">show stuff</button>
+            <p>{{}}</p>
             <h4>@ViewBag.Title</h4>
             <p><b>The Idea: </b>Click a recipe to view, edit or delete.  Or create a new recipe by using the copy and paste feature or manually inputing a recipe.</p>
             <br style="height:22px" ng-show="showTable" />
@@ -73,14 +74,14 @@
             <table id="recipe" ng-show="showCreationTable">
                 <tr>
                     <td colspan="2" id="lable">
-                        <textarea id="recipeName" ng-model="newName" placeholder="New Recipe Name"></textarea>
+                        <textarea id="recipeName" ng-model="newRecipe.name" placeholder="New Recipe Name"></textarea>
                     </td>
                 </tr>
                 <tr>
                     <td rowspan="2">
                         <p>Ingredients:</p>
                         <ul id="ingredient">
-                            <li ng-repeat="x in newIngredients" ng-mouseenter="showDelete=true" ng-mouseleave="showDelete=false">
+                            <li ng-repeat="x in newRecipe.ingredients" ng-mouseenter="showDelete=true" ng-mouseleave="showDelete=false">
                                 <span>{{x.count}}</span>
                                 <span> </span>
                                 <span>{{x.unit}}</span>
@@ -106,7 +107,7 @@
                     <td>
                         <p>Prep Instructions:</p>
                         <ol>
-                            <li ng-repeat="x in newPrep">
+                            <li ng-repeat="x in newRecipe.prep">
                                 {{x.step}}
                             </li>
                         </ol>
@@ -121,12 +122,11 @@
                     <td>
                         <p>Cooking Instructions:</p>
                         <ol>
-                            <li ng-repeat="x in newCook">
+                            <li ng-repeat="x in newRecipe.cook">
                                 {{x.step}}
                             </li>
                         </ol>
                         <hr />
-
                         <form>
                             <input type="text" ng-model="newCookStep" placeholder="New Cook Step" />
                             <button ng-click="addCookStep()">add</button>
@@ -138,7 +138,7 @@
             <table id="recipe" ng-show="showEditingTable">
                 <tr>
                     <th colspan="2">
-                        {{selectedName}}
+                        {{editingRecipe.name}}
                     </th>
                 </tr>
                 <tr>

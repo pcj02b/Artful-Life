@@ -1,6 +1,9 @@
 ﻿var recipeApp = angular.module('recipeApp', []);
 recipeApp.controller('recipeCtrl', function ($scope, $http) {
     $scope.recipes = "";
+    $http.get("/api/Recipe").success(function (data, status) {
+        $scope.recipes = data;
+    });
     $scope.getFromJSON = function () {
         $http.get("/Data/recipes.json")
             .success(function (data) {
@@ -11,8 +14,8 @@ recipeApp.controller('recipeCtrl', function ($scope, $http) {
             });
     }
     $scope.getFromMongo = function () {
-        $http.get("/api/Recipe").success(function (response, status) {
-            $scope.recipes = response;
+        $http.get("/api/Recipe").success(function (data, status) {
+            $scope.recipes = data;
         });
     }
     $scope.seedData = function () {
@@ -21,22 +24,25 @@ recipeApp.controller('recipeCtrl', function ($scope, $http) {
         };
     };
     $scope.showStuff = function () {
-        window.alert($scope.recipes.length);
+        window.alert($scope.recipes[selectedRecipeIndex]._id);
     }
+
     $scope.showDisplayTable = false;
     $scope.showCreationTable = false;
     $scope.showEditingTable = false;
 
-    $scope.newName = "";
-    $scope.newIngredients = [];
-    $scope.newIngredient = [];
+    $scope.newRecipe = {};
+    $scope.newRecipe.ingredients = [];
     $scope.newIngredientCount = 1;
     $scope.newIngredientUnit = "";
     $scope.newIngredientName = "";
-    $scope.newPrep = [];
+    $scope.newRecipe.prep = [];
     $scope.newPrepStep = "";
-    $scope.newCook = [];
+    $scope.newRecipe.cook = [];
     $scope.newCookStep = "";
+
+    $scope.selectedRecipe = "";
+    selectedRecipeIndex = 0;
 
     $scope.editingRecipe = []
 
@@ -45,58 +51,58 @@ recipeApp.controller('recipeCtrl', function ($scope, $http) {
         $scope.showCreationTable = false;
         $scope.showEditingTable = false;
         $scope.selectedRecipe = $scope.recipes[index];
+        selectedRecipeIndex = index;
         $scope.showTable = true;
     }
     $scope.addIngredient = function () {
-        $scope.newIngredients.push({ count: $scope.newIngredientCount, unit: $scope.newIngredientUnit, name: $scope.newIngredientName, included: false, store: -1 });
-        $scope.newIngredient = [];
+        newIngredient = { "count": $scope.newIngredientCount, "unit": $scope.newIngredientUnit, "name": $scope.newIngredientName, "store": 0 };
+        $scope.newRecipe.ingredients.push(newIngredient);
         $scope.newIngredientCount = 1;
         $scope.newIngredientUnit = "";
         $scope.newIngredientName = "";
     }
     $scope.addPrepStep = function () {
-        $scope.newPrep.push({ step: $scope.newPrepStep });
+        $scope.newRecipe.prep.push({ step: $scope.newPrepStep });
         $scope.newPrepStep = "";
     }
     $scope.addCookStep = function () {
-        $scope.newCook.push({ step: $scope.newCookStep });
+        $scope.newRecipe.cook.push({ step: $scope.newCookStep });
         $scope.newCookStep = "";
     }
     $scope.saveNewRecipe = function () {
         var alreadyThere = false;
         for (var i = 0; i < $scope.recipes.length; i++) {
-            if (angular.equals($scope.newName, $scope.recipes[i].name)) {
+            if (angular.equals($scope.newRecipe.name, $scope.recipes[i].name)) {
                 alreadyThere = true;
             }
         }
         if (!alreadyThere) {
-            $scope.recipes.push({ name: $scope.newName, ingredients: $scope.newIngredients, prep: $scope.newPrep, cook: $scope.newCook });
-            $http.post("http://localhost:60864/Data/recipes.json", $scope.recipes).success(function (data, status) {
-                window.alert("good stuff");
+            $scope.newRecipe._id = ($scope.recipes.length);
+            $http.post("/api/Recipe",$scope.newRecipe).success(function (status) {
+                $scope.recipes.push($scope.newRecipe);
             })
-            .error(function (data, status) {
-                window.alert(status);
+            .error(function (status) {
+                console.log("something went wrong");
             });
-            window.alert("data saved");
         }
-        else { window.alert("already there"); }
+        else { window.alert("A recipe by that name already exists."); }
         $scope.showTable = true;
-
     }
     $scope.addRecipe = function () {
+        $scope.newRecipe = {};
+        $scope.newRecipe.ingredients = [];
+        $scope.newRecipe.prep = [];
+        $scope.newRecipe.cook = [];
+
         $scope.showDisplayTable = false;
         $scope.showCreationTable = true;
         $scope.showEditingTable = false;
-        $scope.selectedName = "";
-        $scope.selectedIngredients = [];
-        $scope.selectedPrep = "";
-        $scope.selectedCook = "";
     }
     $scope.editRecipe = function () {
+        $scope.editingRecipe = $scope.recipes[selectedRecipeIndex];
         $scope.showDisplayTable = false;
         $scope.showCreationTable = false;
         $scope.showEditingTable = true;
-        $scope.editingRecipe = $scope.recipes[selectedRecipeIndex];
     }
     $scope.addToEditingIngredients = function () {
         $scope.editingRecipe.ingredients.push({ count: $scope.newIngredientCount, unit: $scope.newIngredientUnit, name: $scope.newIngredientName, included: false, store: -1 });
@@ -115,7 +121,12 @@ recipeApp.controller('recipeCtrl', function ($scope, $http) {
     };
     $scope.saveEditedRecipe = function () {
         if (confirm("Save changes to " + $scope.recipes[selectedRecipeIndex].name)) {
-            $scope.recipes[selectedRecipeIndex] = $scope.editingRecipe;
+            $http.put("/api/Recipe", $scope.editingRecipe).success(function (status) {
+                $scope.recipes[selectedRecipeIndex] = $scope.editingRecipe;
+            })
+            .error(function (status) {
+                console.log("something went wrong");
+            });
         }
         $scope.showDisplayTable = true;
         $scope.showCreationTable = false;
@@ -156,6 +167,12 @@ recipeApp.controller('recipeCtrl', function ($scope, $http) {
             }
         }
         if (confirm("This will permanently remove " + $scope.recipes[selectedRecipeIndex].name)) {
+            var url = "/api/Recipe/" + $scope.recipes[selectedRecipeIndex]._id;
+            $http.delete(url).success(function (status) {
+            })
+            .error(function (status) {
+                console.log("something went wrong");
+            });
             $scope.recipes = newRecipes;
         }
     }

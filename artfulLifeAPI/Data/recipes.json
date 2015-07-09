@@ -1,6 +1,7 @@
 ﻿{
     "recipes": [
         {
+            "_id": 0,
             "name": "Recipe 1",
             "ingredients": [
                 { "count": 1, "unit": "oz.", "name": "Ingredient 1", "store": 0 },
@@ -19,7 +20,7 @@
             "multiplier": 1
         },
         {
-            
+            "_id": 1,
             "name": "Recipe 2",
             "ingredients": [
                 { "count": 1, "unit": "oz.", "name": "Ingredient 2", "store": 1 },
@@ -38,6 +39,7 @@
             "multiplier": 1
         },
         {
+            "_id": 2,
             "name": "Recipe 3",
             "ingredients": [
                 { "count": 1, "unit": "oz.", "name": "Ingredient 3", "store": 0 },
@@ -52,10 +54,11 @@
                 { "step": "Cook step 1 Receipe 3" },
                 { "step": "Cook step 2 Receipe 3" }
             ],
-            "included": true,
-            "multiplier": 2
+            "included": false,
+            "multiplier": 1
         },
         {
+            "_id": 3,
             "name": "Recipe 4",
             "ingredients": [
                 { "count": 1, "unit": "oz.", "name": "Ingredient 4", "store": 1 },
@@ -70,8 +73,84 @@
                 { "step": "Cook step 1 Recipe 4" },
                 { "step": "Cook step 2 Recipe 4" }
             ],
+            "included": true,
+            "multiplier": 2
+        },
+        {
+            "_id": 4,
+            "name": "Recipe 5",
+            "ingredients": [
+                { "count": 1, "unit": "oz.", "name": "Ingredient 5", "store": 0 },
+                { "count": 1, "unit": "oz.", "name": "Ingredient 6", "store": 1 },
+                { "count": 1, "unit": "oz.", "name": "Ingredient 7", "store": 0 }
+            ],
+            "prep": [
+                { "step": "Prep step 1 Recipe 5" },
+                { "step": "Prep step 2 Recipe 5" }
+            ],
+            "cook": [
+                { "step": "Cook step 1 Recipe 5" },
+                { "step": "Cook step 2 Recipe 5" }
+            ],
             "included": false,
             "multiplier": 1
+        },
+        {
+            "_id": 5,
+            "name": "Recipe 6",
+            "ingredients": [
+                { "count": 1, "unit": "oz.", "name": "Ingredient 6", "store": 1 },
+                { "count": 1, "unit": "oz.", "name": "Ingredient 7", "store": 0 },
+                { "count": 1, "unit": "oz.", "name": "Ingredient 8", "store": 1 }
+            ],
+            "prep": [
+                { "step": "Prep step 1 Recipe 6" },
+                { "step": "Prep step 2 Recipe 6" }
+            ],
+            "cook": [
+                { "step": "Cook step 1 Recipe 6" },
+                { "step": "Cook step 2 Recipe 6" }
+            ],
+            "included": true,
+            "multiplier": 3
+        },
+        {
+            "_id": 6,
+            "name": "Recipe 7",
+            "ingredients": [
+                { "count": 1, "unit": "oz.", "name": "Ingredient 7", "store": 1 },
+                { "count": 1, "unit": "oz.", "name": "Ingredient 8", "store": 0 },
+                { "count": 1, "unit": "oz.", "name": "Ingredient 9", "store": 1 }
+            ],
+            "prep": [
+                { "step": "Prep step 1 Recipe 7" },
+                { "step": "Prep step 2 Recipe 7" }
+            ],
+            "cook": [
+                { "step": "Cook step 1 Recipe 7" },
+                { "step": "Cook step 2 Recipe 7" }
+            ],
+            "included": false,
+            "multiplier": 1
+        },
+        {
+            "_id": 7,
+            "name": "Recipe 8",
+            "ingredients": [
+                { "count": 1, "unit": "oz.", "name": "Ingredient 8", "store": 1 },
+                { "count": 1, "unit": "oz.", "name": "Ingredient 9", "store": 0 },
+                { "count": 1, "unit": "oz.", "name": "Ingredient 0", "store": 1 }
+            ],
+            "prep": [
+                { "step": "Prep step 1 Recipe 8" },
+                { "step": "Prep step 2 Recipe 8" }
+            ],
+            "cook": [
+                { "step": "Cook step 1 Recipe 8" },
+                { "step": "Cook step 2 Recipe 8" }
+            ],
+            "included": true,
+            "multiplier": 4
         }
     ]
 }

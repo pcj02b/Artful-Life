@@ -10,6 +10,6 @@ namespace artfulLifeAPI.Models
         public int count { get; set; }
         public string unit { get; set; }
         public string name { get; set; }
-        public string store { get; set; }
+        public int store { get; set; }
     }
 }

@@ -24,46 +24,55 @@ namespace artfulLifeAPI.Controllers
             var client = new MongoClient("mongodb://" + dbuser + ":" + dbpassword + "@ds036698.mongolab.com:36698/artful-life");
             var db = client.GetDatabase("artful-life");
             var recipes = db.GetCollection<Models.Recipe>("Recipes");
-            return from recipe in await recipes.Find(new BsonDocument()).ToListAsync()
-                   select recipe;
+            //return from recipe in await recipes.Find(new BsonDocument()).ToListAsync()
+            //       select recipe;
+            var output = await recipes.Find(new BsonDocument()).ToListAsync();
+            return output;
         }
 
         // GET api/recipe/5
-        public async Task<Models.Recipe> Get(int id)
+        public async Task<Models.Recipe> Get(string name)
         {
             var client = new MongoClient("mongodb://" + dbuser + ":" + dbpassword + "@ds036698.mongolab.com:36698/artful-life");
             var db = client.GetDatabase("artful-life");
             var recipes = db.GetCollection<Models.Recipe>("Recipes");
-            return (from recipe in await recipes.Find(r => r._id == id).ToListAsync()
+            return (from recipe in await recipes.Find(r => r.name == name).ToListAsync()
                     select recipe).FirstOrDefault();
         }
 
         // POST api/recipe
         public async void Post([FromBody]Models.Recipe value)
         {
-            var client = new MongoClient("mongodb://"+dbuser+":"+dbpassword+"@ds036698.mongolab.com:36698/artful-life");
-            var db = client.GetDatabase("artful-life");
-            var recipes = db.GetCollection<Models.Recipe>("Recipes");
-            await recipes.InsertOneAsync(value);
-        }
-
-        // PUT api/recipe/5
-        public async void Put(int id, [FromBody]Models.Recipe value)
-        {
             var client = new MongoClient("mongodb://" + dbuser + ":" + dbpassword + "@ds036698.mongolab.com:36698/artful-life");
             var db = client.GetDatabase("artful-life");
             var recipes = db.GetCollection<Models.Recipe>("Recipes");
             await recipes.InsertOneAsync(value);
+
+        }
+
+        // PUT api/recipe/5
+        public async void Put([FromBody]Models.Recipe value)
+        {
+            var client = new MongoClient("mongodb://" + dbuser + ":" + dbpassword + "@ds036698.mongolab.com:36698/artful-life");
+            var db = client.GetDatabase("artful-life");
+            var recipes = db.GetCollection<Models.Recipe>("Recipes");
+            //await recipes.InsertOneAsync(value);
+            var id = value._id;
+            await recipes.ReplaceOneAsync(
+                filter: new BsonDocument("_id", id),
+                replacement: value);
         }
 
         // DELETE api/recipe/5
         public async void Delete(int id)
         {
-            var client = new MongoClient("mongodb://" + dbuser + ":" + dbpassword + ">@ds036698.mongolab.com:36698/artful-life");
+            var client = new MongoClient("mongodb://" + dbuser + ":" + dbpassword + "@ds036698.mongolab.com:36698/artful-life");
             var db = client.GetDatabase("artful-life");
             var recipes = db.GetCollection<Models.Recipe>("Recipes");
-
-            await recipes.DeleteOneAsync(r => r._id == id);
+            //await recipes.DeleteOneAsync(r => r._id == id);
+            await recipes.DeleteOneAsync(
+                filter: new BsonDocument("_id", id)
+                );
         }
     }
 }

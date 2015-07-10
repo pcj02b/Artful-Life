@@ -17,6 +17,8 @@ namespace artfulLifeAPI.Controllers
     {
         public string dbuser = "pcj02b";
         public string dbpassword = "cloakd";
+
+        public Array idList;
         
         // GET api/recipe
         public async Task<IEnumerable<Models.Recipe>> Get()
@@ -46,6 +48,8 @@ namespace artfulLifeAPI.Controllers
             var client = new MongoClient("mongodb://" + dbuser + ":" + dbpassword + "@ds036698.mongolab.com:36698/artful-life");
             var db = client.GetDatabase("artful-life");
             var recipes = db.GetCollection<Models.Recipe>("Recipes");
+            string input = value.name;
+            value._id = x;
             await recipes.InsertOneAsync(value);
         }
 
@@ -56,19 +60,19 @@ namespace artfulLifeAPI.Controllers
             var db = client.GetDatabase("artful-life");
             var recipes = db.GetCollection<Models.Recipe>("Recipes");
             await recipes.ReplaceOneAsync(
-                filter: new BsonDocument("_id", value._id),
+                filter: new BsonDocument("name", value.name),
                 replacement: value);
         }
 
         // DELETE api/recipe/5
-        public async void Delete(int id)
+        public async void Delete(string name)
         {
             var client = new MongoClient("mongodb://" + dbuser + ":" + dbpassword + "@ds036698.mongolab.com:36698/artful-life");
             var db = client.GetDatabase("artful-life");
             var recipes = db.GetCollection<Models.Recipe>("Recipes");
             //await recipes.DeleteOneAsync(r => r._id == id);
             await recipes.DeleteOneAsync(
-                filter: new BsonDocument("_id", id)
+                filter: new BsonDocument("name", name)
                 );
         }
     }

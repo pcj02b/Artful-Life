@@ -29,7 +29,7 @@ recipeApp.controller('recipeCtrl', ["$scope", "$rootScope", "$http", function ($
         };
     };
     $scope.showStuff = function () {
-        window.alert($rootScope.recipes.length);
+        window.alert($rootScope.recipes[3]._id);
     }
 
     $scope.showDisplayTable = false;
@@ -175,7 +175,7 @@ recipeApp.controller('recipeCtrl', ["$scope", "$rootScope", "$http", function ($
             }
         }
         if (confirm("This will permanently remove " + $scope.recipes[selectedRecipeIndex].name)) {
-            var url = "/api/Recipe/" + $scope.recipes[selectedRecipeIndex]._id;
+            var url = "/api/Recipe/" + $scope.recipes[selectedRecipeIndex].name;
             $http.delete(url).success(function (status) {
             })
             .error(function (status) {

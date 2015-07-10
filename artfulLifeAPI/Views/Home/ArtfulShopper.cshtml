@@ -4,9 +4,9 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
-    <title>Artful Shopper</title>
+    <title>@ViewBag.Title</title>
 </head>
-<body ng-app="storeApp">
+<body ng-app="recipeApp">
     <section ng-controller="storeCtrl">
         <aside>
             <ul>
@@ -24,6 +24,10 @@
             </ul>
         </aside>
         <article>
+            <button ng-click="getFromJSON()">get from JSON</button>
+            <button ng-click="getFromMongo()">get from Mongo</button>
+            <button ng-click="getFromRootScope()">get from rootScope</button>
+            <button ng-click="showStuff()">show stuff</button>
             <h4>Artful Shopping Lists</h4>
             <p><b>The Idea:</b> Select a recipe on the left. Multiply as desired. Then view the grocery list for each store.</p>
             <table ng-repeat="x in newStoreIngredients" class="store">

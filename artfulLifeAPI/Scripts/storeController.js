@@ -1,9 +1,32 @@
-﻿var storeApp = angular.module("storeApp", []);
-storeApp.controller("storeCtrl", function ($scope, $http) {
-    $scope.recipes = [];
-    $http.get("http://localhost:60864/Data/recipes.json").success(function (response) {
-        $scope.recipes = response.recipes;
-    });
+﻿var recipeApp = angular.module("recipeApp");
+
+recipeApp.controller("storeCtrl", ["$scope", "$rootScope", "$http", function ($scope, $rootScope, $http) {
+    $scope.recipes = "";
+
+    $scope.showStuff = function () {
+        window.alert($rootScope.recipes.length);
+    };
+
+    $scope.getFromRootScope = function () {
+        $scope.recipes = $rootScope.recipes;
+    };
+    $scope.getFromMongo = function () {
+        $http.get("/api/Recipe").success(function (data, status) {
+            $scope.recipes = data;
+        });
+        $rootScope.recipes = $scope.recipes;
+    }
+    $scope.getFromJSON = function () {
+        $scope.recipes = {};
+        $http.get("/Data/recipes.json")
+            .success(function (data) {
+                $scope.recipes = data.recipes;
+            })
+            .error(function (status) {
+                window.alert(status);
+            });
+    };
+
     var storeIngredients = [];
     $http.get("http://localhost:60864/Data/storeIngredients.json").success(function (response) {
         storeIngredients = response.stores;
@@ -50,6 +73,7 @@ storeApp.controller("storeCtrl", function ($scope, $http) {
             };
         };
     };
+    $scope.updateStoreIngredientList();
 
     $scope.decrementRecipe = function (recipeNumber) {
         if ($scope.recipes[recipeNumber].multiplier > 1) {
@@ -58,9 +82,7 @@ storeApp.controller("storeCtrl", function ($scope, $http) {
         }
     };
 
-    $scope.updateStoreIngredientList();
-
-    /*$scope.save = function () {
+    $scope.save = function () {
         storeIngredients = $scope.newStoreIngredients;
         $http.post("http://localhost:60864/Data/storeIngredients.json", storeIngredients).success(function (data, status) {
             window.alert("good stuff");
@@ -69,5 +91,5 @@ storeApp.controller("storeCtrl", function ($scope, $http) {
                 window.alert(status);
             });
         window.alert("data saved");
-    };*/
-});
+    };
+}]);

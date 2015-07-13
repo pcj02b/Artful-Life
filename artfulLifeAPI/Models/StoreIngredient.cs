@@ -5,10 +5,10 @@ using System.Web;
 
 namespace artfulLifeAPI.Models
 {
-    public class Store
+    public class StoreIngredient
     {
+        public int count { get; set; }
+        public string unit { get; set; }
         public string name { get; set; }
-        public IEnumerable<StoreIngredient> ingredients { get; set; }
-        public Boolean defaultStore { get; set; }
     }
 }

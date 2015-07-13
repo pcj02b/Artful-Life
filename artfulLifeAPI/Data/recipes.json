@@ -131,7 +131,7 @@
             "ingredients": [
                 { "count": 1, "unit": "oz.", "name": "Ingredient 8", "store": 1 },
                 { "count": 1, "unit": "oz.", "name": "Ingredient 9", "store": 0 },
-                { "count": 1, "unit": "oz.", "name": "Ingredient 0", "store": 1 }
+                { "count": 1, "unit": "oz.", "name": "Ingredient 10", "store": 1 }
             ],
             "prep": [
                 { "step": "Prep step 1 Recipe 8" },

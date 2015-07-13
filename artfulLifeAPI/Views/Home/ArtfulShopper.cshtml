@@ -25,12 +25,12 @@
         </aside>
         <article>
             <button ng-click="getFromJSON()">get from JSON</button>
-            <button ng-click="getFromMongo()">get from Mongo</button>
-            <button ng-click="getFromRootScope()">get from rootScope</button>
-            <button ng-click="showStuff()">show stuff</button>
+        <button ng-click="getFromMongo()">get from Mongo</button>
+        <button ng-click="seedData()">send data to Mongo</button>
+        <button ng-click="showStuff()">show stuff</button>
             <h4>Artful Shopping Lists</h4>
             <p><b>The Idea:</b> Select a recipe on the left. Multiply as desired. Then view the grocery list for each store.</p>
-            <table ng-repeat="x in newStoreIngredients" class="store">
+            <table ng-repeat="x in stores" class="store">
                 <tr>
                     <th>{{x.name}}</th>
                 </tr>
@@ -40,7 +40,7 @@
                             <li ng-repeat="x in x.ingredients">
                                 {{x.count}}
                                 {{x.unit}}
-                                {{x.ingredient}}
+                                {{x.name}}
                             </li>
                         </ul>
                     </td>

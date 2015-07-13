@@ -2,48 +2,43 @@
 
 recipeApp.controller("storeCtrl", function ($scope, $http, recipeService) {
     $scope.recipes = "";
-    $http.get("/api/Recipe").success(function (data, status) {
+    $http.get("/api/Recipe").success(function (data) {
         $scope.recipes = data;
+    });
+    $scope.stores = "";
+    var stores = "";
+    $http.get("/api/Store").success(function (data) {
+        stores = data;
+        $scope.stores = data;
     });
 
     $scope.showStuff = function () {
-        recipeService.showLength();
     };
-
-    $scope.getFromRootScope = function () {
-        $scope.recipes = recipeService.get();
+    $scope.seedData = function () {
+        for (var i = 0; i < $scope.stores.length; i++) {
+            $http.post("/api/Store", $scope.stores[i]);
+        };
     };
     $scope.getFromMongo = function () {
-        $http.get("/api/Recipe").success(function (data, status) {
-            $scope.recipes = data;
+        $http.get("/api/Store").success(function (data) {
+            stores = data;
         });
     }
     $scope.getFromJSON = function () {
-        $scope.recipes = {};
-        $http.get("/Data/recipes.json")
-            .success(function (data) {
-                $scope.recipes = data.recipes;
-            })
-            .error(function (status) {
-                window.alert(status);
-            });
+        $http.get("http://localhost:60864/Data/stores.json").success(function (data) {
+            stores = data.stores;
+        });
+        $scope.updateStoreIngredientList();
     };
-
-    var storeIngredients = [];
-    $http.get("http://localhost:60864/Data/storeIngredients.json").success(function (response) {
-        storeIngredients = response.stores;
-    });
-
-    function isInStoreIngredients(ingredientObject) {
+    function isInStores(ingredientObject, i, n) {
         var ingredientIndex = 0;
         var isThere = false;
-
         var storeIndex = ingredientObject.store;
-        var ingredient = ingredientObject.ingredient;
+        var name = ingredientObject.name;
         var unit = ingredientObject.unit;
-        for (var i = 0; i < $scope.newStoreIngredients[storeIndex].ingredients.length; i++) {
-            if ($scope.newStoreIngredients[storeIndex].ingredients[i].ingredient == ingredient &&
-                $scope.newStoreIngredients[storeIndex].ingredients[i].unit == unit) {
+        for (var i = 0; i < $scope.stores[storeIndex].ingredients.length; i++) {
+            if ($scope.stores[storeIndex].ingredients[i].name == name &&
+                $scope.stores[storeIndex].ingredients[i].unit == unit) {
                 isThere = true;
                 ingredientIndex = i;
                 break;
@@ -52,41 +47,37 @@ recipeApp.controller("storeCtrl", function ($scope, $http, recipeService) {
         var output = { isThere: isThere, storeIndex: storeIndex, ingredientIndex: ingredientIndex }
         return output;
     };
-
     $scope.updateStoreIngredientList = function () {
         var isInStore = {};
-        $scope.newStoreIngredients = JSON.parse(JSON.stringify(storeIngredients));
+        $scope.stores = JSON.parse(JSON.stringify(stores));
         for (var i = 0; i < $scope.recipes.length; i++) {
             if ($scope.recipes[i].included) {
                 for (var n = 0; n < $scope.recipes[i].ingredients.length; n++) {
-                    isInStore = isInStoreIngredients($scope.recipes[i].ingredients[n]);
+                    isInStore = isInStores($scope.recipes[i].ingredients[n],i,n);
                     if (isInStore.isThere) {
-                        $scope.newStoreIngredients[isInStore.storeIndex].ingredients[isInStore.ingredientIndex].count +=
+                        $scope.stores[isInStore.storeIndex].ingredients[isInStore.ingredientIndex].count +=
                             ($scope.recipes[i].ingredients[n].count * $scope.recipes[i].multiplier);
                     }
                     else {
-                        $scope.newStoreIngredients[isInStore.storeIndex].ingredients.push({
+                        $scope.stores[isInStore.storeIndex].ingredients.push({
                             count: ($scope.recipes[i].ingredients[n].count * $scope.recipes[i].multiplier),
                             unit: $scope.recipes[i].ingredients[n].unit,
-                            ingredient: $scope.recipes[i].ingredients[n].ingredient
+                            name: $scope.recipes[i].ingredients[n].name
                         });
                     };
                 };
             };
         };
     };
-    $scope.updateStoreIngredientList();
-
     $scope.decrementRecipe = function (recipeNumber) {
         if ($scope.recipes[recipeNumber].multiplier > 1) {
             $scope.recipes[recipeNumber].multiplier--;
             $scope.updateStoreIngredientList();
         }
     };
-
     $scope.save = function () {
-        storeIngredients = $scope.newStoreIngredients;
-        $http.post("http://localhost:60864/Data/storeIngredients.json", storeIngredients).success(function (data, status) {
+        var stores = $scope.stores;
+        $http.post("http://localhost:60864/Data/stores.json", stores).success(function (data, status) {
             window.alert("good stuff");
         })
             .error(function (data, status) {

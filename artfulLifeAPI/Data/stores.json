@@ -1,0 +1,22 @@
+﻿{
+    "stores": [
+        {
+            "name": "Store 1",
+            "ingredients": [
+                { "count": 1, "unit": "oz.", "name": "Ingredient 1" },
+                { "count": 1, "unit": "oz.", "name": "Ingredient 3" },
+                { "count": 1, "unit": "oz.", "name": "Ingredient 5" }
+            ],
+            "defaultStore": true
+        },
+        {
+            "name": "Store 2",
+            "ingredients": [
+                { "count": 1, "unit": "oz.", "name": "Ingredient 2" },
+                { "count": 1, "unit": "oz.", "name": "Ingredient 4" },
+                { "count": 1, "unit": "oz.", "name": "Ingredient 6" }
+            ],
+            "defaultStore": false
+        }
+    ]
+}

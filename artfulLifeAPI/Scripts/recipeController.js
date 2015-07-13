@@ -1,11 +1,9 @@
 ﻿var recipeApp = angular.module("recipeApp");
 
-recipeApp.controller('recipeCtrl', ["$scope", "$rootScope", "$http", function ($scope, $rootScope, $http) {
+recipeApp.controller('recipeCtrl', function ($scope, $http, recipeService) {
     $scope.recipes = "";
-    
-    $http.get("/api/Recipe").success(function (data, status) {
+    $http.get("/api/Recipe").success(function (data) {
         $scope.recipes = data;
-        $rootScope.recipes = $scope.recipes;
     });
     $scope.getFromJSON = function () {
         $http.get("/Data/recipes.json")
@@ -15,13 +13,11 @@ recipeApp.controller('recipeCtrl', ["$scope", "$rootScope", "$http", function ($
             .error(function (status) {
                 window.alert(status);
             });
-        $rootScope.recipes = $scope.recipes;
     }
     $scope.getFromMongo = function () {
         $http.get("/api/Recipe").success(function (data, status) {
             $scope.recipes = data;
         });
-        $rootScope.recipes = $scope.recipes;
     }
     $scope.seedData = function () {
         for (var i = 0; i < $scope.recipes.length; i++) {
@@ -29,7 +25,8 @@ recipeApp.controller('recipeCtrl', ["$scope", "$rootScope", "$http", function ($
         };
     };
     $scope.showStuff = function () {
-        window.alert($rootScope.recipes[3]._id);
+        recipeService.set($scope.recipes);
+        recipeService.showLength();
     }
 
     $scope.showDisplayTable = false;
@@ -184,4 +181,4 @@ recipeApp.controller('recipeCtrl', ["$scope", "$rootScope", "$http", function ($
             $scope.recipes = newRecipes;
         }
     }
-}]);
+});

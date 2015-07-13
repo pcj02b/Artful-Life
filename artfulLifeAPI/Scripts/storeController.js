@@ -1,20 +1,22 @@
 ﻿var recipeApp = angular.module("recipeApp");
 
-recipeApp.controller("storeCtrl", ["$scope", "$rootScope", "$http", function ($scope, $rootScope, $http) {
+recipeApp.controller("storeCtrl", function ($scope, $http, recipeService) {
     $scope.recipes = "";
+    $http.get("/api/Recipe").success(function (data, status) {
+        $scope.recipes = data;
+    });
 
     $scope.showStuff = function () {
-        window.alert($rootScope.recipes.length);
+        recipeService.showLength();
     };
 
     $scope.getFromRootScope = function () {
-        $scope.recipes = $rootScope.recipes;
+        $scope.recipes = recipeService.get();
     };
     $scope.getFromMongo = function () {
         $http.get("/api/Recipe").success(function (data, status) {
             $scope.recipes = data;
         });
-        $rootScope.recipes = $scope.recipes;
     }
     $scope.getFromJSON = function () {
         $scope.recipes = {};
@@ -92,4 +94,4 @@ recipeApp.controller("storeCtrl", ["$scope", "$rootScope", "$http", function ($s
             });
         window.alert("data saved");
     };
-}]);
+});

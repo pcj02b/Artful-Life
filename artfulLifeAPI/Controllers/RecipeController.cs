@@ -28,7 +28,9 @@ namespace artfulLifeAPI.Controllers
             var recipes = db.GetCollection<Models.Recipe>("Recipes");
             //return from recipe in await recipes.Find(new BsonDocument()).ToListAsync()
             //       select recipe;
-            var output = await recipes.Find(new BsonDocument()).ToListAsync();
+            var filter = new BsonDocument();
+            var projection = Builders<Models.Recipe>.Projection.Exclude("_id");
+            var output = await recipes.Find(filter).Project<Models.Recipe>(projection).ToListAsync();
             return output;
         }
 
@@ -49,7 +51,6 @@ namespace artfulLifeAPI.Controllers
             var db = client.GetDatabase("artful-life");
             var recipes = db.GetCollection<Models.Recipe>("Recipes");
             string input = value.name;
-            value._id = x;
             await recipes.InsertOneAsync(value);
         }
 

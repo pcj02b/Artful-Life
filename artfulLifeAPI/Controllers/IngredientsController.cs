@@ -11,64 +11,66 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Web.Http;
 
-
 namespace artfulLifeAPI.Controllers
 {
-    public class StoreController : ApiController
+    public class IngredientsController : ApiController
     {
         public string dbuser = "pcj02b";
         public string dbpassword = "cloakd";
 
-        // GET api/store
-        public async Task<IEnumerable<Models.Store>> Get()
+        // GET api/ingredients
+        public async Task<IEnumerable<Models.Ingredients>> Get()
         {
             var client = new MongoClient("mongodb://" + dbuser + ":" + dbpassword + "@ds036698.mongolab.com:36698/artful-life");
             var db = client.GetDatabase("artful-life");
-            var stores = db.GetCollection<Models.Store>("Stores");
+            var recipes = db.GetCollection<Models.Ingredients>("Ingredients");
+            //return from recipe in await recipes.Find(new BsonDocument()).ToListAsync()
+            //       select recipe;
             var filter = new BsonDocument();
-            var projection = Builders<Models.Store>.Projection.Exclude("_id");
-            var output = await stores.Find(filter).Project<Models.Store>(projection).ToListAsync();
+            var projection = Builders<Models.Ingredients>.Projection.Exclude("_id");
+            var output = await recipes.Find(filter).Project<Models.Ingredients>(projection).ToListAsync();
             return output;
         }
 
-        // GET api/store/5
-        public async Task<Models.Store> Get(string name)
+        // GET api/ingredients/5
+        public async Task<Models.Ingredients> Get(string name)
         {
             var client = new MongoClient("mongodb://" + dbuser + ":" + dbpassword + "@ds036698.mongolab.com:36698/artful-life");
             var db = client.GetDatabase("artful-life");
-            var stores = db.GetCollection<Models.Store>("Stores");
-            var projection = Builders<Models.Store>.Projection.Exclude("_id");
-            return (from store in await stores.Find(r => r.name == name).Project<Models.Store>(projection).ToListAsync()
-                    select store).FirstOrDefault();
+            var recipes = db.GetCollection<Models.Ingredients>("Ingredients");
+            return (from recipe in await recipes.Find(r => r.name == name).ToListAsync()
+                    select recipe).FirstOrDefault();
         }
 
-        // POST api/store
-        public async void Post([FromBody]Models.Store value)
+        // POST api/ingredients
+        public async void Post([FromBody]Models.Ingredients value)
         {
             var client = new MongoClient("mongodb://" + dbuser + ":" + dbpassword + "@ds036698.mongolab.com:36698/artful-life");
             var db = client.GetDatabase("artful-life");
-            var stores = db.GetCollection<Models.Store>("Stores");
-            await stores.InsertOneAsync(value);
+            var recipes = db.GetCollection<Models.Ingredients>("Ingredients");
+            string input = value.name;
+            await recipes.InsertOneAsync(value);
         }
 
-        // PUT api/store/5
-        public async void Put([FromBody]Models.Store value)
+        // PUT api/ingredients/5
+        public async void Put([FromBody]Models.Ingredients value)
         {
             var client = new MongoClient("mongodb://" + dbuser + ":" + dbpassword + "@ds036698.mongolab.com:36698/artful-life");
             var db = client.GetDatabase("artful-life");
-            var stores = db.GetCollection<Models.Store>("Stores");
-            await stores.ReplaceOneAsync(
+            var recipes = db.GetCollection<Models.Ingredients>("Ingredients");
+            await recipes.ReplaceOneAsync(
                 filter: new BsonDocument("name", value.name),
                 replacement: value);
         }
 
-        // DELETE api/store/5
+        // DELETE api/ingredients/5
         public async void Delete(string name)
         {
             var client = new MongoClient("mongodb://" + dbuser + ":" + dbpassword + "@ds036698.mongolab.com:36698/artful-life");
             var db = client.GetDatabase("artful-life");
-            var stores = db.GetCollection<Models.Store>("Stores");
-            await stores.DeleteOneAsync(
+            var recipes = db.GetCollection<Models.Ingredients>("Ingredients");
+            //await recipes.DeleteOneAsync(r => r._id == id);
+            await recipes.DeleteOneAsync(
                 filter: new BsonDocument("name", name)
                 );
         }

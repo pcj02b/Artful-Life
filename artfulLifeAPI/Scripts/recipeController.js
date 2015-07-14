@@ -12,8 +12,7 @@ recipeApp.controller('recipeCtrl', function ($scope, $http, recipeService) {
             })
             .error(function (status) {
                 window.alert(status);
-            });
-    }
+            });    }
     $scope.getFromMongo = function () {
         $http.get("/api/Recipe").success(function (data, status) {
             $scope.recipes = data;

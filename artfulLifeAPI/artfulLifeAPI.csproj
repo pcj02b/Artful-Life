@@ -176,19 +176,18 @@
     <Compile Include="Areas\RecipeTest\Controllers\TestController.cs" />
     <Compile Include="Areas\RecipeTest\RecipeTestAreaRegistration.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\IngredientsController.cs" />
     <Compile Include="Controllers\RecipeController.cs" />
     <Compile Include="Controllers\StoreController.cs" />
-    <Compile Include="Controllers\TestController.cs" />
-    <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Cook.cs" />
     <Compile Include="Models\Ingredient.cs" />
+    <Compile Include="Models\Ingredients.cs" />
     <Compile Include="Models\Prep.cs" />
     <Compile Include="Models\Recipe.cs" />
     <Compile Include="Models\Store.cs" />
-    <Compile Include="Models\StoreIngredient.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -267,6 +266,7 @@
     <Content Include="ClassDiagram2.cd" />
     <Content Include="Data\recipes.json" />
     <Content Include="Data\stores.json" />
+    <Content Include="Data\ingredients.json" />
     <None Include="Properties\PublishProfiles\artfullife.pubxml" />
     <None Include="Scripts\jquery-1.8.2.intellisense.js" />
     <Content Include="Images\deleteIcon.png" />

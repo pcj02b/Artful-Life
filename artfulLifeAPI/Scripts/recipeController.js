@@ -171,7 +171,8 @@ recipeApp.controller('recipeCtrl', function ($scope, $http, recipeService) {
             }
         }
         if (confirm("This will permanently remove " + $scope.recipes[selectedRecipeIndex].name)) {
-            var url = "/api/Recipe/" + $scope.recipes[selectedRecipeIndex].name;
+            var url = encodeURI("/api/Recipe/?name=" + $scope.recipes[selectedRecipeIndex].name);
+            console.log(url);
             $http.delete(url).success(function (status) {
             })
             .error(function (status) {

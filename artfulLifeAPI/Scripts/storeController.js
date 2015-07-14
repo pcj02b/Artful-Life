@@ -51,17 +51,20 @@ recipeApp.controller("storeCtrl", function ($scope, $http, recipeService) {
     };
 
     $scope.deleteStore = function (index) {
-        if (confirm("This will permanently remove this store.")) {
+        if (confirm("This will permanently remove " + $scope.stores[index].name + ".")) {
             var newStores = new Array;
-            console.log($scope.stores.length);
-            console.log(index);
             wasDefault = $scope.stores[index].defaultStore;
             for (var i = 0; i < $scope.stores.length; i++) {
                 if (i != index) {
                     newStores.push($scope.stores[i]);
                 }
             }
-            $http.delete("/api/Store", $scope.stores[index].name);
+            var url = encodeURI("/api/Store/?name=" + $scope.stores[index].name);
+            $http.delete(url).success(function (status) {
+            })
+            .error(function (status) {
+                console.log("something went wrong");
+            });
             $scope.stores = newStores;
             if (wasDefault) {
                 $scope.stores[0].defaultStore = true;

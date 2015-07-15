@@ -72,8 +72,10 @@ recipeApp.controller("storeCtrl", function ($scope, $http, recipeService) {
             wasDefault = $scope.stores[index].defaultStore;
             //if deleting default store assign default to store 0
             //don't delete store 0
+            defaultStoreIndex = 0;
             if (wasDefault) {
                 $scope.stores[0].defaultStore = true;
+                defaultStoreIndex = index;
             }
             //find default store
             else {

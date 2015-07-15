@@ -11,11 +11,13 @@ recipeApp.controller("storeCtrl", function ($scope, $http, recipeService) {
             $scope.updateStoreIngredientList();
         });
     $scope.ingredients = "";
+    $scope.storeIsClicked = [];
     $http.get("/api/Ingredients")
         .success(function (data) {
             $scope.ingredients = data;
             console.log("finished getting ingredients");
             $scope.updateStoreIngredientList();
+            setStoreIsClicked();
         });
     $scope.stores = "";
     $http.get("/api/Store")
@@ -25,6 +27,11 @@ recipeApp.controller("storeCtrl", function ($scope, $http, recipeService) {
             $scope.updateStoreIngredientList();
         })
 
+    function setStoreIsClicked() {
+        for (var i = 0; i < $scope.ingredients.length; i++) {
+            $scope.storeIsClicked[i] = false;
+        }
+    }
     $scope.showStuff = function () {
         $scope.setStoreIngredientList();
     }
@@ -61,23 +68,56 @@ recipeApp.controller("storeCtrl", function ($scope, $http, recipeService) {
     }
     $scope.deleteStore = function (index) {
         if (confirm("This will permanently remove " + $scope.stores[index].name + ".")) {
-            var newStores = new Array;
+            //find out if it was the default store
             wasDefault = $scope.stores[index].defaultStore;
+            //if deleting default store assign default to store 0
+            //don't delete store 0
+            if (wasDefault) {
+                $scope.stores[0].defaultStore = true;
+            }
+            //find default store
+            else {
+                defaultStoreIndex = 0;
+                for (var i = 0; i < $scope.stores.length; i++) {
+                    if ($scope.stores[i].defaultStore == true) {
+                        defaultStoreIndex = i;
+                    }
+                }
+            }
+            //assign ingredients to default store
+            ingredientIndex = 0; 
+            for (var i = 0; i < $scope.storeIngredientList[index].ingredients.length; i++) {
+                for (var n = 0; n < $scope.ingredients.length; n++) {
+                    if ($scope.ingredients[n].name == $scope.storeIngredientList[index].ingredients[i].name) {
+                        ingredientIndex = n;
+                    }
+                }
+                $scope.ingredients[ingredientIndex].store = defaultStoreIndex;
+                $http.put("/api/Ingredients", $scope.ingredients[ingredientIndex]);
+            }
+            //decrement the store index of any ingredients in stores greater than store being deleted
+            for (var i = 0; i < $scope.ingredients.length; i++) {
+                if ($scope.ingredients[i].store >= index) {
+                    $scope.ingredients[i].store--;
+                    $http.put("/api/Ingredients", $scope.ingredients[i]);
+                }
+            }
+            //create new store list
+            var newStores = new Array;
             for (var i = 0; i < $scope.stores.length; i++) {
                 if (i != index) {
                     newStores.push($scope.stores[i]);
                 }
             }
-            var url = encodeURI("/api/Store/?name=" + $scope.stores[index].name);
-            $http.delete(url).success(function (status) {
+            //delete store in mongo
+            var uri = encodeURI("/api/Store/?name=" + $scope.stores[index].name);
+            $http.delete(uri).success(function (status) {
             })
             .error(function (status) {
-                console.log("something went wrong");
+                console.log("something went wrong while deleting a store.");
             });
+            //update local store list 
             $scope.stores = newStores;
-            if (wasDefault) {
-                $scope.stores[0].defaultStore = true;
-            }
             $scope.updateStoreIngredientList();
         }
     }
@@ -105,7 +145,6 @@ recipeApp.controller("storeCtrl", function ($scope, $http, recipeService) {
     }
     $scope.updateStoreIngredientList = function () {
         $scope.storeIngredientList = new Array;
-
         for (var i = 0; i < $scope.stores.length; i++) {
             $scope.storeIngredientList.push($scope.stores[i]);
         }
@@ -135,6 +174,10 @@ recipeApp.controller("storeCtrl", function ($scope, $http, recipeService) {
             };
         };
     }
+    $scope.incrementRecipe = function (recipeNumber) {
+        $scope.recipes[recipeNumber].multiplier++;
+        $scope.updateStoreIngredientList();
+    }
     $scope.decrementRecipe = function (recipeNumber) {
         if ($scope.recipes[recipeNumber].multiplier > 1) {
             $scope.recipes[recipeNumber].multiplier--;
@@ -153,5 +196,21 @@ recipeApp.controller("storeCtrl", function ($scope, $http, recipeService) {
     }
     $scope.saveIngredients = function () {
 
+    }
+    $scope.updateIngredientStore = function (ingredientIndex, storeIndex) {
+        $scope.storeIsClicked[ingredientIndex] = false;
+        $scope.ingredients[ingredientIndex].store = storeIndex;
+        $http.put("/api/Ingredients", $scope.ingredients[ingredientIndex]).success(function(){
+        });
+        $scope.updateStoreIngredientList();
+    }
+    $scope.toggleStoreIsClicked = function(index){
+        if ($scope.storeIsClicked[index] == true) {
+            $scope.storeIsClicked[index] = false;
+        }
+        else {
+            $scope.storeIsClicked[index] = true;
+        }
+        console.log("storeIsClicked[" + index + "] is now " + $scope.storeIsClicked[index] + ".");
     }
 });

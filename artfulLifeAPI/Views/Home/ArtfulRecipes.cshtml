@@ -7,6 +7,7 @@
     <section ng-controller="recipeCtrl">
         <aside>
             <ul>
+                <li class="title">Recipes</li>
                 <li class="lineBottom" ng-repeat="x in recipes" ng-click="selectRecipe($index);">
                     <a href="">{{x.name}}</a>
                 </li>

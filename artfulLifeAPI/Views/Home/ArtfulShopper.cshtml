@@ -15,7 +15,7 @@
                     {{x.name}}
                     <input type="checkbox" ng-model="x.included" ng-click="updateStoreIngredientList()" />
                     <div ng-show="x.included">
-                        <button ng-click="decrementRecipe($index)" style="height:1.5em;width:1.5em;">-</button><span> {{x.multiplier}} </span><button ng-click="x.multiplier = x.multiplier+1;updateStoreIngredientList()" style="height:1.5em;width:1.5em;"> +</button>
+                        <button ng-click="decrementRecipe($index)" style="height:1.5em;width:1.5em;">-</button><span> {{x.multiplier}} </span><button ng-click="incrementRecipe($index)" style="height:1.5em;width:1.5em;"> +</button>
                     </div>
                 </li>
             </ul>
@@ -23,25 +23,28 @@
                 <li ><a href="" ng-click="saveRecipes()">Save</a></li>
             </ul>
         </aside>
-        <aside style="float:right">
+        <aside class="stores">
             <ul>
                 <li class="title">Ingredients</li>
-                <li class="lineBottom" ng-repeat="x in ingredients">
-                    {{x.name}}
-                </li>
+                <li class="noHighlight" ng-repeat="x in ingredients">
+                    <p>{{x.name}}</p>
+                    <ul>
+                        <li ng-repeat="n in stores" ng-show="($index == x.store && !storeIsClicked[$parent.$index])" ng-click="toggleStoreIsClicked($parent.$index)"><a href="">{{n.name}}</a></li>
+                        <li ng-repeat="n in stores" ng-show="storeIsClicked[$parent.$index]" ng-click="updateIngredientStore($parent.$index, $index)"><a href="">~ {{n.name}} ~</a></li>
+                    </ul>
             </ul>
             <ul>
-                <li><a href="" ng-click="addStore()">Add Store</a></li>
+                <li class="lineTop"><a href="" ng-click="addStore()">Add Store</a></li>
             </ul>
         </aside>
-        <article onload="updateStoreIngredientList()">
-            <button ng-click="getFromJSON()">get from JSON</button>
+        <article>
+            @*<button ng-click="getFromJSON()">get from JSON</button>
             <button ng-click="setStoreIngredientList()">set list</button>
             <button ng-click="updateStoreIngredientList()">update list</button>
-            <button ng-click="showStuff()">show stuff</button>
+            <button ng-click="showStuff()">show stuff</button>*@
             <h4>Artful Shopping Lists</h4>
             <p><b>The Idea:</b> Select a recipe on the left. Multiply as desired. If you shop at more than one store, assign each ingredient to a store on the right. Then view the grocery list for each store.</p>
-            <table ng-repeat="x in storeIngredientList" class="store" ng-hide="showAddStore">
+            <table ng-repeat="x in storeIngredientList" class="store">
                 <tr>
                     <th>{{x.name}}</th>
                 </tr>
@@ -57,7 +60,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td class="delete"><a href="" ng-click="deleteStore($index);">Delete</a></td>
+                    <td class="delete"><a href="" ng-click="deleteStore($index);">Delete Store</a></td>
                 </tr>
             </table>
         </article>

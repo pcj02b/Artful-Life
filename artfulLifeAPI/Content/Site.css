@@ -107,22 +107,34 @@ aside ul{
     padding:0px;
     list-style-type:none;
 }
+aside.stores{
+    float:right;
+    height:initial;
+}
+aside.stores li.noHighlight:hover{
+    background-color:initial;
+}
 aside li {
     width: 100%;
     display: block;
     color: black;
     font-size: 17pt;
-
 }
 aside li.title{
     border-bottom:2px solid rgba(180, 60, 180, 0.9);
     padding-bottom:2px;
     font-weight:bold;
 }
+aside li.title:hover{
+    background-color:initial;
+}
 
 aside li.lineBottom:last-child{
     border-bottom:2px solid rgba(180, 60, 180, 0.9);
     padding-bottom:2px;
+}
+aside li.lineTop{
+    border-top:2px solid rgba(180, 60, 180, 0.9);
 }
 aside li:hover{
     background-color:rgba(180, 60, 180, 0.9);

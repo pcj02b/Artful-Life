@@ -2,26 +2,37 @@
 
 recipeApp.controller("storeCtrl", function ($scope, $http, recipeService) {
     $scope.recipes = "";
-    $http.get("/api/Recipe").success(function (data) {
-        $scope.recipes = data;
-    });
+    ogRecipes = "";
+    $http.get("/api/Recipe")
+        .success(function (data) {
+            $scope.recipes = data;
+            console.log("finished getting recipes");
+            ogRecipes = JSON.parse(JSON.stringify($scope.recipes));
+            $scope.updateStoreIngredientList();
+        });
     $scope.ingredients = "";
-    $http.get("/api/Ingredients").success(function (data) {
-        $scope.ingredients = data;
-    });
+    $http.get("/api/Ingredients")
+        .success(function (data) {
+            $scope.ingredients = data;
+            console.log("finished getting ingredients");
+            $scope.updateStoreIngredientList();
+        });
     $scope.stores = "";
-    $http.get("/api/Store").success(function (data) {
-        $scope.stores = data;
-    });
+    $http.get("/api/Store")
+        .success(function (data) {
+            $scope.stores = data;
+            console.log("finished getting stores");
+            $scope.updateStoreIngredientList();
+        })
 
     $scope.showStuff = function () {
         $scope.setStoreIngredientList();
-    };
+    }
     $scope.seedData = function () {
         for (var i = 0; i < $scope.stores.length; i++) {
             $http.post("/api/Store", $scope.stores[i]);
         };
-    };
+    }
     $scope.getFromJSON = function () {
         $http.get("/Data/stores.json")
             .success(function (data) {
@@ -36,7 +47,6 @@ recipeApp.controller("storeCtrl", function ($scope, $http, recipeService) {
             $scope.stores = data;
         });
     }
-
     $scope.addStore = function () {
         var newRecipeName = prompt("Enter the store name");
         var isDefault = confirm("Will "+newRecipeName+" be your primary store?\nYes:OK No:Cancel")
@@ -48,8 +58,7 @@ recipeApp.controller("storeCtrl", function ($scope, $http, recipeService) {
         $scope.stores.push({ name: newRecipeName, defaultStore: isDefault });
         $http.post("/api/Store", { name: newRecipeName, defaultStore: isDefault });
         $scope.updateStoreIngredientList();
-    };
-
+    }
     $scope.deleteStore = function (index) {
         if (confirm("This will permanently remove " + $scope.stores[index].name + ".")) {
             var newStores = new Array;
@@ -72,8 +81,6 @@ recipeApp.controller("storeCtrl", function ($scope, $http, recipeService) {
             $scope.updateStoreIngredientList();
         }
     }
-
- 
     function isInStores(ingredientObject) {
         var ingredientIndex = 0;
         var isThere = false;
@@ -95,7 +102,7 @@ recipeApp.controller("storeCtrl", function ($scope, $http, recipeService) {
         };
         var output = { isThere: isThere, storeIndex: storeIndex, ingredientIndex: ingredientIndex }
         return output;
-    };
+    }
     $scope.updateStoreIngredientList = function () {
         $scope.storeIngredientList = new Array;
 
@@ -127,18 +134,24 @@ recipeApp.controller("storeCtrl", function ($scope, $http, recipeService) {
                 };
             };
         };
-    };
+    }
     $scope.decrementRecipe = function (recipeNumber) {
         if ($scope.recipes[recipeNumber].multiplier > 1) {
             $scope.recipes[recipeNumber].multiplier--;
             $scope.updateStoreIngredientList();
         }
-    };
+    }
     $scope.saveRecipes = function () {
-
-    };
+        for (var i = 0; i < $scope.recipes.length; i++) {
+            if (angular.equals($scope.recipes[i], ogRecipes[i])) {
+                console.log("nothing has changed in " + ogRecipes[i].name);
+            }
+            else {
+                $http.put("/api/Recipe", $scope.recipes[i]);
+            }
+        }
+    }
     $scope.saveIngredients = function () {
 
-    };
-    angular.element(document).ready($scope.updateStoreIngredientList());
+    }
 });

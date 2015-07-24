@@ -1,8 +1,8 @@
 ﻿var recipeApp = angular.module("recipeApp");
 
-recipeApp.controller("storeCtrl", function ($scope, $http, recipeService) {
+recipeApp.controller("storeCtrl", ["$scope", "$rootScope", "$http", function ($scope, $rootScope, $http) {
     $scope.recipes = "";
-    ogRecipes = "";
+    var ogRecipes = "";
     $http.get("/api/Recipe")
         .success(function (data) {
             $scope.recipes = data;
@@ -69,10 +69,10 @@ recipeApp.controller("storeCtrl", function ($scope, $http, recipeService) {
     $scope.deleteStore = function (index) {
         if (confirm("This will permanently remove " + $scope.stores[index].name + ".")) {
             //find out if it was the default store
-            wasDefault = $scope.stores[index].defaultStore;
+            var wasDefault = $scope.stores[index].defaultStore;
             //if deleting default store assign default to store 0
             //don't delete store 0
-            defaultStoreIndex = 0;
+            var defaultStoreIndex = 0;
             if (wasDefault) {
                 $scope.stores[0].defaultStore = true;
                 defaultStoreIndex = index;
@@ -87,7 +87,7 @@ recipeApp.controller("storeCtrl", function ($scope, $http, recipeService) {
                 }
             }
             //assign ingredients to default store
-            ingredientIndex = 0; 
+            var ingredientIndex = 0; 
             for (var i = 0; i < $scope.storeIngredientList[index].ingredients.length; i++) {
                 for (var n = 0; n < $scope.ingredients.length; n++) {
                     if ($scope.ingredients[n].name == $scope.storeIngredientList[index].ingredients[i].name) {
@@ -215,4 +215,4 @@ recipeApp.controller("storeCtrl", function ($scope, $http, recipeService) {
         }
         console.log("storeIsClicked[" + index + "] is now " + $scope.storeIsClicked[index] + ".");
     }
-});
+}]);

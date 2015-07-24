@@ -1,6 +1,6 @@
 ﻿var recipeApp = angular.module("recipeApp");
 
-recipeApp.controller('recipeCtrl', function ($scope, $http, recipeService) {
+recipeApp.controller('recipeCtrl', ["$scope", "$rootScope", "$http", function ($scope, $rootScope, $http) {
     $scope.recipes = "";
     $http.get("/api/Recipe").success(function (data) {
         $scope.recipes = data;
@@ -56,7 +56,7 @@ recipeApp.controller('recipeCtrl', function ($scope, $http, recipeService) {
         $scope.showTable = true;
     }
     $scope.addIngredient = function () {
-        newIngredient = { "count": $scope.newIngredientCount, "unit": $scope.newIngredientUnit, "name": $scope.newIngredientName, "store": 0 };
+        var newIngredient = { "count": $scope.newIngredientCount, "unit": $scope.newIngredientUnit, "name": $scope.newIngredientName, "store": 0 };
         $scope.newRecipe.ingredients.push(newIngredient);
         $scope.newIngredientCount = 1;
         $scope.newIngredientUnit = "";
@@ -181,4 +181,4 @@ recipeApp.controller('recipeCtrl', function ($scope, $http, recipeService) {
             $scope.recipes = newRecipes;
         }
     }
-});
+}]);

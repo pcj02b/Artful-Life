@@ -1,15 +1,14 @@
 ﻿var recipeApp = angular.module("recipeApp");
 
-recipeApp.controller("storeCtrl", ["$scope", "$rootScope", "$http", function ($scope, $rootScope, $http) {
+recipeApp.controller("storeCtrl", function ($scope, $http) {
     $scope.recipes = "";
-    var ogRecipes = "";
     $http.get("/api/Recipe")
         .success(function (data) {
             $scope.recipes = data;
             console.log("finished getting recipes");
-            ogRecipes = JSON.parse(JSON.stringify($scope.recipes));
             $scope.updateStoreIngredientList();
-        });
+            });
+    var ogRecipes = JSON.parse(JSON.stringify($scope.recipes));
     $scope.ingredients = "";
     $scope.storeIsClicked = [];
     $http.get("/api/Ingredients")
@@ -215,4 +214,4 @@ recipeApp.controller("storeCtrl", ["$scope", "$rootScope", "$http", function ($s
         }
         console.log("storeIsClicked[" + index + "] is now " + $scope.storeIsClicked[index] + ".");
     }
-}]);
+})

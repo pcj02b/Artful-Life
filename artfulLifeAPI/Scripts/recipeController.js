@@ -1,6 +1,6 @@
 ﻿var recipeApp = angular.module("recipeApp");
 
-recipeApp.controller('recipeCtrl', ["$scope", "$rootScope", "$http", function ($scope, $rootScope, $http) {
+recipeApp.controller('recipeCtrl', function ($scope, $http) {
     $scope.recipes = "";
     $http.get("/api/Recipe").success(function (data) {
         $scope.recipes = data;
@@ -181,4 +181,4 @@ recipeApp.controller('recipeCtrl', ["$scope", "$rootScope", "$http", function ($
             $scope.recipes = newRecipes;
         }
     }
-}]);
+})

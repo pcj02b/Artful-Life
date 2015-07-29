@@ -1,0 +1,15 @@
+﻿{
+    "ingredients": [
+        { "name": "Ingredient 1", "store": 0 },
+        { "name": "Ingredient 2", "store": 1 },
+        { "name": "Ingredient 3", "store": 0 },
+        { "name": "Ingredient 4", "store": 1 },
+        { "name": "Ingredient 5", "store": 0 },
+        { "name": "Ingredient 6", "store": 1 },
+        { "name": "Ingredient 7", "store": 0 },
+        { "name": "Ingredient 8", "store": 1 },
+        { "name": "Ingredient 9", "store": 0 },
+        { "name": "Ingredient 10", "store": 1 }
+    ]
+
+}

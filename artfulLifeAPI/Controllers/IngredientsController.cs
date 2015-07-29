@@ -13,62 +13,63 @@ using System.Web.Http;
 
 namespace artfulLifeAPI.Controllers
 {
-    public class RecipeController : ApiController
+    public class IngredientsController : ApiController
     {
         public string dbuser = "pcj02b";
         public string dbpassword = "cloakd";
-        
-        // GET api/recipe
-        public async Task<IEnumerable<Models.Recipe>> Get()
+
+        // GET api/ingredients
+        public async Task<IEnumerable<Models.Ingredients>> Get()
         {
             var client = new MongoClient("mongodb://" + dbuser + ":" + dbpassword + "@ds036698.mongolab.com:36698/artful-life");
             var db = client.GetDatabase("artful-life");
-            var recipes = db.GetCollection<Models.Recipe>("Recipes");
+            var recipes = db.GetCollection<Models.Ingredients>("Ingredients");
             //return from recipe in await recipes.Find(new BsonDocument()).ToListAsync()
             //       select recipe;
             var filter = new BsonDocument();
-            var projection = Builders<Models.Recipe>.Projection.Exclude("_id");
-            var output = await recipes.Find(filter).Project<Models.Recipe>(projection).ToListAsync();
+            var projection = Builders<Models.Ingredients>.Projection.Exclude("_id");
+            var output = await recipes.Find(filter).Project<Models.Ingredients>(projection).ToListAsync();
             return output;
         }
 
-        // GET api/recipe/5
-        public async Task<Models.Recipe> Get(string name)
+        // GET api/ingredients/5
+        public async Task<Models.Ingredients> Get(string name)
         {
             var client = new MongoClient("mongodb://" + dbuser + ":" + dbpassword + "@ds036698.mongolab.com:36698/artful-life");
             var db = client.GetDatabase("artful-life");
-            var recipes = db.GetCollection<Models.Recipe>("Recipes");
+            var recipes = db.GetCollection<Models.Ingredients>("Ingredients");
             return (from recipe in await recipes.Find(r => r.name == name).ToListAsync()
                     select recipe).FirstOrDefault();
         }
 
-        // POST api/recipe
-        public async void Post([FromBody]Models.Recipe value)
+        // POST api/ingredients
+        public async void Post([FromBody]Models.Ingredients value)
         {
             var client = new MongoClient("mongodb://" + dbuser + ":" + dbpassword + "@ds036698.mongolab.com:36698/artful-life");
             var db = client.GetDatabase("artful-life");
-            var recipes = db.GetCollection<Models.Recipe>("Recipes");
-            string input = value.name;
+            var recipes = db.GetCollection<Models.Ingredients>("Ingredients");
+            //string input = value.name;
             await recipes.InsertOneAsync(value);
         }
 
-        // PUT api/recipe/5
-        public async void Put([FromBody]Models.Recipe value)
+        // PUT api/ingredients/5
+        public async void Put([FromBody]Models.Ingredients value)
         {
             var client = new MongoClient("mongodb://" + dbuser + ":" + dbpassword + "@ds036698.mongolab.com:36698/artful-life");
             var db = client.GetDatabase("artful-life");
-            var recipes = db.GetCollection<Models.Recipe>("Recipes");
+            var recipes = db.GetCollection<Models.Ingredients>("Ingredients");
             await recipes.ReplaceOneAsync(
                 filter: new BsonDocument("name", value.name),
                 replacement: value);
         }
 
-        // DELETE api/recipe/5
+        // DELETE api/ingredients/5
         public async void Delete(string name)
         {
             var client = new MongoClient("mongodb://" + dbuser + ":" + dbpassword + "@ds036698.mongolab.com:36698/artful-life");
             var db = client.GetDatabase("artful-life");
-            var recipes = db.GetCollection<Models.Recipe>("Recipes");
+            var recipes = db.GetCollection<Models.Ingredients>("Ingredients");
+            //await recipes.DeleteOneAsync(r => r._id == id);
             await recipes.DeleteOneAsync(
                 filter: new BsonDocument("name", name)
                 );

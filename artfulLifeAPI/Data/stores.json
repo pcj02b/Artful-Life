@@ -1,0 +1,12 @@
+﻿{
+    "stores": [
+        {
+            "name": "Store 1",
+            "defaultStore": true
+        },
+        {
+            "name": "Store 2",
+            "defaultStore": false
+        }
+    ]
+}

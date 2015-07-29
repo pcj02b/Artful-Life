@@ -83,6 +83,7 @@
     </Reference>
     <Reference Include="System.Net.Http.Formatting, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.4.0.30506.0\lib\net40\System.Net.Http.Formatting.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System.Net.Http.WebRequest">
     </Reference>
@@ -96,6 +97,7 @@
     </Reference>
     <Reference Include="System.Web.Http.WebHost, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.4.0.30506.0\lib\net40\System.Web.Http.WebHost.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System.Web.Mvc, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
@@ -174,14 +176,15 @@
     <Compile Include="Areas\RecipeTest\Controllers\TestController.cs" />
     <Compile Include="Areas\RecipeTest\RecipeTestAreaRegistration.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\IngredientsController.cs" />
     <Compile Include="Controllers\RecipeController.cs" />
-    <Compile Include="Controllers\TestController.cs" />
-    <Compile Include="Controllers\ValuesController.cs" />
+    <Compile Include="Controllers\StoreController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Cook.cs" />
     <Compile Include="Models\Ingredient.cs" />
+    <Compile Include="Models\Ingredients.cs" />
     <Compile Include="Models\Prep.cs" />
     <Compile Include="Models\Recipe.cs" />
     <Compile Include="Models\Store.cs" />
@@ -262,9 +265,11 @@
     <Content Include="Areas\RecipeTest\Views\Test\Index.cshtml" />
     <Content Include="ClassDiagram2.cd" />
     <Content Include="Data\recipes.json" />
-    <Content Include="Data\storeIngredients.json" />
+    <Content Include="Data\stores.json" />
+    <Content Include="Data\ingredients.json" />
     <None Include="Properties\PublishProfiles\artfullife.pubxml" />
     <None Include="Scripts\jquery-1.8.2.intellisense.js" />
+    <Content Include="Images\deleteIcon.png" />
     <Content Include="Scripts\jquery-1.8.2.js" />
     <Content Include="Scripts\jquery-1.8.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
@@ -282,7 +287,8 @@
     <Content Include="Scripts\navBar.js" />
     <Content Include="Scripts\recipeApp.js" />
     <Content Include="Scripts\ingredientApp.js" />
-    <Content Include="Scripts\storeApp.js" />
+    <Content Include="Scripts\recipeController.js" />
+    <Content Include="Scripts\storeController.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>

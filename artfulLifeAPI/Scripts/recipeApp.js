@@ -102,11 +102,11 @@ recipeApp.controller('recipeCtrl', function ($scope, $http) {
     $scope.addToEditingPrep = function () {
         $scope.editingRecipe.prep.push({ step: $scope.newPrepStep });
         $scope.newPrepStep = "";
-    };
+    }
     $scope.addToEditingCook = function () {
         $scope.editingRecipe.cook.push({ step: $scope.newCookStep });
         $scope.newCookStep = "";
-    };
+    }
     $scope.saveEditedRecipe = function () {
         if (confirm("Save changes to " + $scope.recipes[selectedRecipeIndex].name)) {
             $scope.recipes[selectedRecipeIndex] = $scope.editingRecipe;
@@ -114,43 +114,5 @@ recipeApp.controller('recipeCtrl', function ($scope, $http) {
         $scope.showDisplayTable = true;
         $scope.showCreationTable = false;
         $scope.showEditingTable = false;
-    }
-    $scope.removeIngredient = function (index) {
-        var editingIngredients = []; //local temp list
-        for (var i = 0; i < $scope.editingRecipe.ingredients.length; i++) {
-            if (i != index) {
-                editingIngredients.push($scope.editingRecipe.ingredients[i]);
-            }
-        }
-        $scope.editingRecipe.ingredients = editingIngredients;
-    }
-    $scope.removePrep = function (index) {
-        var editingPrep = []; //local temp list
-        for (var i = 0; i < $scope.editingRecipe.prep.length; i++) {
-            if (i != index) {
-                editingPrep.push($scope.editingRecipe.prep[i]);
-            }
-        }
-        $scope.editingRecipe.prep = editingPrep;
-    };
-    $scope.removeCook = function (index) {
-        var editingCook = []; //local temp list
-        for (var i = 0; i < $scope.editingRecipe.cook.length; i++) {
-            if (i != index) {
-                editingCook.push($scope.editingRecipe.cook[i]);
-            }
-        }
-        $scope.editingRecipe.cook = editingCook;
-    };
-    $scope.removeRecipe = function () {
-        var newRecipes = []; //local temp list
-        for (var i = 0; i < $scope.recipes.length; i++) {
-            if (i != selectedRecipeIndex) {
-                newRecipes.push($scope.recipes[i]);
-            }
-        }
-        if (confirm("This will permanently remove " + $scope.recipes[selectedRecipeIndex].name)) {
-            $scope.recipes = newRecipes;
-        }
     }
 });

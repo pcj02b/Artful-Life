@@ -7,7 +7,8 @@
     <section ng-controller="recipeCtrl">
         <aside>
             <ul>
-                <li id="lineBottom" ng-repeat="x in recipes" ng-click="selectRecipe(x.name, x.ingredients, x.prep, x.cook, $index);">
+                <li class="title">Recipes</li>
+                <li class="lineBottom" ng-repeat="x in recipes" ng-click="selectRecipe($index);">
                     <a href="">{{x.name}}</a>
                 </li>
             </ul>
@@ -20,7 +21,10 @@
             </ul>
         </aside>
         <article>
-            <button ng-click="seedData()"></button>
+            @*<button ng-click="getFromJSON()">get from JSON</button>
+            <button ng-click="getFromMongo()">get from Mongo</button>
+            <button ng-click="seedData()">send data to Mongo</button>
+            <button ng-click="showStuff()">show stuff</button>*@
             <h4>@ViewBag.Title</h4>
             <p><b>The Idea: </b>Click a recipe to view, edit or delete.  Or create a new recipe by using the copy and paste feature or manually inputing a recipe.</p>
             <br style="height:22px" ng-show="showTable" />
@@ -28,7 +32,7 @@
             <table id="recipe" ng-show="showDisplayTable">
                 <tr>
                     <th colspan="2">
-                        {{selectedName}}
+                        {{selectedRecipe.name}}
                     </th>
                 </tr>
                 <tr>
@@ -40,7 +44,7 @@
                                 <span> </span>
                                 <span>{{x.unit}}</span>
                                 <span> </span>
-                                <span>{{x.ingredient}}</span>
+                                <span>{{x.name}}</span>
                             </li>
                         </ul>
                     </td>
@@ -70,19 +74,19 @@
             <table id="recipe" ng-show="showCreationTable">
                 <tr>
                     <td colspan="2" id="lable">
-                        <textarea id="recipeName" ng-model="newName" placeholder="New Recipe Name"></textarea>
+                        <textarea id="recipeName" ng-model="newRecipe.name" placeholder="New Recipe Name"></textarea>
                     </td>
                 </tr>
                 <tr>
                     <td rowspan="2">
                         <p>Ingredients:</p>
                         <ul id="ingredient">
-                            <li ng-repeat="x in newIngredients" ng-mouseenter="showDelete=true" ng-mouseleave="showDelete=false">
+                            <li ng-repeat="x in newRecipe.ingredients" ng-mouseenter="showDelete=true" ng-mouseleave="showDelete=false">
                                 <span>{{x.count}}</span>
                                 <span> </span>
                                 <span>{{x.unit}}</span>
                                 <span> </span>
-                                <span>{{x.ingredient}}</span>
+                                <span>{{x.name}}</span>
                             </li>
                         </ul>
                         <hr />
@@ -97,16 +101,13 @@
                                 <option value="lb.">Pound</option>
                             </select>
                             <input type="text" style="height:20px" ng-model="newIngredientName" placeholder="New Ingredient" />
-                            <select ng-options="x.name for x in stores" ng-model="newIngredientStore">
-                                <option value="" disabled selected style="display:none;">Store</option>
-                            </select>
                             <button ng-click="addIngredient()">add</button>
                         </form>
                     </td>
                     <td>
                         <p>Prep Instructions:</p>
                         <ol>
-                            <li ng-repeat="x in newPrep">
+                            <li ng-repeat="x in newRecipe.prep">
                                 {{x.step}}
                             </li>
                         </ol>
@@ -121,12 +122,11 @@
                     <td>
                         <p>Cooking Instructions:</p>
                         <ol>
-                            <li ng-repeat="x in newCook">
+                            <li ng-repeat="x in newRecipe.cook">
                                 {{x.step}}
                             </li>
                         </ol>
                         <hr />
-
                         <form>
                             <input type="text" ng-model="newCookStep" placeholder="New Cook Step" />
                             <button ng-click="addCookStep()">add</button>
@@ -138,7 +138,7 @@
             <table id="recipe" ng-show="showEditingTable">
                 <tr>
                     <th colspan="2">
-                        {{selectedName}}
+                        {{editingRecipe.name}}
                     </th>
                 </tr>
                 <tr>
@@ -150,7 +150,7 @@
                                 <span> </span>
                                 <span>{{x.unit}}</span>
                                 <span> </span>
-                                <span>{{x.ingredient}}</span>
+                                <span>{{x.name}}</span>
                                 <span ng-show="showDelete"><a href="" ng-click="removeIngredient($index);"><img src="../Images/deleteIcon.png" alt="delete item" height="15" width="15" /></a></span>
                             </li>
                         </ul>
@@ -166,9 +166,6 @@
                                 <option value="lb.">Pound</option>
                             </select>
                             <input type="text" style="height:20px" ng-model="newIngredientName" placeholder="New Ingredient" />
-                            <select ng-options="x.name for x in stores" ng-model="newIngredientStore">
-                                <option value="" disabled selected style="display:none;">Store</option>
-                            </select>
                             <button ng-click="addToEditingIngredients()">add</button>
                         </form>
                     </td>

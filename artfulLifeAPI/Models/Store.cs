@@ -8,6 +8,6 @@ namespace artfulLifeAPI.Models
     public class Store
     {
         public string name { get; set; }
-        public IEnumerable<Ingredient> Ingredient { get; set; }
+        public Boolean defaultStore { get; set; }
     }
 }

@@ -7,6 +7,6 @@ namespace artfulLifeAPI.Models
 {
     public class Prep
     {
-        public string Step { get; set; }
+        public string step { get; set; }
     }
 }

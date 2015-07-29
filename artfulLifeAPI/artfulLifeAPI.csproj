@@ -325,13 +325,11 @@
     <Content Include="Views\Home\ArtfulShopper.cshtml" />
     <Content Include="Views\Home\ArtfulResourceful.cshtml" />
     <Content Include="Views\Home\TipsAndAdvise.cshtml" />
-    <Content Include="Views\Home\ArtfulStores.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\RecipeTest\Models\" />
     <Folder Include="Areas\RecipeTest\Views\Shared\" />
-    <Folder Include="JavaScript\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

@@ -32,11 +32,6 @@ namespace artfulLifeAPI.Controllers
             ViewBag.Title = "Artful Cooking";
             return View();
         }
-        public ActionResult ArtfulStores()
-        {
-            ViewBag.Title = "Artful Stores";
-            return View();
-        }
         public ActionResult ArtfulResourceful()
         {
             ViewBag.Title = "Artful & Resourceful";

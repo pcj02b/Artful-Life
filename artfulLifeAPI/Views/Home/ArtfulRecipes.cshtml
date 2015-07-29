@@ -22,14 +22,12 @@
         </aside>
         <article>
             @*<button ng-click="getFromJSON()">get from JSON</button>
-            <button ng-click="getFromMongo()">get from Mongo</button>
-            <button ng-click="seedData()">send data to Mongo</button>
-            <button ng-click="showStuff()">show stuff</button>*@
+            <button ng-click="seedData()">send data to Mongo</button>*@
             <h4>@ViewBag.Title</h4>
-            <p><b>The Idea: </b>Click a recipe to view, edit or delete.  Or create a new recipe by using the copy and paste feature or manually inputing a recipe.</p>
+            <p><b>The Idea: </b>Click a recipe to view, edit or delete.  Or create a new recipe by using the copy and paste feature or manually inputting a recipe.</p>
             <br style="height:22px" ng-show="showTable" />
             <!--Display Table-->
-            <table id="recipe" ng-show="showDisplayTable">
+            <table class="recipe" ng-show="showDisplayTable">
                 <tr>
                     <th colspan="2">
                         {{selectedRecipe.name}}
@@ -48,7 +46,7 @@
                             </li>
                         </ul>
                     </td>
-                    <td>
+                    <td class="steps">
                         <p>Prep Instructions:</p>
                         <ol>
                             <li ng-repeat="x in selectedRecipe.prep">
@@ -58,7 +56,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td>
+                    <td class="steps">
                         <p>Cooking Instructions:</p>
                         <ol>
                             <li ng-repeat="x in selectedRecipe.cook">
@@ -69,9 +67,7 @@
                 </tr>
             </table>
             <!--Creation Table-->
-            <textarea placeholder="Copy and paste recipe here" ng-show="showCreationTable"></textarea>
-            <p ng-show="showCreationTable"><b>or</b></p>
-            <table id="recipe" ng-show="showCreationTable">
+            <table class="recipe" ng-show="showCreationTable">
                 <tr>
                     <td colspan="2" id="lable">
                         <textarea id="recipeName" ng-model="newRecipe.name" placeholder="New Recipe Name"></textarea>
@@ -79,6 +75,7 @@
                 </tr>
                 <tr>
                     <td rowspan="2">
+                        <textarea placeholder="Copy and paste ingredients here" ng-show="showCreationTable"></textarea>
                         <p>Ingredients:</p>
                         <ul id="ingredient">
                             <li ng-repeat="x in newRecipe.ingredients" ng-mouseenter="showDelete=true" ng-mouseleave="showDelete=false">
@@ -105,6 +102,7 @@
                         </form>
                     </td>
                     <td>
+                        <textarea placeholder="Copy and paste prep instructions here" ng-show="showCreationTable"></textarea>
                         <p>Prep Instructions:</p>
                         <ol>
                             <li ng-repeat="x in newRecipe.prep">
@@ -120,6 +118,7 @@
                 </tr>
                 <tr>
                     <td>
+                        <textarea placeholder="Copy and paste prep instructions here" ng-show="showCreationTable"></textarea>
                         <p>Cooking Instructions:</p>
                         <ol>
                             <li ng-repeat="x in newRecipe.cook">
@@ -135,7 +134,7 @@
                 </tr>
             </table>
             <!--Editing Table-->
-            <table id="recipe" ng-show="showEditingTable">
+            <table class="recipe" ng-show="showEditingTable">
                 <tr>
                     <th colspan="2">
                         {{editingRecipe.name}}
@@ -145,13 +144,17 @@
                     <td rowspan="2">
                         <p>Ingredients:</p>
                         <ul id="ingredient">
-                            <li ng-repeat="x in editingRecipe.ingredients" ng-mouseenter="showDelete=true" ng-mouseleave="showDelete=false">
-                                <span>{{x.count}}</span>
-                                <span> </span>
-                                <span>{{x.unit}}</span>
-                                <span> </span>
-                                <span>{{x.name}}</span>
-                                <span ng-show="showDelete"><a href="" ng-click="removeIngredient($index);"><img src="../Images/deleteIcon.png" alt="delete item" height="15" width="15" /></a></span>
+                            <li ng-repeat="x in editingRecipe.ingredients" ng-mouseenter="showButtons=true" ng-mouseleave="showButtons=false">
+                                <span ng-click="selectEditingIngredient($index)" class="link">
+                                    <span>{{x.count}}</span>
+                                    <span> </span>
+                                    <span>{{x.unit}}</span>
+                                    <span> </span>
+                                    <span>{{x.name}}</span>
+                                </span>
+                                <span ng-show="showButtons && $index!=(editingRecipe.ingredients.length-1)" title="move ingredient down"><a href="" ng-click="moveIngredientDown($index)">down</a></span>
+                                <span ng-show="showButtons" title="delete"><a href="" ng-click="removeIngredient($index)"><img src="../Images/deleteIcon.png" alt="delete item" height="15" width="15" /></a></span>
+                                <span ng-show="showButtons && $index!=0" title="move ingredient up"><a href="" ng-click="moveIngredientUp($index)">up</a></span>
                             </li>
                         </ul>
                         <hr />
@@ -166,15 +169,18 @@
                                 <option value="lb.">Pound</option>
                             </select>
                             <input type="text" style="height:20px" ng-model="newIngredientName" placeholder="New Ingredient" />
-                            <button ng-click="addToEditingIngredients()">add</button>
+                            <button ng-hide="editingIngredient" ng-click="addToEditingIngredients()">add</button>
+                            <button ng-show="editingIngredient" ng-click="saveEditedIngredient()">save</button>
                         </form>
                     </td>
-                    <td>
+                    <td class="steps">
                         <p>Prep Instructions:</p>
                         <ol>
-                            <li ng-repeat="x in editingRecipe.prep" ng-mouseenter="showDelete=true" ng-mouseleave="showDelete=false">
+                            <li ng-repeat="x in editingRecipe.prep" ng-mouseenter="showButtons=true" ng-mouseleave="showButtons=false">
                                 <span>{{x.step}}</span>
-                                <span ng-show="showDelete"><a href="" ng-click="removePrep($index);"><img src="../Images/deleteIcon.png" alt="delete item" height="15" width="15" /></a></span>
+                                <span ng-show="showButtons && $index!=(editingRecipe.prep.length-1)" title="move prep step down"><a href="" ng-click="movePrepDown($index)">down</a></span>
+                                <span ng-show="showButtons"><a href="" ng-click="removePrep($index);"><img src="../Images/deleteIcon.png" alt="delete item" height="15" width="15" /></a></span>
+                                <span ng-show="showButtons && $index!=0" title="move prep step up"><a href="" ng-click="movePrepUp($index)">up</a></span>
                             </li>
                         </ol>
                         <hr />
@@ -185,12 +191,14 @@
                     </td>
                 </tr>
                 <tr>
-                    <td>
+                    <td class="steps">
                         <p>Cooking Instructions:</p>
                         <ol>
-                            <li ng-repeat="x in editingRecipe.cook" ng-mouseenter="showDelete=true" ng-mouseleave="showDelete=false">
+                            <li ng-repeat="x in editingRecipe.cook" ng-mouseenter="showButtons=true" ng-mouseleave="showButtons=false">
                                 <span>{{x.step}}</span>
-                                <span ng-show="showDelete"><a href="" ng-click="removeCook($index);"><img src="../Images/deleteIcon.png" alt="delete item" height="15" width="15" /></a></span>
+                                <span ng-show="showButtons && $index!=(editingRecipe.cook.length-1)" title="move cook step down"><a href="" ng-click="moveCookDown($index)">down</a></span>
+                                <span ng-show="showButtons"><a href="" ng-click="removeCook($index);"><img src="../Images/deleteIcon.png" alt="delete item" height="15" width="15" /></a></span>
+                                <span ng-show="showButtons && $index!=0" title="move cook step up"><a href="" ng-click="moveCookUp($index)">up</a></span>
                             </li>
                         </ol>
                         <hr />

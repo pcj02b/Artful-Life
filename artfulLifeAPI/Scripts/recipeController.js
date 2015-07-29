@@ -46,6 +46,8 @@ recipeApp.controller('recipeCtrl', function ($scope, $http) {
     selectedRecipeIndex = 0;
 
     $scope.editingRecipe = []
+    var editingIngredientIndex = 0;
+    $scope.editingIngredient = false;
 
     $scope.selectRecipe = function (index) {
         $scope.showDisplayTable = true;
@@ -84,13 +86,14 @@ recipeApp.controller('recipeCtrl', function ($scope, $http) {
             .error(function (status) {
                 console.log("something went wrong");
             });
+
+            $scope.showTable = true;
+            $scope.newRecipe = {};
+            $scope.newRecipe.ingredients = [];
+            $scope.newRecipe.prep = [];
+            $scope.newRecipe.cook = [];
         }
         else { window.alert("A recipe by that name already exists."); }
-        $scope.showTable = true;
-        $scope.newRecipe = {};
-        $scope.newRecipe.ingredients = [];
-        $scope.newRecipe.prep = [];
-        $scope.newRecipe.cook = [];
     }
     $scope.addRecipe = function () {
         $scope.newRecipe = {};
@@ -123,6 +126,23 @@ recipeApp.controller('recipeCtrl', function ($scope, $http) {
         $scope.editingRecipe.cook.push({ step: $scope.newCookStep });
         $scope.newCookStep = "";
     };
+    $scope.selectEditingIngredient = function (index) {
+        $scope.editingIngredient = true;
+        $scope.newIngredientCount = $scope.editingRecipe.ingredients[index].count;
+        $scope.newIngredientUnit = $scope.editingRecipe.ingredients[index].unit;
+        $scope.newIngredientName = $scope.editingRecipe.ingredients[index].name;
+        editingIngredientIndex = index;
+    }
+    $scope.saveEditedIngredient = function () {
+        $scope.editingRecipe.ingredients[editingIngredientIndex].count = $scope.newIngredientCount;
+        $scope.editingRecipe.ingredients[editingIngredientIndex].unit = $scope.newIngredientUnit;
+        $scope.editingRecipe.ingredients[editingIngredientIndex].name = $scope.newIngredientName;
+        $scope.editingIngredient = false;
+        $scope.newIngredient = [];
+        $scope.newIngredientCount = 1;
+        $scope.newIngredientUnit = "";
+        $scope.newIngredientName = "";
+    }
     $scope.saveEditedRecipe = function () {
         if (confirm("Save changes to " + $scope.recipes[selectedRecipeIndex].name)) {
             $http.put("/api/Recipe", $scope.editingRecipe).success(function (status) {
@@ -180,5 +200,41 @@ recipeApp.controller('recipeCtrl', function ($scope, $http) {
             });
             $scope.recipes = newRecipes;
         }
+    }
+    $scope.moveIngredientUp = function (index) {
+        var lowIngredient = {}, prop;
+        for (prop in $scope.editingRecipe.ingredients[index - 1]) {
+            lowIngredient[prop] = $scope.editingRecipe.ingredients[index - 1][prop];
+        }
+        $scope.editingRecipe.ingredients[index - 1] = $scope.editingRecipe.ingredients[index];
+        $scope.editingRecipe.ingredients[index] = lowIngredient;
+    }
+    $scope.moveIngredientDown = function (index) {
+        var highIngredient = {}, prop;
+        for (prop in $scope.editingRecipe.ingredients[index + 1]) {
+            lowIngredient[prop] = $scope.editingRecipe.ingredients[index + 1][prop];
+        }
+        $scope.editingRecipe.ingredients[index + 1] = $scope.editingRecipe.ingredients[index];
+        $scope.editingRecipe.ingredients[index] = highIngredient;
+    }
+    $scope.movePrepUp = function (index) {
+        var lowPrep = $.extend({}, $scope.editingRecipe.prep[index - 1]);
+        $scope.editingRecipe.prep[index - 1] = $scope.editingRecipe.prep[index];
+        $scope.editingRecipe.prep[index] = lowPrep;
+    }
+    $scope.movePrepDown = function (index) {
+        var highPrep = $.extend({}, $scope.editingRecipe.prep[index + 1]);
+        $scope.editingRecipe.prep[index + 1] = $scope.editingRecipe.prep[index];
+        $scope.editingRecipe.prep[index] = highPrep;
+    }
+    $scope.moveCookUp = function (index) {
+        var lowCook = $.extend({}, $scope.editingRecipe.cook[index - 1]);
+        $scope.editingRecipe.cook[index - 1] = $scope.editingRecipe.cook[index];
+        $scope.editingRecipe.cook[index] = lowCook;
+    }
+    $scope.moveCookDown = function (index) {
+        var highCook = $.extend({}, $scope.editingRecipe.cook[index + 1]);
+        $scope.editingRecipe.cook[index + 1] = $scope.editingRecipe.cook[index];
+        $scope.editingRecipe.cook[index] = highCook;
     }
 })

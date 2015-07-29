@@ -260,13 +260,12 @@
     <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\HelpPageApiModel.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\ApiGroup.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\Api.cshtml" />
-    <Content Include="ClassDiagram1.cd" />
     <Content Include="Areas\RecipeTest\Views\Web.config" />
     <Content Include="Areas\RecipeTest\Views\Test\Index.cshtml" />
-    <Content Include="ClassDiagram2.cd" />
     <Content Include="Data\recipes.json" />
     <Content Include="Data\stores.json" />
     <Content Include="Data\ingredients.json" />
+    <None Include="Properties\PublishProfiles\artfullife %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\artfullife.pubxml" />
     <None Include="Scripts\jquery-1.8.2.intellisense.js" />
     <Content Include="Images\deleteIcon.png" />

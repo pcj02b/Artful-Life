@@ -90,6 +90,10 @@ hr{color:rgba(180, 60, 180, 0.5);}
 
 /* main layout
 ----------------------------------------------------------*/
+span.link:hover{
+    background-color:rgba(180, 60, 180, 0.5);
+}
+
 aside{
     float:left;
     min-width:180px;
@@ -167,7 +171,7 @@ section ul{
     font-size:large;
 }
 
-table#recipe{
+table.recipe{
     min-width:600px;
     box-sizing:border-box;
     border-collapse:collapse;
@@ -176,36 +180,41 @@ table#recipe{
     margin:0px;
     float:left;
 }
-table#recipe p{
+table.recipe p{
     font-weight:bold;
 }
-table#recipe table,th,tr,td{
+table.recipe table,th,tr,td{
     border:1px solid black;
 }
-table#recipe th{
+table.recipe th{
     font-size:24pt;
     padding:8px;
     text-align:center;
 }
-table#recipe textarea{
+table.recipe textarea{
     width:100%; 
     box-sizing:border-box;
     font-family:Josefin Slab;
     height:20px;
 }
-table#recipe textarea#recipeName{
+table.recipe textarea#recipeName{
     font-size:x-large;
     text-align:center;
     height:40px;
     font-weight:inherit;
 }
-table#recipe ul#ingredient{
+table.recipe ul#ingredient{
     font-weight:normal;
     text-align:left;
 }
+
+td.steps{
+min-width:250px;
+max-width:400px;
+}
 table.store{
     float:left;
-    min-width: 200px;
+    min-width: 250px;
 }
 table.store th{
     font-size:x-large;

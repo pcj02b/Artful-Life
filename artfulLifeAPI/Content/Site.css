@@ -197,7 +197,7 @@ table.recipe textarea{
     font-family:Josefin Slab;
     height:20px;
 }
-table.recipe textarea#recipeName{
+table.recipe textarea.recipeName{
     font-size:x-large;
     text-align:center;
     height:40px;

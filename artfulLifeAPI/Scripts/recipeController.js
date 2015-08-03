@@ -5,27 +5,43 @@ recipeApp.controller('recipeCtrl', function ($scope, $http) {
     $http.get("/api/Recipe").success(function (data) {
         $scope.recipes = data;
     });
+    $scope.units = "";
+    $http.get("/api/Units").success(function (data) {
+        $scope.units = data;
+    });
     $scope.getFromJSON = function () {
-        $http.get("/Data/recipes.json")
+        //$http.get("/Data/recipes.json")
+        //    .success(function (data) {
+        //        $scope.recipes = data.recipes;
+        //    })
+        //    .error(function (status) {
+        //        window.alert(status);
+        //    });
+        $http.get("/Data/units.json")
             .success(function (data) {
-                $scope.recipes = data.recipes;
+                $scope.units = data.units;
             })
             .error(function (status) {
                 window.alert(status);
-            });    }
+            });
+    }
     $scope.getFromMongo = function () {
         $http.get("/api/Recipe").success(function (data, status) {
             $scope.recipes = data;
         });
+        $http.get("/api/Units").sucess(function (data) {
+            $scope.units = data;
+        });
     }
     $scope.seedData = function () {
-        for (var i = 0; i < $scope.recipes.length; i++) {
-            $http.post("/api/Recipe", $scope.recipes[i]);
+        //for (var i = 0; i < $scope.recipes.length; i++) {
+        //    $http.post("/api/Recipe", $scope.recipes[i]);
+        //};
+        for (var i = 0; i < $scope.units.length; i++) {
+            $http.post("/api/Units", $scope.units[i]);
         };
     };
     $scope.showStuff = function () {
-        recipeService.set($scope.recipes);
-        recipeService.showLength();
     }
 
     $scope.showDisplayTable = false;
@@ -48,6 +64,9 @@ recipeApp.controller('recipeCtrl', function ($scope, $http) {
     $scope.editingRecipe = []
     var editingIngredientIndex = 0;
     $scope.editingIngredient = false;
+    $scope.textIngredients = "";
+    $scope.textPrep = "";
+    $scope.textCook = "";
 
     $scope.selectRecipe = function (index) {
         $scope.showDisplayTable = true;
@@ -63,6 +82,45 @@ recipeApp.controller('recipeCtrl', function ($scope, $http) {
         $scope.newIngredientCount = 1;
         $scope.newIngredientUnit = "";
         $scope.newIngredientName = "";
+    }
+    $scope.addTextCreationIngredients = function () {
+        $scope.ingredientArray = $scope.textIngredients.split(/\n/);
+        $scope.numberArray = [];
+        $scope.marker = 0;
+        $scope.count = [];
+        $scope.unit = [];
+        for (var i = 0 ; i < $scope.ingredientArray.length ; i++){
+            $scope.marker = $scope.ingredientArray[i].search(/[0-9]|[0-9]|[0-9]|[0-9]/, "");
+            if ($scope.marker == -1) {
+                console.log("there is no number");
+                $scope.numberArray[i] = 0;
+            }
+            else {
+                $scope.ingredientArray[i] = $scope.ingredientArray[i].slice($scope.marker);
+                $scope.numberArray[i] = $scope.ingredientArray[i].match(/[0-9]|[0-9]|[0-9]|[0-9]/g);
+            }
+            $scope.count[i] = "";
+            for (var n = 0; n < $scope.numberArray[i].length; n++) {
+                $scope.count[i] = $scope.count[i].concat($scope.numberArray[i][n]);
+            }
+            $scope.ingredientArray[i] = $scope.ingredientArray[i].replace($scope.count[i], "");
+            for (var n = 0 ; n < $scope.units.length ; n++) {
+                for (var r = 0; r < $scope.units[n].name.length ; r++) {
+                    $scope.marker = $scope.ingredientArray[i].search(" " + $scope.units[n].name[r] + " ");
+                    if ($scope.marker != -1) {
+                        console.log($scope.marker);
+                        console.log($scope.units[n].unit)
+                        $scope.unit[i] = $scope.units[n].unit;
+                        $scope.ingredientArray[i] = $scope.ingredientArray[i].replace($scope.units[n].name[r], "");
+                    }
+                    if (r == $scope.units[n].name.length - 1 && $scope.unit[i]==undefined) {
+                        $scope.unit[i] = "";
+                    }
+                }
+            }
+            $scope.newRecipe.ingredients.push({ "count": $scope.count[i], "unit": $scope.unit[i], "name": $scope.ingredientArray[i], "store": 0 });
+        }
+        $scope.textIngredients = "";
     }
     $scope.addPrepStep = function () {
         $scope.newRecipe.prep.push({ step: $scope.newPrepStep });

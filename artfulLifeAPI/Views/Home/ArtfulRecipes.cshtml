@@ -70,12 +70,15 @@
             <table class="recipe" ng-show="showCreationTable">
                 <tr>
                     <td colspan="2" id="lable">
-                        <textarea id="recipeName" ng-model="newRecipe.name" placeholder="New Recipe Name"></textarea>
+                        <textarea id="recipeName" ng-model="newRecipe.name" placeholder="New Recipe Name" ></textarea>
                     </td>
                 </tr>
                 <tr>
                     <td rowspan="2">
-                        <textarea placeholder="Copy and paste ingredients here" ng-show="showCreationTable"></textarea>
+                        <form>
+                            <textarea placeholder='Copy and paste ingredients here, i.e. "3 oz butter"' ng-model="textIngredients" style="height:auto"></textarea>
+                            <button ng-click="addTextCreationIngredients()">add</button>
+                        </form>
                         <p>Ingredients:</p>
                         <ul id="ingredient">
                             <li ng-repeat="x in newRecipe.ingredients" ng-mouseenter="showDelete=true" ng-mouseleave="showDelete=false">

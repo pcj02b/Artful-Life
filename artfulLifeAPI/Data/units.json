@@ -1,0 +1,36 @@
+﻿{
+    "units": [
+        {
+            "unit": "fl. oz.",
+            "name": ["fluid ounce", "fluid ounces", "fl. oz.", "fl oz" ]
+        },
+        {
+            "unit": "ml.",
+            "name": [ "milliliter", "milliliters", "ml", "ml." ]
+        },
+        {
+            "unit": "l.",
+            "name": [ "liter", "liters", "l", "l." ]
+        },
+        {
+            "unit": "cup",
+            "name": [ "cup", "cups" ]
+        },
+        {
+            "unit": "gal.",
+            "name": [ "gallon", "gallons", "gal", "gal." ]
+        },
+        {
+            "unit": "g.",
+            "name": [ "gram", "grams", "gr.", "gr", "g.", "g" ]
+        },
+        {
+            "unit": "oz.",
+            "name": [ "ounce", "ounces", "oz.", "oz" ]
+        },
+        {
+            "unit": "lb.",
+            "name": [ "pound", "pounds", "lb", "lb.", "lbs", "lbs." ]
+        }
+    ]
+}

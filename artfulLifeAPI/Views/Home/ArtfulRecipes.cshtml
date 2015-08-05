@@ -22,10 +22,6 @@
         <article>
             <button ng-click="getFromJSON()">get from JSON</button>
             <button ng-click="seedData()">send data to Mongo</button>
-            <div>{{editingRecipe.name}}</div>
-            <div>{{editingRecipe.ingredients}}</div>
-            <div>{{editingRecipe.prep}}</div>
-            <div>{{editingRecipe.cook}}</div>
             <h4>@ViewBag.Title</h4>
             <p><b>The Idea: </b>Click a recipe to view, edit or delete.  Or create a new recipe by using the copy and paste feature or manually inputting a recipe.</p>
             <br style="height:22px" ng-show="showTable" />

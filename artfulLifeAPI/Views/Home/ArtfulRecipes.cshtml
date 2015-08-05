@@ -20,8 +20,8 @@
             </ul>
         </aside>
         <article>
-            @*<button ng-click="getFromJSON()">get from JSON</button>
-            <button ng-click="seedData()">send data to Mongo</button>*@
+            <button ng-click="getFromJSON()">get from JSON</button>
+            <button ng-click="seedData()">send data to Mongo</button>
             <h4>@ViewBag.Title</h4>
             <p><b>The Idea: </b>Click a recipe to view, edit or delete.  Or create a new recipe by using the copy and paste feature or manually inputting a recipe.</p>
             <br style="height:22px" ng-show="showTable" />
@@ -37,7 +37,8 @@
                         <p>Ingredients:</p>
                         <ul id="ingredient">
                             <li ng-repeat="x in selectedRecipe.ingredients">
-                                <span>{{x.count}}</span>
+                                <span>{{x.count[0]}}</span>
+                                <span ng-hide="x.count[1]==0"> {{x.count[1]}}/{{x.count[2]}}</span>
                                 <span> </span>
                                 <span>{{x.unit}}</span>
                                 <span> </span>
@@ -82,7 +83,8 @@
                         <ul id="ingredient">
                             <li ng-repeat="x in editingRecipe.ingredients">
                                 <span ng-click="selectEditingIngredient($index)" class="link">
-                                    <span>{{x.count}}</span>
+                                    <span ng-hide="x.count[0]==0">{{x.count[0]}}</span>
+                                    <span ng-hide="x.count[1]==0"> {{x.count[1]}}/{{x.count[2]}}</span>
                                     <span> </span>
                                     <span>{{x.unit}}</span>
                                     <span> </span>
@@ -92,18 +94,27 @@
                         </ul>
                         <hr />
                         <form>
-                            <input type="number" style="height:20px" min="1" ng-model="newIngredientCount" value="1" />
+                            <input type="number" step="any" style="width:40px" min="0" ng-model="newIngredientCount[0]" />and
+                            <input type="number" style="width:30px" min="0" ng-model="newIngredientCount[1]" />/
+                            <input type="number" style="width:30px" min="2" ng-model="newIngredientCount[2]" />
                             <select ng-model="newIngredientUnit">
                                 <option value="" disabled selected style="display:none;">Unit</option>
-                                <option value="oz.">Ounce</option>
-                                <option value="g.">Gram</option>
                                 <option value="fl. oz.">Fluid Ounce</option>
+                                <option value="tsp.">Teaspoon</option>
+                                <option value="tbsp.">Tablespoon</option>
+                                <option value="cup">Cup</option>
+                                <option value="gal.">Gallon</option>
                                 <option value="ml.">Milliliter</option>
+                                <option value="l.">Liter</option>
+                                <option value="oz.">Ounce</option>
                                 <option value="lb.">Pound</option>
+                                <option value="g.">Gram</option>
+                                <option value="kg.">Kilogram</option>
+                                <option value="">None</option>
                             </select>
                             <input type="text" style="height:20px" ng-model="newIngredientName" placeholder="New Ingredient" />
-                            <button ng-hide="editingIngredient" ng-click="addToEditingIngredients()">add</button>
-                            <button ng-show="editingIngredient" ng-click="saveEditedIngredient()">save</button>
+                            <button ng-hide="editingIngredient" ng-click="addIngredient()">add</button>
+                            <button ng-show="editingIngredient" ng-click="saveIngredient()">save</button>
                         </form>
                         <form>
                             <span ng-show="editingIngredient && editingIngredientIndex!=(editingRecipe.ingredients.length-1)" title="move ingredient down"><a href="" ng-click="moveIngredientDown()">down</a></span>

@@ -2,7 +2,15 @@
     "units": [
         {
             "unit": "fl. oz.",
-            "name": ["fluid ounce", "fluid ounces", "fl. oz.", "fl oz" ]
+            "name": [ "fluid ounce", "fluid ounces", "fl. oz.", "fl oz" ]
+        },
+        {
+            "unit": "tsp.",
+            "name": [ "tsp.", "tsp", "teaspoons", "teaspoon" ]
+        },
+        {
+            "unit": "tbsp.",
+            "name": [ "tbsp.", "tbsp", "tablespoons", "tablespoon"]
         },
         {
             "unit": "ml.",
@@ -10,19 +18,23 @@
         },
         {
             "unit": "l.",
-            "name": [ "liter", "liters", "l", "l." ]
+            "name": [ "liter", "liters", "l.", "l" ]
         },
         {
             "unit": "cup",
-            "name": [ "cup", "cups" ]
+            "name": [ "cups", "cup" ]
         },
         {
             "unit": "gal.",
-            "name": [ "gallon", "gallons", "gal", "gal." ]
+            "name": [ "gallon", "gallons", "gal.", "gal" ]
         },
         {
             "unit": "g.",
             "name": [ "gram", "grams", "gr.", "gr", "g.", "g" ]
+        },
+        {
+            "unit": "kg.",
+            "name": [ "kilogram", "kilograms", "kg.", "kg"]
         },
         {
             "unit": "oz.",
@@ -31,6 +43,18 @@
         {
             "unit": "lb.",
             "name": [ "pound", "pounds", "lb", "lb.", "lbs", "lbs." ]
+        },
+        {
+            "unit": "clove",
+            "name": [ "cloves", "clove" ]
+        },
+        {
+            "unit": "dash",
+            "name": [ "dash" ]
+        },
+        {
+            "unit": "pinch",
+            "name": ["pinch"]
         }
     ]
 }

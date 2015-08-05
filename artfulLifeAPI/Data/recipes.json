@@ -3,9 +3,9 @@
         {
             "name": "Recipe 1",
             "ingredients": [
-                { "count": 1, "unit": "oz.", "name": "Ingredient 1"},
-                { "count": 1, "unit": "oz.", "name": "Ingredient 2"},
-                { "count": 1, "unit": "oz.", "name": "Ingredient 3"}
+                { "count": [ 1, 0, 2], "unit": "oz.", "name": "Ingredient 1" },
+                { "count": [ 1, 0, 2], "unit": "oz.", "name": "Ingredient 2" },
+                { "count": [ 1, 0, 2], "unit": "oz.", "name": "Ingredient 3" }
             ],
             "prep": [
                 { "step": "Prep step 1 Receipe 1" },
@@ -21,9 +21,9 @@
         {
             "name": "Recipe 2",
             "ingredients": [
-                { "count": 1, "unit": "oz.", "name": "Ingredient 2"},
-                { "count": 1, "unit": "oz.", "name": "Ingredient 3"},
-                { "count": 1, "unit": "oz.", "name": "Ingredient 4"}
+                { "count": [ 1, 0, 2], "unit": "oz.", "name": "Ingredient 2" },
+                { "count": [ 1, 0, 2], "unit": "oz.", "name": "Ingredient 3" },
+                { "count": [ 1, 0, 2], "unit": "oz.", "name": "Ingredient 4" }
             ],
             "prep": [
                 { "step": "Prep step 1 Receipe 2" },
@@ -39,9 +39,9 @@
         {
             "name": "Recipe 3",
             "ingredients": [
-                { "count": 1, "unit": "oz.", "name": "Ingredient 3"},
-                { "count": 1, "unit": "oz.", "name": "Ingredient 4"},
-                { "count": 1, "unit": "oz.", "name": "Ingredient 5"}
+                { "count": [ 1, 0, 2], "unit": "oz.", "name": "Ingredient 3" },
+                { "count": [ 1, 0, 2], "unit": "oz.", "name": "Ingredient 4" },
+                { "count": [ 1, 0, 2], "unit": "oz.", "name": "Ingredient 5" }
             ],
             "prep": [
                 { "step": "Prep step 1 Receipe 3" },
@@ -57,9 +57,9 @@
         {
             "name": "Recipe 4",
             "ingredients": [
-                { "count": 1, "unit": "oz.", "name": "Ingredient 4"},
-                { "count": 1, "unit": "oz.", "name": "Ingredient 5"},
-                { "count": 1, "unit": "oz.", "name": "Ingredient 6"}
+                { "count": [ 1, 0, 2], "unit": "oz.", "name": "Ingredient 4" },
+                { "count": [ 1, 0, 2], "unit": "oz.", "name": "Ingredient 5" },
+                { "count": [ 1, 0, 2], "unit": "oz.", "name": "Ingredient 6" }
             ],
             "prep": [
                 { "step": "Prep step 1 Recipe 4" },
@@ -75,9 +75,9 @@
         {
             "name": "Recipe 5",
             "ingredients": [
-                { "count": 1, "unit": "oz.", "name": "Ingredient 5"},
-                { "count": 1, "unit": "oz.", "name": "Ingredient 6"},
-                { "count": 1, "unit": "oz.", "name": "Ingredient 7"}
+                { "count": [ 1, 0, 2], "unit": "oz.", "name": "Ingredient 5" },
+                { "count": [ 1, 0, 2], "unit": "oz.", "name": "Ingredient 6" },
+                { "count": [ 1, 0, 2], "unit": "oz.", "name": "Ingredient 7" }
             ],
             "prep": [
                 { "step": "Prep step 1 Recipe 5" },
@@ -93,9 +93,9 @@
         {
             "name": "Recipe 6",
             "ingredients": [
-                { "count": 1, "unit": "oz.", "name": "Ingredient 6"},
-                { "count": 1, "unit": "oz.", "name": "Ingredient 7"},
-                { "count": 1, "unit": "oz.", "name": "Ingredient 8"}
+                { "count": [ 1, 0, 2], "unit": "oz.", "name": "Ingredient 6" },
+                { "count": [ 1, 0, 2], "unit": "oz.", "name": "Ingredient 7" },
+                { "count": [ 1, 0, 2], "unit": "oz.", "name": "Ingredient 8" }
             ],
             "prep": [
                 { "step": "Prep step 1 Recipe 6" },
@@ -111,9 +111,9 @@
         {
             "name": "Recipe 7",
             "ingredients": [
-                { "count": 1, "unit": "oz.", "name": "Ingredient 7"},
-                { "count": 1, "unit": "oz.", "name": "Ingredient 8"},
-                { "count": 1, "unit": "oz.", "name": "Ingredient 9"}
+                { "count": [ 1, 0, 2], "unit": "oz.", "name": "Ingredient 7" },
+                { "count": [ 1, 0, 2], "unit": "oz.", "name": "Ingredient 8" },
+                { "count": [ 1, 0, 2], "unit": "oz.", "name": "Ingredient 9" }
             ],
             "prep": [
                 { "step": "Prep step 1 Recipe 7" },
@@ -129,9 +129,9 @@
         {
             "name": "Recipe 8",
             "ingredients": [
-                { "count": 1, "unit": "oz.", "name": "Ingredient 8"},
-                { "count": 1, "unit": "oz.", "name": "Ingredient 9"},
-                { "count": 1, "unit": "oz.", "name": "Ingredient 10"}
+                { "count": [ 1, 0, 2], "unit": "oz.", "name": "Ingredient 8" },
+                { "count": [ 1, 0, 2], "unit": "oz.", "name": "Ingredient 9" },
+                { "count": [ 1, 0, 2], "unit": "oz.", "name": "Ingredient 10" }
             ],
             "prep": [
                 { "step": "Prep step 1 Recipe 8" },

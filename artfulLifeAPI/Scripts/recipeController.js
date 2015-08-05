@@ -53,7 +53,7 @@ recipeApp.controller('recipeCtrl', function ($scope, $http) {
     $scope.editingRecipe = {};
     $scope.editingRecipe.name = "";
     $scope.editingRecipe.ingredients = [];
-    $scope.newIngredientCount = 1;
+    $scope.newIngredientCount = [0,0,2];
     $scope.newIngredientUnit = "";
     $scope.newIngredientName = "";
     $scope.editingRecipe.prep = [];
@@ -78,9 +78,10 @@ recipeApp.controller('recipeCtrl', function ($scope, $http) {
         selectedRecipeIndex = index;
     }
     $scope.addIngredient = function () {
-        var newIngredient = { "count": $scope.newIngredientCount, "unit": $scope.newIngredientUnit, "name": $scope.newIngredientName, "store": 0 };
+        var newIngredient = { "count": [$scope.newIngredientCount[0],$scope.newIngredientCount[1],$scope.newIngredientCount[2]], "unit": $scope.newIngredientUnit, "name": $scope.newIngredientName, "store": 0 };
         $scope.editingRecipe.ingredients.push(newIngredient);
-        $scope.newIngredientCount = 1;
+        $scope.newIngredient = [];
+        $scope.newIngredientCount = [0,0,2];
         $scope.newIngredientUnit = "";
         $scope.newIngredientName = "";
     }
@@ -90,36 +91,59 @@ recipeApp.controller('recipeCtrl', function ($scope, $http) {
         $scope.marker = 0;
         $scope.count = [];
         $scope.unit = [];
-        for (var i = 0 ; i < $scope.ingredientArray.length ; i++){
-            $scope.marker = $scope.ingredientArray[i].search(/[0-9]|[0-9]|[0-9]|[0-9]/, "");
-            if ($scope.marker == -1) {
-                console.log("there is no number");
-                $scope.numberArray[i] = 0;
-            }
-            else {
-                $scope.ingredientArray[i] = $scope.ingredientArray[i].slice($scope.marker);
-                $scope.numberArray[i] = $scope.ingredientArray[i].match(/[0-9]|[0-9]|[0-9]|[0-9]/g);
-            }
-            $scope.count[i] = "";
-            for (var n = 0; n < $scope.numberArray[i].length; n++) {
-                $scope.count[i] = $scope.count[i].concat($scope.numberArray[i][n]);
-            }
-            $scope.ingredientArray[i] = $scope.ingredientArray[i].replace($scope.count[i], "");
-            for (var n = 0 ; n < $scope.units.length ; n++) {
-                for (var r = 0; r < $scope.units[n].name.length ; r++) {
-                    $scope.marker = $scope.ingredientArray[i].search(" " + $scope.units[n].name[r] + " ");
-                    if ($scope.marker != -1) {
-                        console.log($scope.marker);
-                        console.log($scope.units[n].unit)
-                        $scope.unit[i] = $scope.units[n].unit;
-                        $scope.ingredientArray[i] = $scope.ingredientArray[i].replace($scope.units[n].name[r], "");
+        for (var i = 0 ; i < $scope.ingredientArray.length ; i++) {
+            if ($scope.ingredientArray[i] != "") {
+                var fractionTest = new RegExp(/\d+([\/.]\d+)?/g);
+                $scope.count[i] = [];
+                $scope.numberArray[i] = $scope.ingredientArray[i].match(fractionTest);
+                if (fractionTest.test($scope.ingredientArray[i])) {
+                    console.log("found number");
+                    if ($scope.numberArray[i].length == 2) {
+                        console.log("found mixed fraction");
+                        $scope.count[i][0] = $scope.numberArray[i][0];
+                        $scope.count[i][1] = $scope.numberArray[i][1].match(/\d+/g)[0];
+                        $scope.count[i][2] = $scope.numberArray[i][1].match(/\d+/g)[1];
+                        $scope.ingredientArray[i] = $scope.ingredientArray[i].replace("/", "");
                     }
-                    if (r == $scope.units[n].name.length - 1 && $scope.unit[i]==undefined) {
-                        $scope.unit[i] = "";
+                    if ($scope.numberArray[i].length == 1 && $scope.numberArray[i][0].match(/[/]/) != null) {
+                        console.log("found simple fraction");
+                        $scope.count[i][0] = 0;
+                        $scope.count[i][1] = $scope.numberArray[i][0].match(/\d+/g)[0];
+                        $scope.count[i][2] = $scope.numberArray[i][0].match(/\d+/g)[1];
+                        $scope.ingredientArray[i] = $scope.ingredientArray[i].replace("/", "");
+                    }
+                    if ($scope.numberArray[i].length == 1 && $scope.numberArray[i][0].match(/[/]/) == null) {
+                        console.log("found whole number or decimal");
+                        $scope.count[i][0] = $scope.numberArray[i][0];
+                        $scope.count[i][1] = 0;
+                        $scope.count[i][2] = 2;
+                        $scope.ingredientArray[i] = $scope.ingredientArray[i].replace("/", "");
+                    }
+                    for (var n = 0; n < 3; n++) {
+                        $scope.ingredientArray[i] = $scope.ingredientArray[i].replace($scope.count[i][n], "");
                     }
                 }
+                else {
+                    console.log("no number found")
+                }
+                for (var n = 0 ; n < $scope.units.length ; n++) {
+                    for (var r = 0; r < $scope.units[n].name.length ; r++) {
+                        $scope.marker = $scope.ingredientArray[i].search(" " + $scope.units[n].name[r] + " ");
+                        if ($scope.marker != -1) {
+                            $scope.unit[i] = $scope.units[n].unit;
+                            $scope.ingredientArray[i] = $scope.ingredientArray[i].replace($scope.units[n].name[r], "");
+                        }
+                        if (r == $scope.units[n].name.length - 1 && $scope.unit[i] == undefined) {
+                            $scope.unit[i] = "";
+                        }
+                    }
+                }
+                $scope.ingredientArray[i] = $scope.ingredientArray[i].trim();
+                $scope.count[i][0] = Number($scope.count[i][0]);
+                $scope.count[i][1] = Number($scope.count[i][1]);
+                $scope.count[i][2] = Number($scope.count[i][2]);
+                $scope.editingRecipe.ingredients.push({ "count": $scope.count[i], "unit": $scope.unit[i], "name": $scope.ingredientArray[i], "store": 0 });
             }
-            $scope.editingRecipe.ingredients.push({ "count": $scope.count[i], "unit": $scope.unit[i], "name": $scope.ingredientArray[i], "store": 0 });
         }
         $scope.textIngredients = "";
     }
@@ -165,9 +189,15 @@ recipeApp.controller('recipeCtrl', function ($scope, $http) {
     }
     $scope.addRecipe = function () {
         $scope.editingRecipe = {};
+        $scope.editingRecipe.name = "";
         $scope.editingRecipe.ingredients = [];
+        $scope.newIngredientCount = [0, 0, 2];
+        $scope.newIngredientUnit = "";
+        $scope.newIngredientName = "";
         $scope.editingRecipe.prep = [];
+        $scope.newPrepStep = "";
         $scope.editingRecipe.cook = [];
+        $scope.newCookStep = "";
 
         $scope.showDisplayTable = false;
         $scope.showEditingTable = true;
@@ -176,13 +206,6 @@ recipeApp.controller('recipeCtrl', function ($scope, $http) {
         $scope.editingRecipe = $scope.recipes[selectedRecipeIndex];
         $scope.showDisplayTable = false;
         $scope.showEditingTable = true;
-    }
-    $scope.addToEditingIngredients = function () {
-        $scope.editingRecipe.ingredients.push({ count: $scope.newIngredientCount, unit: $scope.newIngredientUnit, name: $scope.newIngredientName, included: false, store: -1 });
-        $scope.newIngredient = [];
-        $scope.newIngredientCount = 1;
-        $scope.newIngredientUnit = "";
-        $scope.newIngredientName = "";
     }
     $scope.addToEditingPrep = function () {
         $scope.editingRecipe.prep.push({ step: $scope.newPrepStep });
@@ -209,13 +232,13 @@ recipeApp.controller('recipeCtrl', function ($scope, $http) {
         $scope.newCookStep = $scope.editingRecipe.cook[index].step;
         $scope.editingCookIndex = index;
     }
-    $scope.saveEditedIngredient = function () {
-        $scope.editingRecipe.ingredients[$scope.editingIngredientIndex].count = $scope.newIngredientCount;
+    $scope.saveIngredient = function () {
+        $scope.editingRecipe.ingredients[$scope.editingIngredientIndex].count = [$scope.newIngredientCount[0], $scope.newIngredientCount[1], $scope.newIngredientCount[2]];
         $scope.editingRecipe.ingredients[$scope.editingIngredientIndex].unit = $scope.newIngredientUnit;
         $scope.editingRecipe.ingredients[$scope.editingIngredientIndex].name = $scope.newIngredientName;
         $scope.editingIngredient = false;
         $scope.newIngredient = [];
-        $scope.newIngredientCount = 1;
+        $scope.newIngredientCount = [0,0,2];
         $scope.newIngredientUnit = "";
         $scope.newIngredientName = "";
     }

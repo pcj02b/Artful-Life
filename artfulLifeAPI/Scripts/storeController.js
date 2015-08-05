@@ -161,12 +161,16 @@ recipeApp.controller("storeCtrl", function ($scope, $http) {
                 for (var n = 0; n < $scope.recipes[i].ingredients.length; n++) {
                     isInStore = isInStores($scope.recipes[i].ingredients[n]);
                     if (isInStore.isThere) {
-                        $scope.stores[isInStore.storeIndex].ingredients[isInStore.ingredientIndex].count +=
-                            ($scope.recipes[i].ingredients[n].count * $scope.recipes[i].multiplier);
+                        $scope.stores[isInStore.storeIndex].ingredients[isInStore.ingredientIndex].count[0] +=
+                            ($scope.recipes[i].ingredients[n].count[0] * $scope.recipes[i].multiplier);
+                        $scope.stores[isInStore.storeIndex].ingredients[isInStore.ingredientIndex].count[1] +=
+                            ($scope.recipes[i].ingredients[n].count[1] * $scope.recipes[i].multiplier);
                     }
                     else {
                         $scope.stores[isInStore.storeIndex].ingredients.push({
-                            count: ($scope.recipes[i].ingredients[n].count * $scope.recipes[i].multiplier),
+                            count: [($scope.recipes[i].ingredients[n].count[0] * $scope.recipes[i].multiplier),
+                                    ($scope.recipes[i].ingredients[n].count[1] * $scope.recipes[i].multiplier),
+                                     $scope.recipes[i].ingredients[n].count[2]],
                             unit: $scope.recipes[i].ingredients[n].unit,
                             name: $scope.recipes[i].ingredients[n].name
                         });

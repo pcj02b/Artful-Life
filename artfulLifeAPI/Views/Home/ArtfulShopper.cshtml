@@ -52,7 +52,7 @@
                     <td>
                         <ul>
                             <li ng-repeat="x in x.ingredients">
-                                {{x.count[0]+x.count[1]*x.count[2]}}
+                                {{x.count[0]+x.count[1]/x.count[2] | number:2 | number}}
                                 @*<span>{{x.count[0]}}</span>
                                 <span ng-hide="x.count[1]==0"> {{x.count[1]}}/{{x.count[2]}}</span>*@
                                 {{x.unit}}

@@ -9,6 +9,11 @@ recipeApp.controller('recipeCtrl', function ($scope, $http) {
     $http.get("/api/Units").success(function (data) {
         $scope.units = data;
     });
+    $scope.ingredients = "";
+    $http.get("/api/Ingredients").success(function (data) {
+        $scope.ingredients = data;
+    });
+    $scope.stores = "";
     $scope.getFromJSON = function () {
         //$http.get("/Data/recipes.json")
         //    .success(function (data) {
@@ -152,8 +157,26 @@ recipeApp.controller('recipeCtrl', function ($scope, $http) {
         $scope.newCookStep = "";
     }
     $scope.saveRecipe = function () {
-        var alreadyThere = false;
         var savingRecipe = jQuery.extend({},$scope.editingRecipe);
+
+        var isInIngredients = false;
+        var newIngredient = {};
+        for (var i = 0 ; i < savingRecipe.ingredients.length ; i++) {
+            for (var n = 0 ; n < $scope.ingredients.length ; n++){
+                if (savingRecipe.ingredients[i].name == $scope.ingredients[n].name) {
+                    isInIngredients = true;
+                }
+            }
+            if (!isInIngredients) {
+                console.log("there was something to add")
+                newIngredient = { name: savingRecipe.ingredients[i].name, store: 0 };
+                $scope.ingredients.push(newIngredient);
+                $http.post("/api/Ingredients", newIngredient);
+                isInIngredients = false;
+            }
+        }
+
+        var alreadyThere = false;
         for (var i = 0; i < $scope.recipes.length; i++) {
             if (angular.equals($scope.editingRecipe.name, $scope.recipes[i].name)) {
                 alreadyThere = true;

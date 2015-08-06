@@ -11,7 +11,7 @@
         <aside>
             <ul>
                 <li class="title">Recipes</li>
-                <li class="lineBottom" ng-repeat="x in recipes">
+                <li class="lineBottom noHighlight" ng-repeat="x in recipes">
                     {{x.name}}
                     <input type="checkbox" ng-model="x.included" ng-click="updateStoreIngredientList()" />
                     <div ng-show="x.included">
@@ -27,8 +27,8 @@
             <ul>
                 <li class="title">Ingredients</li>
                 <li class="noHighlight" ng-repeat="x in ingredients">
-                    <p>{{x.name}}</p>
-                    <ul>
+                    <p>{{x.name}} <button ng-show="storeIsClicked[$index]" ng-click="toggleStoreIsClicked($index)">x</button></p>
+                    <ul style="border-bottom:1px solid grey">
                         <li ng-repeat="n in stores" ng-show="($index == x.store && !storeIsClicked[$parent.$index])" ng-click="toggleStoreIsClicked($parent.$index)"><a href="">{{n.name}}</a></li>
                         <li ng-repeat="n in stores" ng-show="storeIsClicked[$parent.$index]" ng-click="updateIngredientStore($parent.$index, $index)"><a href="">~ {{n.name}} ~</a></li>
                     </ul>

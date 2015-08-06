@@ -209,13 +209,17 @@ recipeApp.controller("storeCtrl", function ($scope, $http) {
         });
         $scope.updateStoreIngredientList();
     }
-    $scope.toggleStoreIsClicked = function(index){
+    $scope.toggleStoreIsClicked = function (index) {
+        for (var i = 0 ; i < $scope.storeIsClicked.length ; i++) {
+            if (i != index) {
+                $scope.storeIsClicked[i] = false;
+            }
+        }
         if ($scope.storeIsClicked[index] == true) {
             $scope.storeIsClicked[index] = false;
         }
         else {
             $scope.storeIsClicked[index] = true;
         }
-        console.log("storeIsClicked[" + index + "] is now " + $scope.storeIsClicked[index] + ".");
     }
 })

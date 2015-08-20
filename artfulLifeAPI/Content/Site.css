@@ -84,6 +84,10 @@ h5, h6 {
 
 hr{color:rgba(180, 60, 180, 0.5);}
 
+.alert {
+    color:red;
+    font-weight:bold;
+}
 
 /* main layout
 ----------------------------------------------------------*/

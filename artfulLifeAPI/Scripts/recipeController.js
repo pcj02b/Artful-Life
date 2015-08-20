@@ -158,7 +158,6 @@ recipeApp.controller('recipeCtrl', function ($scope, $http) {
     }
     $scope.saveRecipe = function () {
         var savingRecipe = jQuery.extend({},$scope.editingRecipe);
-
         var isInIngredients = false;
         var newIngredient = {};
         for (var i = 0 ; i < savingRecipe.ingredients.length ; i++) {
@@ -169,7 +168,7 @@ recipeApp.controller('recipeCtrl', function ($scope, $http) {
             }
             if (!isInIngredients) {
                 console.log("there was something to add")
-                newIngredient = { name: savingRecipe.ingredients[i].name, store: 0 };
+                newIngredient = { name: savingRecipe.ingredients[i].name, store: -1 };
                 $scope.ingredients.push(newIngredient);
                 $http.post("/api/Ingredients", newIngredient);
                 isInIngredients = false;

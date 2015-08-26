@@ -25,6 +25,7 @@ recipeApp.controller("storeCtrl", function ($scope, $http) {
             console.log("finished getting stores");
             $scope.updateStoreIngredientList();
         })
+    $scope.defaultStoreIndex = -1;
 
     function setStoreIsClicked() {
         for (var i = 0; i < $scope.ingredients.length; i++) {
@@ -66,45 +67,33 @@ recipeApp.controller("storeCtrl", function ($scope, $http) {
         $scope.updateStoreIngredientList();
     }
     $scope.deleteStore = function (index) {
+        var wasDefault = $scope.stores[index].defaultStore;
+        var newStores = new Array;
+        var ingredientIndex = 0;
         if (confirm("This will permanently remove " + $scope.stores[index].name + ".")) {
-            //find out if it was the default store
-            var wasDefault = $scope.stores[index].defaultStore;
-            //if deleting default store assign default to store 0
-            //don't delete store 0
-            var defaultStoreIndex = 0;
             if (wasDefault) {
-                $scope.stores[0].defaultStore = true;
-                defaultStoreIndex = index;
-            }
-            //find default store
-            else {
-                defaultStoreIndex = 0;
-                for (var i = 0; i < $scope.stores.length; i++) {
-                    if ($scope.stores[i].defaultStore == true) {
-                        defaultStoreIndex = i;
-                    }
-                }
+                $scope.defaultStoreIndex = -1;
+                confirm("You've deleted your default store. Please set a new default store.")
             }
             //assign ingredients to default store
-            var ingredientIndex = 0; 
             for (var i = 0; i < $scope.storeIngredientList[index].ingredients.length; i++) {
                 for (var n = 0; n < $scope.ingredients.length; n++) {
                     if ($scope.ingredients[n].name == $scope.storeIngredientList[index].ingredients[i].name) {
                         ingredientIndex = n;
                     }
                 }
-                $scope.ingredients[ingredientIndex].store = defaultStoreIndex;
+                $scope.ingredients[ingredientIndex].store = -1;
                 $http.put("/api/Ingredients", $scope.ingredients[ingredientIndex]);
             }
+
             //decrement the store index of any ingredients in stores greater than store being deleted
             for (var i = 0; i < $scope.ingredients.length; i++) {
-                if ($scope.ingredients[i].store >= index) {
+                if ($scope.ingredients[i].store > index) {
                     $scope.ingredients[i].store--;
                     $http.put("/api/Ingredients", $scope.ingredients[i]);
                 }
             }
             //create new store list
-            var newStores = new Array;
             for (var i = 0; i < $scope.stores.length; i++) {
                 if (i != index) {
                     newStores.push($scope.stores[i]);
@@ -123,50 +112,71 @@ recipeApp.controller("storeCtrl", function ($scope, $http) {
         }
     }
     function isInStores(ingredientObject) {
+        //ingredientObject is {"count": [1,0,2], "unit": "oz", "name": "Ingredient 2"}
         var ingredientIndex = 0;
         var isThere = false;
         var storeIndex = 0;
+        var name = ingredientObject.name;
+        var unit = ingredientObject.unit;
+        var output = {};
         for (var i = 0; i < $scope.ingredients.length; i++) {
             if ($scope.ingredients[i].name == ingredientObject.name) {
                 storeIndex = $scope.ingredients[i].store;
             }
         }
-        var name = ingredientObject.name;
-        var unit = ingredientObject.unit;
-        for (var i = 0; i < $scope.stores[storeIndex].ingredients.length; i++) {
-            if ($scope.stores[storeIndex].ingredients[i].name == name &&
-                $scope.stores[storeIndex].ingredients[i].unit == unit) {
+        if (storeIndex === -1) {
+            storeIndex = $scope.defaultStoreIndex;
+        }
+        for (var i = 0; i < $scope.storeIngredientList[storeIndex].ingredients.length; i++) {
+            if ($scope.storeIngredientList[storeIndex].ingredients[i].name == name &&
+                $scope.storeIngredientList[storeIndex].ingredients[i].unit == unit) {
                 isThere = true;
                 ingredientIndex = i;
                 break;
             };
         };
-        var output = { isThere: isThere, storeIndex: storeIndex, ingredientIndex: ingredientIndex }
+        output = { isThere: isThere, storeIndex: storeIndex, ingredientIndex: ingredientIndex }
         return output;
     }
     $scope.updateStoreIngredientList = function () {
+        var storeIndex = 0;
+        var isInStore = {};
         $scope.storeIngredientList = new Array;
+        var ingredientIndex = 0;
+        var ingredientName = "";
+        for (var i = 0; i < $scope.stores.length; i++) {
+            if ($scope.stores[i].defaultStore === true) {
+                $scope.defaultStoreIndex = i;
+            }
+        }
         for (var i = 0; i < $scope.stores.length; i++) {
             $scope.storeIngredientList.push($scope.stores[i]);
         }
-        var ingredientIndex = 0;
-        var ingredientName = "";
+
         for (var i = 0; i < $scope.ingredients.length; i++) {
             storeIndex = $scope.ingredients[i].store;
-            $scope.storeIngredientList[storeIndex].ingredients = [];
+            if (storeIndex === -1) {
+                $scope.storeIngredientList[$scope.defaultStoreIndex].ingredients = [];
+            }
+            else{
+                $scope.storeIngredientList[storeIndex].ingredients = [];
+            }
         }
-        var isInStore = {};
         for (var i = 0; i < $scope.recipes.length; i++) {
             if ($scope.recipes[i].included) {
                 for (var n = 0; n < $scope.recipes[i].ingredients.length; n++) {
                     isInStore = isInStores($scope.recipes[i].ingredients[n]);
                     if (isInStore.isThere) {
-                        $scope.stores[isInStore.storeIndex].ingredients[isInStore.ingredientIndex].count +=
-                            ($scope.recipes[i].ingredients[n].count * $scope.recipes[i].multiplier);
+                        $scope.storeIngredientList[isInStore.storeIndex].ingredients[isInStore.ingredientIndex].count[0] +=
+                            ($scope.recipes[i].ingredients[n].count[0] * $scope.recipes[i].multiplier);
+                        $scope.storeIngredientList[isInStore.storeIndex].ingredients[isInStore.ingredientIndex].count[1] +=
+                            ($scope.recipes[i].ingredients[n].count[1] * $scope.recipes[i].multiplier);
                     }
                     else {
-                        $scope.stores[isInStore.storeIndex].ingredients.push({
-                            count: ($scope.recipes[i].ingredients[n].count * $scope.recipes[i].multiplier),
+                        $scope.storeIngredientList[isInStore.storeIndex].ingredients.push({
+                            count: [($scope.recipes[i].ingredients[n].count[0] * $scope.recipes[i].multiplier),
+                                    ($scope.recipes[i].ingredients[n].count[1] * $scope.recipes[i].multiplier),
+                                     $scope.recipes[i].ingredients[n].count[2]],
                             unit: $scope.recipes[i].ingredients[n].unit,
                             name: $scope.recipes[i].ingredients[n].name
                         });
@@ -205,13 +215,17 @@ recipeApp.controller("storeCtrl", function ($scope, $http) {
         });
         $scope.updateStoreIngredientList();
     }
-    $scope.toggleStoreIsClicked = function(index){
+    $scope.toggleStoreIsClicked = function (index) {
+        for (var i = 0 ; i < $scope.storeIsClicked.length ; i++) {
+            if (i != index) {
+                $scope.storeIsClicked[i] = false;
+            }
+        }
         if ($scope.storeIsClicked[index] == true) {
             $scope.storeIsClicked[index] = false;
         }
         else {
             $scope.storeIsClicked[index] = true;
         }
-        console.log("storeIsClicked[" + index + "] is now " + $scope.storeIsClicked[index] + ".");
     }
 })

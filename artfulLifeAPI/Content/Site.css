@@ -1,10 +1,8 @@
-﻿html {
-    height:100%;
+﻿html, body, section, aside {
+    height:100vh;
 }
 body {
     font-family:Josefin Slab;
-    height:100%;
-    position:relative;
     margin:0px 16px;
 }
 
@@ -13,7 +11,6 @@ header{
     padding:0px;
     text-align:center;
 }
-
 nav{
     background-color:grey;
     border:1px solid black;
@@ -32,7 +29,7 @@ nav ul{
 }
 nav li {
     float:left;
-    width:14.28%;
+    width:16.66%;
     min-width:204px;
 }
 nav a{
@@ -87,20 +84,38 @@ h5, h6 {
 
 hr{color:rgba(180, 60, 180, 0.5);}
 
+.alert {
+    color:red;
+    font-weight:bold;
+}
 
 /* main layout
 ----------------------------------------------------------*/
+.link:hover{
+    background-color:rgba(180, 60, 180, 0.5);
+}
+.title-link{
+    border-bottom:2px solid rgba(180, 60, 180, 0.9);
+    padding-bottom:2px;
+    font-weight:bold;
+}
+.title-link:hover{
+    background-color:rgba(180, 60, 180, 0.5);
+}
+
 aside{
     float:left;
     min-width:180px;
     max-width:200px;
-    height:100%;
+    min-height:100vh;
     background-color:lightgrey;
     margin:0px 8px 0px 0px;
     padding:0px;
     line-height:28px;
     text-align:center;
     box-sizing:border-box;
+    overflow:auto;
+    min-height:100vh;
 }
 aside ul{
     margin:0px;
@@ -111,8 +126,8 @@ aside.stores{
     float:right;
     height:initial;
 }
-aside.stores li.noHighlight:hover{
-    background-color:initial;
+.noHighlight:hover{
+    background-color:lightgrey;
 }
 aside li {
     width: 100%;
@@ -157,7 +172,6 @@ section{
     margin:0px; 
     padding:0px;
     box-sizing:border-box;
-    height:100%;
 }
 section textarea{
     min-width:250px;
@@ -167,45 +181,49 @@ section ul{
     font-size:large;
 }
 
-table#recipe{
+table.recipe{
     min-width:600px;
     box-sizing:border-box;
-    border-collapse:collapse;
+    /*border-collapse:collapse;*/
     box-sizing:border-box;
     font-size:14pt;
-    margin:0px;
     float:left;
 }
-table#recipe p{
+table.recipe p{
     font-weight:bold;
 }
-table#recipe table,th,tr,td{
+table.recipe table,th,tr,td{
     border:1px solid black;
 }
-table#recipe th{
+table.recipe th{
     font-size:24pt;
     padding:8px;
     text-align:center;
 }
-table#recipe textarea{
+table.recipe textarea{
     width:100%; 
     box-sizing:border-box;
     font-family:Josefin Slab;
     height:20px;
 }
-table#recipe textarea#recipeName{
+table.recipe textarea.recipeName{
     font-size:x-large;
     text-align:center;
     height:40px;
     font-weight:inherit;
 }
-table#recipe ul#ingredient{
+table.recipe ul#ingredient{
     font-weight:normal;
     text-align:left;
 }
+
+td.steps{
+min-width:250px;
+max-width:400px;
+}
 table.store{
     float:left;
-    min-width: 200px;
+    min-width: 250px;
 }
 table.store th{
     font-size:x-large;

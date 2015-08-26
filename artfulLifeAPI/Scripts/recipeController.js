@@ -13,6 +13,9 @@ recipeApp.controller('recipeCtrl', function ($scope, $http) {
     $http.get("/api/Ingredients").success(function (data) {
         $scope.ingredients = data;
     });
+
+    var idToken = localStorage.getItem("idToken");
+
     $scope.stores = "";
     $scope.getFromJSON = function () {
         //$http.get("/Data/recipes.json")

@@ -13,5 +13,9 @@ namespace artfulLifeAPI.Models
         public IEnumerable<Cook> cook { get; set; }
         public Boolean included { get; set; }
         public int multiplier { get; set; }
+        public string owner { get; set; }
+        public IEnumerable<string> editors { get; set; }
+        public IEnumerable<string> viewers { get; set; }
+
     }
 }

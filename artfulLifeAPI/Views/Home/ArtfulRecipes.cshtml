@@ -13,17 +13,18 @@
                 </li>
             </ul>
             <ul>
-                <li><a ng-hide="showEditingTable" ng-click="addRecipe()">Add Recipe</a></li>
-                <li><a ng-show="showDisplayTable" ng-click="editRecipe()">Edit Recipe</a></li>
-                <li><a ng-show="showEditingTable" ng-click="saveRecipe()">Save Recipe</a></li>
-                <li><a ng-show="showDisplayTable" ng-click="removeRecipe()">Remove Recipe</a></li>
+                <li><a href="" ng-hide="showEditingTable" ng-click="addRecipe()">Add Recipe</a></li>
+                <li><a href="" ng-show="showDisplayTable" ng-click="editRecipe()">Edit Recipe</a></li>
+                <li><a href="" ng-show="showEditingTable" ng-click="saveRecipe()">Save Recipe</a></li>
+                <li><a href="" ng-show="showShareLink" ng-click="shareRecipe()">Share Recipe</a></li>
+                <li><a href="" ng-show="showDisplayTable" ng-click="removeRecipe()">Remove Recipe</a></li>
             </ul>
         </aside>
         <article>
             @*<button ng-click="getFromJSON()">get from JSON</button>
             <button ng-click="seedData()">send data to Mongo</button>*@
-            <h4>@ViewBag.Title</h4>
-            <p><b>The Idea: </b>Click a recipe to view, edit or delete.  Or create a new recipe by using the copy and paste feature or manually inputting a recipe.</p>
+            <h4 ng-hide="showSharePage">@ViewBag.Title</h4>
+            <p ng-hide="showSharePage"><b>The Idea: </b>Click a recipe to view, edit or delete.  Or create a new recipe by using the copy and paste feature or manually inputting a recipe.</p>
             <br style="height:22px" ng-show="showTable" />
             <!--Display Table-->
             <table class="recipe" ng-show="showDisplayTable">
@@ -162,6 +163,10 @@
                     </td>
                 </tr>
             </table>
+            <div class="sharePage" ng-show="showSharePage">
+                <h4>Share {{selectedRecipe.name}}</h4>
+                This is how you share a recipe
+            </div>
         </article>
     </section>
 </body>

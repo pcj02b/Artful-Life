@@ -1,33 +1,41 @@
 ﻿var recipeApp = angular.module("recipeApp");
 
 recipeApp.controller('recipeCtrl', function ($scope, $http) {
-    $scope.recipes = "";
+    $scope.recipes = [];
+    var allRecipes = [];
+    var tempRecipe = {};
+    var user = localStorage.getItem("user");
     $http.get("/api/Recipe").success(function (data) {
-        $scope.recipes = data;
+        allRecipes = data;
+        for (var i = 0 ; i < allRecipes.length ; i++) {
+            if (allRecipes[i].owner === user) {
+                console.log("owner of " + allRecipes[i].name);
+                tempRecipe = { recipe: allRecipes[i] };
+                $scope.recipes.push(tempRecipe.recipe);
+                $scope.recipes[$scope.recipes.length - 1].ownership = "owner";
+            }
+            for (var n = 0 ; n < allRecipes[i].editors.length ; n++) {
+                if (allRecipes[i].editors[n] === user) {
+                    console.log("editor of " + allRecipes[i].name);
+                    tempRecipe = { recipe: allRecipes[i] };
+                    $scope.recipes.push(tempRecipe.recipe);
+                    $scope.recipes[$scope.recipes.length - 1].ownership = "editor";
+                }
+            }
+            for (var n = 0 ; n < allRecipes[i].viewers.length ; n++) {
+                if (allRecipes[i].viewers[n] === user) {
+                    console.log("viewer of " + allRecipes[i].name);
+                    tempRecipe = { recipe: allRecipes[i] };
+                    $scope.recipes.push(tempRecipe.recipe);
+                    $scope.recipes[$scope.recipes.length - 1].ownership = "viewer";
+                }
+            }
+        }
     });
-    $scope.units = "";
-    $http.get("/api/Units").success(function (data) {
-        $scope.units = data;
-    });
-    $scope.ingredients = "";
-    $http.get("/api/Ingredients").success(function (data) {
-        $scope.ingredients = data;
-    });
-
-    var idToken = localStorage.getItem("idToken");
-
-    $scope.stores = "";
     $scope.getFromJSON = function () {
-        //$http.get("/Data/recipes.json")
-        //    .success(function (data) {
-        //        $scope.recipes = data.recipes;
-        //    })
-        //    .error(function (status) {
-        //        window.alert(status);
-        //    });
-        $http.get("/Data/units.json")
+        $http.get("/Data/recipes.json")
             .success(function (data) {
-                $scope.units = data.units;
+                $scope.recipes = data.recipes;
             })
             .error(function (status) {
                 window.alert(status);
@@ -37,23 +45,17 @@ recipeApp.controller('recipeCtrl', function ($scope, $http) {
         $http.get("/api/Recipe").success(function (data, status) {
             $scope.recipes = data;
         });
-        $http.get("/api/Units").sucess(function (data) {
-            $scope.units = data;
-        });
     }
     $scope.seedData = function () {
-        //for (var i = 0; i < $scope.recipes.length; i++) {
-        //    $http.post("/api/Recipe", $scope.recipes[i]);
-        //};
-        for (var i = 0; i < $scope.units.length; i++) {
-            $http.post("/api/Units", $scope.units[i]);
+        for (var i = 0; i < $scope.recipes.length; i++) {
+            $http.post("/api/Recipe", $scope.recipes[i]);
         };
     };
-    $scope.showStuff = function () {
-    }
 
     $scope.showDisplayTable = false;
     $scope.showEditingTable = false;
+    $scope.showShareLink = false;
+    $scope.showSharePage = false;
 
     $scope.selectedRecipe = {};
     selectedRecipeIndex = 0;
@@ -76,11 +78,51 @@ recipeApp.controller('recipeCtrl', function ($scope, $http) {
     $scope.textPrep = "";
     $scope.textCook = "";
 
+    updateRecipes = function () {
+        $scope.$apply(function(){
+        console.log("updating recipes");
+        user = localStorage.getItem("user");
+        $scope.recipes = [];
+        for (var i = 0 ; i < allRecipes.length ; i++) {
+            if (allRecipes[i].owner === user) {
+                console.log("owner of " + allRecipes[i].name);
+                tempRecipe = { recipe: allRecipes[i] };
+                $scope.recipes.push(tempRecipe.recipe);
+                $scope.recipes[$scope.recipes.length - 1].ownership = "owner";
+            }
+            for (var n = 0 ; n < allRecipes[i].editors.length ; n++) {
+                if (allRecipes[i].editors[n] === user) {
+                    console.log("editor of " + allRecipes[i].name);
+                    tempRecipe = { recipe: allRecipes[i] };
+                    $scope.recipes.push(tempRecipe.recipe);
+                    $scope.recipes[$scope.recipes.length - 1].ownership = "editor";
+                }
+            }
+            for (var n = 0 ; n < allRecipes[i].viewers.length ; n++) {
+                if (allRecipes[i].viewers[n] === user) {
+                    console.log("viewer of " + allRecipes[i].name);
+                    tempRecipe = { recipe: allRecipes[i] };
+                    $scope.recipes.push(tempRecipe.recipe);
+                    $scope.recipes[$scope.recipes.length - 1].ownership = "viewer";
+                }
+            }
+        }
+        console.log("scope recipe length: " + $scope.recipes.length);
+        })
+    }
+
     $scope.selectRecipe = function (index) {
         $scope.showDisplayTable = true;
         $scope.showEditingTable = false;
+        $scope.showShareLink = true;
+        $scope.showSharePage = false;
         $scope.selectedRecipe = $scope.recipes[index];
         selectedRecipeIndex = index;
+    }
+    $scope.shareRecipe = function () {
+        $scope.showDisplayTable = false;
+        $scope.showEditingTable = false;
+        $scope.showSharePage = true;
     }
     $scope.addIngredient = function () {
         var newIngredient = { count: [$scope.newIngredientCount[0],$scope.newIngredientCount[1],$scope.newIngredientCount[2]], unit: $scope.newIngredientUnit, name: $scope.newIngredientName };
@@ -229,9 +271,14 @@ recipeApp.controller('recipeCtrl', function ($scope, $http) {
         $scope.showEditingTable = true;
     }
     $scope.editRecipe = function () {
-        $scope.editingRecipe = $scope.recipes[selectedRecipeIndex];
-        $scope.showDisplayTable = false;
-        $scope.showEditingTable = true;
+        if ($scope.recipes[selectedRecipeIndex].ownership != "viewer") {
+            $scope.editingRecipe = $scope.recipes[selectedRecipeIndex];
+            $scope.showDisplayTable = false;
+            $scope.showEditingTable = true;
+        }
+        else {
+            window.alert("You may only view this recipe.");
+        }
     }
     $scope.selectEditingIngredient = function (index) {
         $scope.editingIngredient = true;

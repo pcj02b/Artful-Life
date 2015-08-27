@@ -16,7 +16,7 @@
     <script src="../Scripts/recipeController.js"></script>
     <script src="../Scripts/storeController.js"></script>
     <script src="../Scripts/cookingController.js"></script>
-    <script src="../Scripts/googleSignIn.js"></script>
+    <script src="../Scripts/signIn.js"></script>
     <script src="https://apis.google.com/js/platform.js" async defer></script> @*google signin*@
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
@@ -38,7 +38,7 @@
             <li>@Html.ActionLink("Tips and Advise", "TipsAndAdvise", "Home", new { area = "" }, null)</li>
             <li>
                 <div id="logIn" class="g-signin2" data-onsuccess="onSignIn" style="float:none"></div>
-                <div id="logOut"><a href="/" onclick="signOut()">Sign out</a></div>
+                <div id="logOut"><a href="" onclick="signOut()">Sign out</a></div>
             </li>
             <li>@Html.ActionLink("API", "Index", "Help", new { area = "" }, null)</li>
         </ul>

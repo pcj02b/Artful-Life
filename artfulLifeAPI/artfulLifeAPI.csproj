@@ -272,7 +272,6 @@
     <None Include="Scripts\jquery-1.8.2.intellisense.js" />
     <Content Include="Images\deleteIcon.png" />
     <Content Include="Scripts\cookingController.js" />
-    <Content Include="Scripts\googleSignIn.js" />
     <Content Include="Scripts\jquery-1.8.2.js" />
     <Content Include="Scripts\jquery-1.8.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
@@ -291,6 +290,7 @@
     <Content Include="Scripts\recipeApp.js" />
     <Content Include="Scripts\ingredientApp.js" />
     <Content Include="Scripts\recipeController.js" />
+    <Content Include="Scripts\signIn.js" />
     <Content Include="Scripts\storeController.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>

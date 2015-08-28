@@ -78,7 +78,7 @@ recipeApp.controller('recipeCtrl', function ($scope, $http) {
     $scope.textPrep = "";
     $scope.textCook = "";
 
-    updateRecipes = function () {
+    updateRecipes = function() {
         $scope.$apply(function(){
         console.log("updating recipes");
         user = localStorage.getItem("user");
@@ -119,10 +119,13 @@ recipeApp.controller('recipeCtrl', function ($scope, $http) {
         $scope.selectedRecipe = $scope.recipes[index];
         selectedRecipeIndex = index;
     }
-    $scope.shareRecipe = function () {
+    $scope.showShareRecipe = function () {
         $scope.showDisplayTable = false;
         $scope.showEditingTable = false;
         $scope.showSharePage = true;
+    }
+    $scope.shareRecipe = function () {
+
     }
     $scope.addIngredient = function () {
         var newIngredient = { count: [$scope.newIngredientCount[0],$scope.newIngredientCount[1],$scope.newIngredientCount[2]], unit: $scope.newIngredientUnit, name: $scope.newIngredientName };

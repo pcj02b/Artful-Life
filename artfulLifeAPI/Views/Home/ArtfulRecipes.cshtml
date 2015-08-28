@@ -16,7 +16,7 @@
                 <li><a href="" ng-hide="showEditingTable" ng-click="addRecipe()">Add Recipe</a></li>
                 <li><a href="" ng-show="showDisplayTable" ng-click="editRecipe()">Edit Recipe</a></li>
                 <li><a href="" ng-show="showEditingTable" ng-click="saveRecipe()">Save Recipe</a></li>
-                <li><a href="" ng-show="showShareLink" ng-click="shareRecipe()">Share Recipe</a></li>
+                <li><a href="" ng-show="showShareLink" ng-click="showShareRecipe()">Share Recipe</a></li>
                 <li><a href="" ng-show="showDisplayTable" ng-click="removeRecipe()">Remove Recipe</a></li>
             </ul>
         </aside>
@@ -165,7 +165,18 @@
             </table>
             <div class="sharePage" ng-show="showSharePage">
                 <h4>Share {{selectedRecipe.name}}</h4>
-                This is how you share a recipe
+                <h5>This is how you share a recipe:</h5>
+                <form>
+                    <p>Who would you like to share this recipe with?</p>
+                    <input type="email" ng-model="shareEmail"/>
+                    <p>May this person edit this recipe?</p>
+                    <span>Yes, this person may make chages to MY recipe</span>
+                    <input type="radio" name="canEdit" ng-model="shareCanEdit" />
+                    <span>No</span>
+                    <input type="radio" name="canEdit" ng-model="shareCanEdit" /> 
+                    <br /><br />
+                    <button type="submit" ng-click="shareRecipe()">Share</button>
+                </form>
             </div>
         </article>
     </section>

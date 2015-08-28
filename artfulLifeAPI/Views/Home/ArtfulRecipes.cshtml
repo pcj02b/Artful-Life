@@ -168,12 +168,12 @@
                 <h5>This is how you share a recipe:</h5>
                 <form>
                     <p>Who would you like to share this recipe with?</p>
-                    <input type="email" ng-model="shareEmail"/>
+                    <input type="email" ng-model="shareEmail" required/>
                     <p>May this person edit this recipe?</p>
-                    <span>Yes, this person may make chages to MY recipe</span>
-                    <input type="radio" name="canEdit" ng-model="shareCanEdit" />
+                    <span>Yes</span>
+                    <input type="radio" name="canEdit" value=true ng-model="shareCanEdit" required />
                     <span>No</span>
-                    <input type="radio" name="canEdit" ng-model="shareCanEdit" /> 
+                    <input type="radio" name="canEdit" value=false ng-model="shareCanEdit" required /> 
                     <br /><br />
                     <button type="submit" ng-click="shareRecipe()">Share</button>
                 </form>

@@ -165,15 +165,17 @@
             </table>
             <div class="sharePage" ng-show="showSharePage">
                 <h4>Share {{selectedRecipe.name}}</h4>
-                <h5>This is how you share a recipe:</h5>
+                <h5>You may allow any Artful Life member to view this recipe. They may create a copy of your recipe and edit it if they desire. If you created this recipe, you may also allow another user to edit your recipe directly.</h5>
                 <form>
                     <p>Who would you like to share this recipe with?</p>
                     <input type="email" ng-model="shareEmail" required/>
-                    <p>May this person edit this recipe?</p>
-                    <span>Yes</span>
-                    <input type="radio" name="canEdit" value=true ng-model="shareCanEdit" required />
-                    <span>No</span>
-                    <input type="radio" name="canEdit" value=false ng-model="shareCanEdit" required /> 
+                    <div ng-show="showShareEdit">
+                        <p>May this person edit this recipe?</p>
+                        <span>Yes</span>
+                        <input type="radio" name="canEdit" value=true ng-model="shareCanEdit" required/>
+                        <span>No</span>
+                        <input type="radio" name="canEdit" value=false ng-model="shareCanEdit" required/>
+                    </div>
                     <br /><br />
                     <button type="submit" ng-click="shareRecipe()">Share</button>
                 </form>

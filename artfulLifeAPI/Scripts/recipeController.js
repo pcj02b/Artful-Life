@@ -32,6 +32,9 @@ recipeApp.controller('recipeCtrl', function ($scope, $http) {
             }
         }
     });
+    $http.get("/api/Ingredients").success(function (data) {
+        $scope.ingredients = data;
+    });
     $scope.getFromJSON = function () {
         $http.get("/Data/recipes.json")
             .success(function (data) {
@@ -78,8 +81,11 @@ recipeApp.controller('recipeCtrl', function ($scope, $http) {
     $scope.textPrep = "";
     $scope.textCook = "";
 
+    $scope.showSharePage = false;
+    $scope.showShareLink = false;
     $scope.shareEmail = "";
     $scope.shareCanEdit = false;
+    $scope.showShareEdit = false;
 
     updateRecipes = function() {
         $scope.$apply(function(){
@@ -125,6 +131,9 @@ recipeApp.controller('recipeCtrl', function ($scope, $http) {
         $scope.showDisplayTable = false;
         $scope.showEditingTable = false;
         $scope.showSharePage = true;
+        if ($scope.recipes[selectedRecipeIndex].ownership === "owner") {
+            $scope.showShareEdit = true;
+        }
         $scope.showShareLink = false;
     }
     $scope.shareRecipe = function () {
@@ -140,10 +149,11 @@ recipeApp.controller('recipeCtrl', function ($scope, $http) {
         else {
             $scope.recipes[selectedRecipeIndex].viewers.push($scope.shareEmail);
         };
-        $http.put("/api/Recipes", $scope.recipes[selectedRecipeIndex]);
+        $http.put("/api/Recipe", $scope.recipes[selectedRecipeIndex]);
         window.alert($scope.recipes[selectedRecipeIndex].name + " shared with " + $scope.shareEmail);
         $scope.showSharePage = false;
         $scope.showShareLink = true;
+        $scope.showShareEdit = false;
     }
     $scope.addIngredient = function () {
         var newIngredient = { count: [$scope.newIngredientCount[0],$scope.newIngredientCount[1],$scope.newIngredientCount[2]], unit: $scope.newIngredientUnit, name: $scope.newIngredientName };
@@ -223,52 +233,47 @@ recipeApp.controller('recipeCtrl', function ($scope, $http) {
         $scope.newCookStep = "";
     }
     $scope.saveRecipe = function () {
-        var savingRecipe = jQuery.extend({},$scope.editingRecipe);
         var isInIngredients = false;
         var newIngredient = {};
-        for (var i = 0 ; i < savingRecipe.ingredients.length ; i++) {
+        var alreadyThere = true;
+        //for each ingredient in editing recipe check to see if it's already in the ingredient list
+        for (var i = 0 ; i < $scope.editingRecipe.ingredients.length ; i++) {
             for (var n = 0 ; n < $scope.ingredients.length ; n++){
-                if (savingRecipe.ingredients[i].name == $scope.ingredients[n].name) {
+                if ($scope.editingRecipe.ingredients[i].name === $scope.ingredients[n].name) {
                     isInIngredients = true;
                 }
             }
             if (!isInIngredients) {
-                console.log("there was something to add")
-                newIngredient = { name: savingRecipe.ingredients[i].name, store: -1 };
+                console.log("there was a new ingredient to add")
+                newIngredient = { name: $scope.editingRecipe.ingredients[i].name, store: -1 };
                 $scope.ingredients.push(newIngredient);
                 $http.post("/api/Ingredients", newIngredient);
                 isInIngredients = false;
             }
         }
-
-        var alreadyThere = false;
-        for (var i = 0; i < $scope.recipes.length; i++) {
-            if (angular.equals($scope.editingRecipe.name, $scope.recipes[i].name)) {
-                alreadyThere = true;
-            }
+        //check to see if recipe is already there
+        console.log($scope.editingRecipe._id);
+        if (angular.equals($scope.editingRecipe._id, undefined)) {
+            alreadyThere = false;
         }
-        if (!alreadyThere && $scope.editingRecipe.name != "") {
-            console.log ("pushing new recipe to $scope.recipes.")
+        if (!alreadyThere) {
+            console.log("creating new recipe");
             $http.post("/api/Recipe", $scope.editingRecipe).success(function (status) {
-                $scope.recipes.push(savingRecipe);
+                $scope.recipes.push($scope.editingRecipe);
                 $scope.showDisplayTable = false;
             })
             .error(function (status) {
                 console.log("something went wrong saving new recipe");
-                $scope.recipes.push(savingRecipe);
-                $scope.showDisplayTable = false;
             });
         }
         else {
             if (confirm("Save changes to " + $scope.recipes[selectedRecipeIndex].name)) {
                 $http.put("/api/Recipe", $scope.editingRecipe).success(function (status) {
-                    $scope.recipes[selectedRecipeIndex] = savingRecipe;
+                    $scope.recipes[selectedRecipeIndex] = $scope.editingRecipe;
                     $scope.showEditingTable = false;
                 })
                 .error(function (status) {
                     console.log("something went wrong saving existing recipe");
-                    $scope.recipes[selectedRecipeIndex] = savingRecipe;
-                    $scope.showEditingTable = false;
                 });
             }
         }
@@ -282,7 +287,7 @@ recipeApp.controller('recipeCtrl', function ($scope, $http) {
         $scope.showEditingTable = false;
     }
     $scope.addRecipe = function () {
-        $scope.editingRecipe = { name: "", ingredients: [], prep: [], cook: [], included: false, multiplier: 1 };
+        $scope.editingRecipe = { name: "", ingredients: [], prep: [], cook: [], included: false, multiplier: 1, owner: user, editors:[], viewers:[] };
         $scope.newIngredientCount = [0, 0, 2];
         $scope.newIngredientUnit = "";
         $scope.newIngredientName = "";
@@ -290,8 +295,10 @@ recipeApp.controller('recipeCtrl', function ($scope, $http) {
         $scope.newCookStep = "";
         $scope.showDisplayTable = false;
         $scope.showEditingTable = true;
+        $scope.showShareLink = false;
     }
     $scope.editRecipe = function () {
+        $scope.showShareLink = false;
         if ($scope.recipes[selectedRecipeIndex].ownership != "viewer") {
             $scope.editingRecipe = $scope.recipes[selectedRecipeIndex];
             $scope.showDisplayTable = false;

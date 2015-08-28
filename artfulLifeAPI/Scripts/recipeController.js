@@ -78,6 +78,9 @@ recipeApp.controller('recipeCtrl', function ($scope, $http) {
     $scope.textPrep = "";
     $scope.textCook = "";
 
+    $scope.shareEmail = "";
+    $scope.shareCanEdit = false;
+
     updateRecipes = function() {
         $scope.$apply(function(){
         console.log("updating recipes");
@@ -110,7 +113,6 @@ recipeApp.controller('recipeCtrl', function ($scope, $http) {
         console.log("scope recipe length: " + $scope.recipes.length);
         })
     }
-
     $scope.selectRecipe = function (index) {
         $scope.showDisplayTable = true;
         $scope.showEditingTable = false;
@@ -123,9 +125,25 @@ recipeApp.controller('recipeCtrl', function ($scope, $http) {
         $scope.showDisplayTable = false;
         $scope.showEditingTable = false;
         $scope.showSharePage = true;
+        $scope.showShareLink = false;
     }
     $scope.shareRecipe = function () {
-
+        if ($scope.shareCanEdit) {
+            if ($scope.recipes[selectedRecipeIndex].ownership === "owner") {
+                $scope.recipes[selectedRecipeIndex].editors.push($scope.shareEmail);
+            }
+            else {
+                window.alert("only the owner can share the ability to edit.");
+                return;
+            };
+        }
+        else {
+            $scope.recipes[selectedRecipeIndex].viewers.push($scope.shareEmail);
+        };
+        $http.put("/api/Recipes", $scope.recipes[selectedRecipeIndex]);
+        window.alert($scope.recipes[selectedRecipeIndex].name + " shared with " + $scope.shareEmail);
+        $scope.showSharePage = false;
+        $scope.showShareLink = true;
     }
     $scope.addIngredient = function () {
         var newIngredient = { count: [$scope.newIngredientCount[0],$scope.newIngredientCount[1],$scope.newIngredientCount[2]], unit: $scope.newIngredientUnit, name: $scope.newIngredientName };

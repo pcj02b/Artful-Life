@@ -84,8 +84,8 @@
                         </form>
                         <p>Ingredients:</p>
                         <ul id="ingredient">
-                            <li ng-repeat="x in editingRecipe.ingredients">
-                                <span ng-click="selectEditingIngredient($index)" class="link">
+                            <li ng-repeat="x in editingRecipe.ingredients" >
+                                <span ng-click="selectEditingIngredient($index)" ng-class="($index == editingIngredientIndex) ? 'selected':'link'">
                                     <span ng-hide="x.count[0]==0">{{x.count[0]}}</span>
                                     <span ng-hide="x.count[1]==0"> {{x.count[1]}}/{{x.count[2]}}</span>
                                     <span> </span>
@@ -131,7 +131,7 @@
                         <p>Prep Instructions:</p>
                         <ol>
                             <li ng-repeat="x in editingRecipe.prep" ng-click="selectEditingPrep($index)">
-                                <span class="link">{{x.step}}</span>
+                                <span ng-class="($index == editingPrepIndex) ? 'selected':'link'">{{x.step}}</span>
                             </li>
                         </ol>
                         <hr />
@@ -153,7 +153,7 @@
                         <p>Cooking Instructions:</p>
                         <ol>
                             <li ng-repeat="x in editingRecipe.cook" ng-click="selectEditingCook($index)">
-                                <span class="link">{{x.step}}</span>
+                                <span ng-class="($index == editingCookIndex) ? 'selected':'link'">{{x.step}}</span>
                             </li>
                         </ol>
                         <hr />

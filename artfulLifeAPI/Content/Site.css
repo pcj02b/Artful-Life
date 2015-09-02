@@ -82,7 +82,7 @@ h5, h6 {
     margin:0px; 
 }
 
-hr{color:rgba(180, 60, 180, 0.5);}
+hr{color:rgb(180, 60, 180);}
 
 .alert {
     color:red;
@@ -92,7 +92,7 @@ hr{color:rgba(180, 60, 180, 0.5);}
 /* main layout
 ----------------------------------------------------------*/
 .link:hover{
-    background-color:rgba(180, 60, 180, 0.5);
+    background-color:rgba(180, 60, 180, 0.75);
 }
 .title-link{
     border-bottom:2px solid rgba(180, 60, 180, 0.9);
@@ -100,7 +100,7 @@ hr{color:rgba(180, 60, 180, 0.5);}
     font-weight:bold;
 }
 .title-link:hover{
-    background-color:rgba(180, 60, 180, 0.5);
+    background-color:rgba(180, 60, 180, 0.9);
 }
 
 aside{
@@ -215,6 +215,10 @@ table.recipe textarea.recipeName{
 table.recipe ul#ingredient{
     font-weight:normal;
     text-align:left;
+}
+
+.selected{
+    background-color:rgba(180, 60, 180, 0.75)
 }
 
 td.steps{

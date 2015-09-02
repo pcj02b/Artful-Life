@@ -12,7 +12,15 @@
 }
 
 $(document).ready(function () {
-    $("#logOut").hide();
+    var user = localStorage.getItem("user");
+
+    if (typeof user === "string") {
+        $("#logOut").show();
+        $("#logIn").hide();
+    }
+    else {
+        $("#logOut").hide();
+    }
     $("#logIn").click(function () {
         $(this).hide();
         $("#logOut").show();

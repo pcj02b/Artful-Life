@@ -69,9 +69,9 @@ recipeApp.controller('recipeCtrl', function ($scope, $http) {
     $scope.newPrepStep = "";
     $scope.newCookStep = "";
 
-    $scope.editingIngredientIndex = 0;
-    $scope.editingPrepIndex = 0;
-    $scope.editingCookIndex = 0;
+    $scope.editingIngredientIndex = -1;
+    $scope.editingPrepIndex = -1;
+    $scope.editingCookIndex = -1;
     $scope.editingIngredient = false;
     $scope.editingPrep = false;
     $scope.editingCook = false;
@@ -333,12 +333,14 @@ recipeApp.controller('recipeCtrl', function ($scope, $http) {
         $scope.editingRecipe.ingredients[$scope.editingIngredientIndex].unit = $scope.newIngredientUnit;
         $scope.editingRecipe.ingredients[$scope.editingIngredientIndex].name = $scope.newIngredientName;
         $scope.editingIngredient = false;
-        $scope.newIngredientCount = [0,0,2];
+        $scope.editingIngredientIndex = -1;
+        $scope.newIngredientCount = [0, 0, 2];
         $scope.newIngredientUnit = "";
         $scope.newIngredientName = "";
     }
     $scope.unsaveIngredient = function () {
         $scope.editingIngredient = false;
+        $scope.editingIngredientIndex = -1;
         $scope.newIngredientCount = [0, 0, 2];
         $scope.newIngredientUnit = "";
         $scope.newIngredientName = "";
@@ -350,15 +352,19 @@ recipeApp.controller('recipeCtrl', function ($scope, $http) {
     }
     $scope.unsavePrepStep = function () {
         $scope.editingPrep = false;
+        $scope.editingPrepIndex = -1;
         $scope.newPrepStep = "";
     }
     $scope.saveCookStep = function () {
         $scope.editingRecipe.cook[$scope.editingCookIndex].step = $scope.newCookStep;
         $scope.editingCook = false;
+        $scope.editingCookIndex = -1;
+        $scope.editingPrepIndex = -1;
         $scope.newCookStep = "";
     }
     $scope.unsaveCookStep = function(){
         $scope.editingCook = false;
+        $scope.editingCookIndex = -1;
         $scope.newCookStep = "";
     }
     $scope.removeIngredient = function () {

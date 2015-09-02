@@ -68,6 +68,8 @@
                 </tr>
             </table>                
             <!--Editing Table-->
+            <p ng-show="showEditingTable">new prep step: {{newPrepStep}}</p>
+            <p ng-show="showEditingTable">editing prep index: {{editingPrepIndex}}</p>
             <table class="recipe" ng-show="showEditingTable">
                 <tr>
                     <th colspan="2">
@@ -96,8 +98,8 @@
                         <hr />
                         <form>
                             <input type="number" step="any" style="width:40px" min="0" ng-model="newIngredientCount[0]" />and
-                            <input type="number" style="width:30px" min="0" ng-model="newIngredientCount[1]" />/
-                            <input type="number" style="width:30px" min="2" ng-model="newIngredientCount[2]" />
+                            <input type="number" style="width:30px" step="1" min="0" ng-model="newIngredientCount[1]" />/
+                            <input type="number" style="width:30px" step="1" min="2" ng-model="newIngredientCount[2]" />
                             <select ng-model="newIngredientUnit">
                                 <option value="" disabled selected style="display:none;">Unit</option>
                                 <option value="fl. oz.">Fluid Ounce</option>
@@ -116,6 +118,8 @@
                             <input type="text" style="height:20px" ng-model="newIngredientName" placeholder="New Ingredient" />
                             <button ng-hide="editingIngredient" ng-click="addIngredient()">add</button>
                             <button ng-show="editingIngredient" ng-click="saveIngredient()">save</button>
+                            <button ng-show="editingIngredient" ng-click="unsaveIngredient()">X</button>
+
                         </form>
                         <form>
                             <span ng-show="editingIngredient && editingIngredientIndex!=(editingRecipe.ingredients.length-1)" title="move ingredient down"><a href="" ng-click="moveIngredientDown()">down</a></span>
@@ -133,12 +137,14 @@
                         <hr />
                         <form>
                             <input type="text" ng-model="newPrepStep" placeholder="New Prep Step" />
-                            <button ng-click="addPrepStep()">add</button>
+                            <button ng-hide="editingPrep" ng-click="addPrepStep()">add</button>
+                            <button ng-show="editingPrep" ng-click="savePrepStep()">save</button>
+                            <button ng-show="editingPrep" ng-click="unsavePrepStep()">X</button>
                         </form>
                         <form>
-                            <span ng-show="editingPrep && editingPrepIndex!=(editingRecipe.prep.length-1)" title="move prep step down"><a href="" ng-click="movePrepDown(editingPrepIndex)">down</a></span>
+                            <span ng-show="editingPrep && editingPrepIndex!=(editingRecipe.prep.length-1)" title="move prep step down"><a href="" ng-click="movePrepDown()">down</a></span>
                             <span ng-show="editingPrep"><a href="" ng-click="removePrep(editingPrepIndex);"><img src="../Images/deleteIcon.png" alt="delete item" height="15" width="15" /></a></span>
-                            <span ng-show="editingPrep && editingPrepIndex!=0" title="move prep step up"><a href="" ng-click="movePrepUp(editingPrepIndex)">up</a></span>
+                            <span ng-show="editingPrep && editingPrepIndex!=0" title="move prep step up"><a href="" ng-click="movePrepUp()">up</a></span>
                         </form>
                     </td>
                 </tr>
@@ -153,7 +159,9 @@
                         <hr />
                         <form>
                             <input type="text" ng-model="newCookStep" placeholder="New Cook Step" />
-                            <button ng-click="addCookStep()">add</button>
+                            <button ng-hide="editingCook" ng-click="addCookStep()">add</button>
+                            <button ng-show="editingCook" ng-click="saveCookStep()">save</button>
+                            <button ng-show="editingCook" ng-click="unsaveCookStep()">X</button>
                         </form>
                         <form>
                             <span ng-show="editingCook && editingCookIndex!=(editingRecipe.cook.length-1)" title="move cook step down"><a href="" ng-click="moveCookDown(editingCookIndex)">down</a></span>
@@ -163,6 +171,7 @@
                     </td>
                 </tr>
             </table>
+            @*Share page*@
             <div class="sharePage" ng-show="showSharePage">
                 <h4>Share {{selectedRecipe.name}}</h4>
                 <h5>You may allow any Artful Life member to view this recipe. They may create a copy of your recipe and edit it if they desire. If you created this recipe, you may also allow another user to edit your recipe directly.</h5>

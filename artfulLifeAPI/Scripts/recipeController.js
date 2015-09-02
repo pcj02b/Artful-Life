@@ -63,13 +63,11 @@ recipeApp.controller('recipeCtrl', function ($scope, $http) {
     $scope.selectedRecipe = {};
     selectedRecipeIndex = 0;
 
-    $scope.editingRecipe = { name: "", ingredients: [], prep: [], cook: [], included: false, multiplier: 1 };
-
     $scope.newIngredientCount = [0,0,2];
     $scope.newIngredientUnit = "";
     $scope.newIngredientName = "";
-    $scope.newPrepStep = {};
-    $scope.newCookStep = {};
+    $scope.newPrepStep = "";
+    $scope.newCookStep = "";
 
     $scope.editingIngredientIndex = 0;
     $scope.editingPrepIndex = 0;
@@ -90,7 +88,6 @@ recipeApp.controller('recipeCtrl', function ($scope, $http) {
     updateRecipes = function() {
         $scope.$apply(function(){
         console.log("updating recipes");
-        user = localStorage.getItem("user");
         $scope.recipes = [];
         for (var i = 0 ; i < allRecipes.length ; i++) {
             if (allRecipes[i].owner === user) {
@@ -299,6 +296,12 @@ recipeApp.controller('recipeCtrl', function ($scope, $http) {
     }
     $scope.editRecipe = function () {
         $scope.showShareLink = false;
+        $scope.editingRecipe = $scope.recipes[selectedRecipeIndex];
+        $scope.newIngredientCount = [0, 0, 2];
+        $scope.newIngredientUnit = "";
+        $scope.newIngredientName = "";
+        $scope.newPrepStep = "";
+        $scope.newCookStep = "";
         if ($scope.recipes[selectedRecipeIndex].ownership != "viewer") {
             $scope.editingRecipe = $scope.recipes[selectedRecipeIndex];
             $scope.showDisplayTable = false;
@@ -333,6 +336,30 @@ recipeApp.controller('recipeCtrl', function ($scope, $http) {
         $scope.newIngredientCount = [0,0,2];
         $scope.newIngredientUnit = "";
         $scope.newIngredientName = "";
+    }
+    $scope.unsaveIngredient = function () {
+        $scope.editingIngredient = false;
+        $scope.newIngredientCount = [0, 0, 2];
+        $scope.newIngredientUnit = "";
+        $scope.newIngredientName = "";
+    }
+    $scope.savePrepStep = function () {
+        $scope.editingRecipe.prep[$scope.editingPrepIndex].step = $scope.newPrepStep;
+        $scope.editingPrep = false;
+        $scope.newPrepStep = "";
+    }
+    $scope.unsavePrepStep = function () {
+        $scope.editingPrep = false;
+        $scope.newPrepStep = "";
+    }
+    $scope.saveCookStep = function () {
+        $scope.editingRecipe.cook[$scope.editingCookIndex].step = $scope.newCookStep;
+        $scope.editingCook = false;
+        $scope.newCookStep = "";
+    }
+    $scope.unsaveCookStep = function(){
+        $scope.editingCook = false;
+        $scope.newCookStep = "";
     }
     $scope.removeIngredient = function () {
         var editingIngredients = []; //local temp list
@@ -396,16 +423,22 @@ recipeApp.controller('recipeCtrl', function ($scope, $http) {
         $scope.editingRecipe.ingredients[$scope.editingIngredientIndex] = highIngredient;
         $scope.selectEditingIngredient($scope.editingIngredientIndex + 1);
     }
-    $scope.movePrepUp = function (index) {
-        var lowPrep = $.extend({}, $scope.editingRecipe.prep[index - 1]);
-        $scope.editingRecipe.prep[index - 1] = $scope.editingRecipe.prep[index];
-        $scope.editingRecipe.prep[index] = lowPrep;
+    $scope.movePrepUp = function () {
+        var lowPrep = {}, prop;
+        for (prop in $scope.editingRecipe.prep[$scope.editingPrepIndex - 1]) {
+            lowPrep[prop] = $scope.editingRecipe.prep[$scope.editingPrepIndex - 1][prop];
+        }
+        $scope.editingRecipe.prep[$scope.editingPrepIndex - 1] = $scope.editingRecipe.prep[$scope.editingPrepIndex];
+        $scope.editingRecipe.prep[$scope.editingPrepIndex] = lowPrep;
         $scope.selectEditingPrep($scope.editingPrepIndex - 1);
     }
-    $scope.movePrepDown = function (index) {
-        var highPrep = $.extend({}, $scope.editingRecipe.prep[index + 1]);
-        $scope.editingRecipe.prep[index + 1] = $scope.editingRecipe.prep[index];
-        $scope.editingRecipe.prep[index] = highPrep;
+    $scope.movePrepDown = function () {
+        var highPrep = {}, prop;
+        for (prop in $scope.editingRecipe.prep[$scope.editingPrepIndex + 1]) {
+            highPrep[prop] = $scope.editingRecipe.prep[$scope.editingPrepIndex + 1][prop];
+        }
+        $scope.editingRecipe.prep[$scope.editingPrepIndex + 1] = $scope.editingRecipe.prep[$scope.editingPrepIndex];
+        $scope.editingRecipe.prep[$scope.editingPrepIndex] = highPrep;
         $scope.selectEditingPrep($scope.editingPrepIndex + 1);
     }
     $scope.moveCookUp = function (index) {

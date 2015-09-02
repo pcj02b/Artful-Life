@@ -7,19 +7,19 @@
     var id_token = googleUser.getAuthResponse().id_token;
     console.log("ID Token: " + id_token);
 
-    localStorage.setItem("user", profile.getEmail());
+    sessionStorage.setItem("user", profile.getEmail());
     updateRecipes();
 }
 
 $(document).ready(function () {
-    var user = localStorage.getItem("user");
-
+    var user = sessionStorage.getItem("user");
     if (typeof user === "string") {
         $("#logOut").show();
         $("#logIn").hide();
     }
     else {
         $("#logOut").hide();
+        $("#logIn").show();
     }
     $("#logIn").click(function () {
         $(this).hide();
@@ -36,7 +36,7 @@ function signOut() {
     var auth2 = gapi.auth2.getAuthInstance();
     auth2.signOut().then(function () {
         console.log('User signed out.');
-        localStorage.removeItem("user");
+        sessionStorage.removeItem("user");
         updateRecipes();
     });
 }

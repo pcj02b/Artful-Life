@@ -4,18 +4,18 @@ recipeApp.controller('recipeCtrl', function ($scope, $http) {
     $scope.recipes = [];
     var allRecipes = [];
     var tempRecipe = {};
-    var user = localStorage.getItem("user");
+    $scope.user = localStorage.getItem("user");
     $http.get("/api/Recipe").success(function (data) {
         allRecipes = data;
         for (var i = 0 ; i < allRecipes.length ; i++) {
-            if (allRecipes[i].owner === user) {
+            if (allRecipes[i].owner === $scope.user) {
                 console.log("owner of " + allRecipes[i].name);
                 tempRecipe = { recipe: allRecipes[i] };
                 $scope.recipes.push(tempRecipe.recipe);
                 $scope.recipes[$scope.recipes.length - 1].ownership = "owner";
             }
             for (var n = 0 ; n < allRecipes[i].editors.length ; n++) {
-                if (allRecipes[i].editors[n] === user) {
+                if (allRecipes[i].editors[n] === $scope.user) {
                     console.log("editor of " + allRecipes[i].name);
                     tempRecipe = { recipe: allRecipes[i] };
                     $scope.recipes.push(tempRecipe.recipe);
@@ -23,7 +23,7 @@ recipeApp.controller('recipeCtrl', function ($scope, $http) {
                 }
             }
             for (var n = 0 ; n < allRecipes[i].viewers.length ; n++) {
-                if (allRecipes[i].viewers[n] === user) {
+                if (allRecipes[i].viewers[n] === $scope.user) {
                     console.log("viewer of " + allRecipes[i].name);
                     tempRecipe = { recipe: allRecipes[i] };
                     $scope.recipes.push(tempRecipe.recipe);
@@ -36,9 +36,9 @@ recipeApp.controller('recipeCtrl', function ($scope, $http) {
         $scope.ingredients = data;
     });
     $scope.getFromJSON = function () {
-        $http.get("/Data/recipes.json")
+        $http.get("/Data/ingredients.json")
             .success(function (data) {
-                $scope.recipes = data.recipes;
+                $scope.ingredients = data.ingredients;
             })
             .error(function (status) {
                 window.alert(status);
@@ -50,8 +50,8 @@ recipeApp.controller('recipeCtrl', function ($scope, $http) {
         });
     }
     $scope.seedData = function () {
-        for (var i = 0; i < $scope.recipes.length; i++) {
-            $http.post("/api/Recipe", $scope.recipes[i]);
+        for (var i = 0; i < $scope.ingredients.length; i++) {
+            $http.post("/api/Ingredients", $scope.ingredients[i]);
         };
     };
 
@@ -90,14 +90,14 @@ recipeApp.controller('recipeCtrl', function ($scope, $http) {
         console.log("updating recipes");
         $scope.recipes = [];
         for (var i = 0 ; i < allRecipes.length ; i++) {
-            if (allRecipes[i].owner === user) {
+            if (allRecipes[i].owner === $scope.user) {
                 console.log("owner of " + allRecipes[i].name);
                 tempRecipe = { recipe: allRecipes[i] };
                 $scope.recipes.push(tempRecipe.recipe);
                 $scope.recipes[$scope.recipes.length - 1].ownership = "owner";
             }
             for (var n = 0 ; n < allRecipes[i].editors.length ; n++) {
-                if (allRecipes[i].editors[n] === user) {
+                if (allRecipes[i].editors[n] === $scope.user) {
                     console.log("editor of " + allRecipes[i].name);
                     tempRecipe = { recipe: allRecipes[i] };
                     $scope.recipes.push(tempRecipe.recipe);
@@ -105,7 +105,7 @@ recipeApp.controller('recipeCtrl', function ($scope, $http) {
                 }
             }
             for (var n = 0 ; n < allRecipes[i].viewers.length ; n++) {
-                if (allRecipes[i].viewers[n] === user) {
+                if (allRecipes[i].viewers[n] === $scope.user) {
                     console.log("viewer of " + allRecipes[i].name);
                     tempRecipe = { recipe: allRecipes[i] };
                     $scope.recipes.push(tempRecipe.recipe);
@@ -237,16 +237,18 @@ recipeApp.controller('recipeCtrl', function ($scope, $http) {
         for (var i = 0 ; i < $scope.editingRecipe.ingredients.length ; i++) {
             for (var n = 0 ; n < $scope.ingredients.length ; n++){
                 if ($scope.editingRecipe.ingredients[i].name === $scope.ingredients[n].name) {
+                    console.log($scope.editingRecipe.ingredients[i].name + " already there");
                     isInIngredients = true;
                 }
             }
             if (!isInIngredients) {
                 console.log("there was a new ingredient to add")
+                console.log("namely, " + $scope.editingRecipe.ingredients[i].name);
                 newIngredient = { name: $scope.editingRecipe.ingredients[i].name, store: -1 };
                 $scope.ingredients.push(newIngredient);
                 $http.post("/api/Ingredients", newIngredient);
-                isInIngredients = false;
             }
+            isInIngredients = false;
         }
         //check to see if recipe is already there
         console.log($scope.editingRecipe._id);
@@ -284,7 +286,7 @@ recipeApp.controller('recipeCtrl', function ($scope, $http) {
         $scope.showEditingTable = false;
     }
     $scope.addRecipe = function () {
-        $scope.editingRecipe = { name: "", ingredients: [], prep: [], cook: [], included: false, multiplier: 1, owner: user, editors:[], viewers:[] };
+        $scope.editingRecipe = { name: "", ingredients: [], prep: [], cook: [], included: false, multiplier: 1, owner: $scope.user, editors:[], viewers:[] };
         $scope.newIngredientCount = [0, 0, 2];
         $scope.newIngredientUnit = "";
         $scope.newIngredientName = "";

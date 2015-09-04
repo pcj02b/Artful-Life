@@ -31,16 +31,16 @@
     <nav>
         <ul>
             <li>@Html.ActionLink("Home", "Index", "Home", new { area = "" }, null)</li>
-            <li>@Html.ActionLink("Artful Recipes", "ArtfulRecipes", "Home", new { area = "" }, null)</li>
-            <li>@Html.ActionLink("Artful Shopper", "ArtfulShopper", "Home", new { area = "" }, null)</li>
-            <li>@Html.ActionLink("Artful Cooking", "ArtfulCooking", "Home", new { area = "" }, null)</li>
-            <li>@Html.ActionLink("Artful & Resourceful", "ArtfulResourceful", "Home", new { area = "" }, null)</li>
-            <li>@Html.ActionLink("Tips and Advise", "TipsAndAdvise", "Home", new { area = "" }, null)</li>
+            <li>@Html.ActionLink("Recipes", "ArtfulRecipes", "Home", new { area = "" }, null)</li>
+            <li>@Html.ActionLink("Shopper", "ArtfulShopper", "Home", new { area = "" }, null)</li>
+            <li>@Html.ActionLink("Cooking", "ArtfulCooking", "Home", new { area = "" }, null)</li>
+            <li>@Html.ActionLink("Resourceful", "ArtfulResourceful", "Home", new { area = "" }, null)</li>
+            <li>@Html.ActionLink("Tips", "TipsAndAdvise", "Home", new { area = "" }, null)</li>
             <li>
                 <div id="logIn" class="g-signin2" data-onsuccess="onSignIn" style="float:none"></div>
                 <div id="logOut"><a href="" onclick="signOut()">Sign out</a></div>
             </li>
-            @*<li>@Html.ActionLink("API", "Index", "Help", new { area = "" }, null)</li>*@
+            <li>@Html.ActionLink("API", "Index", "Help", new { area = "" }, null)</li>
         </ul>
     </nav>
     @RenderBody()

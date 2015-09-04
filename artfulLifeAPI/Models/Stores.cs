@@ -5,9 +5,9 @@ using System.Web;
 
 namespace artfulLifeAPI.Models
 {
-    public class Ingredients
+    public class Stores
     {
-        public string name { get; set; }
-        public IEnumerable<User> user { get; set; }
+        public string _id { get; set; }
+        public IEnumerable<Store> store { get; set; }
     }
 }

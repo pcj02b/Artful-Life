@@ -1,44 +1,75 @@
 ﻿var recipeApp = angular.module("recipeApp");
-
 recipeApp.controller("storeCtrl", function ($scope, $http) {
-    $scope.recipes = "";
-    $http.get("/api/Recipe")
-        .success(function (data) {
-            $scope.recipes = data;
-            console.log("finished getting recipes");
-            $scope.updateStoreIngredientList();
-            });
+    $scope.user = sessionStorage.getItem("user");
+    $scope.recipes = [];
+    var allRecipes = [];
+    var tempRecipe = {};
+    $scope.user = sessionStorage.getItem("user");
+    $http.get("/api/Recipe").success(function (data) {
+        allRecipes = data;
+        for (var i = 0 ; i < allRecipes.length ; i++) {
+            if (allRecipes[i].owner === $scope.user) {
+                console.log("owner of " + allRecipes[i].name);
+                tempRecipe = { recipe: allRecipes[i] };
+                $scope.recipes.push(tempRecipe.recipe);
+                $scope.recipes[$scope.recipes.length - 1].ownership = "owner";
+            }
+            for (var n = 0 ; n < allRecipes[i].editors.length ; n++) {
+                if (allRecipes[i].editors[n] === $scope.user) {
+                    console.log("editor of " + allRecipes[i].name);
+                    tempRecipe = { recipe: allRecipes[i] };
+                    $scope.recipes.push(tempRecipe.recipe);
+                    $scope.recipes[$scope.recipes.length - 1].ownership = "editor";
+                }
+            }
+            for (var n = 0 ; n < allRecipes[i].viewers.length ; n++) {
+                if (allRecipes[i].viewers[n] === $scope.user) {
+                    console.log("viewer of " + allRecipes[i].name);
+                    tempRecipe = { recipe: allRecipes[i] };
+                    $scope.recipes.push(tempRecipe.recipe);
+                    $scope.recipes[$scope.recipes.length - 1].ownership = "viewer";
+                }
+            }
+        }
+        console.log("finished getting recipes");
+    });
     var ogRecipes = JSON.parse(JSON.stringify($scope.recipes));
-    $scope.ingredients = "";
+    $scope.ingredients = [];
+    var allIngredients = [];
     $scope.storeIsClicked = [];
-    $http.get("/api/Ingredients")
+    var getIngredientsURI = "/api/Ingredients?user=".concat($scope.user);
+    $http.get(getIngredientsURI)
         .success(function (data) {
-            $scope.ingredients = data;
+            allIngredients = data;
+            for (var i = 0; i < allIngredients.length; i++) {
+                for (var n = 0; n < allIngredients[i].user.length; n++) {
+                    if (allIngredients[i].user[n].name === $scope.user) {
+                        $scope.ingredients.push({ name: allIngredients[i].name, store: allIngredients[i].user[n].store });
+                    }
+                }
+            }
             console.log("finished getting ingredients");
             $scope.updateStoreIngredientList();
             setStoreIsClicked();
         });
-    $scope.stores = "";
-    $http.get("/api/Store")
+    $scope.stores = [];
+    var getStoreURI = "/api/Store/?user=".concat($scope.user);
+    $http.get(getStoreURI)
         .success(function (data) {
-            $scope.stores = data;
+            $scope.stores = data[0].store;
             console.log("finished getting stores");
             $scope.updateStoreIngredientList();
-        })
+        });
+
     $scope.defaultStoreIndex = -1;
 
-    function setStoreIsClicked() {
-        for (var i = 0; i < $scope.ingredients.length; i++) {
-            $scope.storeIsClicked[i] = false;
-        }
-    }
-    $scope.showStuff = function () {
-        $scope.setStoreIngredientList();
-    }
     $scope.seedData = function () {
         for (var i = 0; i < $scope.stores.length; i++) {
             $http.post("/api/Store", $scope.stores[i]);
         };
+        for (var i = 0; i < $scope.ingredients.length; i++) {
+            $http.post("/api/Ingredients", $scope.ingredients[i]);
+        }
     }
     $scope.getFromJSON = function () {
         $http.get("/Data/stores.json")
@@ -48,22 +79,67 @@ recipeApp.controller("storeCtrl", function ($scope, $http) {
             .error(function (status) {
                 window.alert(status);
             });
+        $http.get("/Data/ingredients.json")
+        .success(function (data) {
+            $scope.ingredients = data.ingredients;
+        });
     }
     $scope.getFromMongo = function () {
         $http.get("/api/Store").success(function (data) {
             $scope.stores = data;
         });
     }
+
+    updateStores = function() {
+        console.log("updating stores");
+        $scope.$apply(function () {
+            $scope.user = sessionStorage.getItem("user");
+            console.log("updating stores for " + $scope.user);
+            $scope.recipes = [];
+            for (var i = 0 ; i < allRecipes.length ; i++) {
+                if (allRecipes[i].owner === $scope.user) {
+                    console.log("owner of " + allRecipes[i].name);
+                    tempRecipe = { recipe: allRecipes[i] };
+                    $scope.recipes.push(tempRecipe.recipe);
+                    $scope.recipes[$scope.recipes.length - 1].ownership = "owner";
+                }
+                for (var n = 0 ; n < allRecipes[i].editors.length ; n++) {
+                    if (allRecipes[i].editors[n] === $scope.user) {
+                        console.log("editor of " + allRecipes[i].name);
+                        tempRecipe = { recipe: allRecipes[i] };
+                        $scope.recipes.push(tempRecipe.recipe);
+                        $scope.recipes[$scope.recipes.length - 1].ownership = "editor";
+                    }
+                }
+                for (var n = 0 ; n < allRecipes[i].viewers.length ; n++) {
+                    if (allRecipes[i].viewers[n] === $scope.user) {
+                        console.log("viewer of " + allRecipes[i].name);
+                        tempRecipe = { recipe: allRecipes[i] };
+                        $scope.recipes.push(tempRecipe.recipe);
+                        $scope.recipes[$scope.recipes.length - 1].ownership = "viewer";
+                    }
+                }
+            }
+        })
+        $scope.updateStoreIngredientList();
+    }
+    function setStoreIsClicked() {
+        for (var i = 0; i < $scope.ingredients.length; i++) {
+            $scope.storeIsClicked[i] = false;
+        }
+    }
     $scope.addStore = function () {
-        var newRecipeName = prompt("Enter the store name");
-        var isDefault = confirm("Will "+newRecipeName+" be your primary store?\nYes:OK No:Cancel")
+        var newStoreName = prompt("Enter the store name");
+        var isDefault = confirm("Will " + newStoreName + " be your primary store?\nYes:OK No:Cancel")
+        var output = {};
         if (isDefault) {
             for (var i = 0; i < $scope.stores.length; i++) {
                 $scope.stores[i].defaultStore = false;
             }
         }
-        $scope.stores.push({ name: newRecipeName, defaultStore: isDefault });
-        $http.post("/api/Store", { name: newRecipeName, defaultStore: isDefault });
+        $scope.stores.push({ name: newStoreName, defaultStore: isDefault });
+        output = { _id: $scope.user, store: $scope.stores };
+        $http.put("/api/Store?user=".concat($scope.user), output);
         $scope.updateStoreIngredientList();
     }
     $scope.deleteStore = function (index) {
@@ -112,7 +188,6 @@ recipeApp.controller("storeCtrl", function ($scope, $http) {
         }
     }
     function isInStores(ingredientObject) {
-        //ingredientObject is {"count": [1,0,2], "unit": "oz", "name": "Ingredient 2"}
         var ingredientIndex = 0;
         var isThere = false;
         var storeIndex = 0;

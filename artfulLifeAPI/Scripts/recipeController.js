@@ -114,7 +114,6 @@ recipeApp.controller('recipeCtrl', function ($scope, $http) {
                     }
                 }
             }
-            console.log("scope recipe length: " + $scope.recipes.length);
         })
     }
     $scope.selectRecipe = function (index) {

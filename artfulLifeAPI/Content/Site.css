@@ -29,8 +29,8 @@ nav ul{
 }
 nav li {
     float:left;
-    width:16.66%;
-    min-width:204px;
+    width:14.28%;
+    min-width:100px;
 }
 nav a{
     color:white;

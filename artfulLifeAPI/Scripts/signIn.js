@@ -9,6 +9,7 @@
 
     sessionStorage.setItem("user", profile.getEmail());
     updateRecipes();
+    updateStores();
 }
 
 $(document).ready(function () {
@@ -38,5 +39,6 @@ function signOut() {
         console.log('User signed out.');
         sessionStorage.removeItem("user");
         updateRecipes();
+        updateStores();
     });
 }

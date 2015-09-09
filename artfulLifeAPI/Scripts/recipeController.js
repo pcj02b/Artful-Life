@@ -5,7 +5,8 @@ recipeApp.controller('recipeCtrl', function ($scope, $http) {
     var allRecipes = [];
     var tempRecipe = {};
     $scope.user = sessionStorage.getItem("user");
-    $http.get("/api/Recipe").success(function (data) {
+    var getRecipeURI = "/api/Recipe?user=".concat($scope.user);
+    $http.get(getRecipeURI).success(function (data) {
         allRecipes = data;
         for (var i = 0 ; i < allRecipes.length ; i++) {
             if (allRecipes[i].owner === $scope.user) {
@@ -31,9 +32,18 @@ recipeApp.controller('recipeCtrl', function ($scope, $http) {
                 }
             }
         }
+        console.log("finished getting recipes");
     });
-    $http.get("/api/Ingredients").success(function (data) {
-        $scope.ingredients = data;
+    var getIngredientsURI = "/api/Ingredients?user=".concat($scope.user);
+    $http.get(getIngredientsURI)
+        .success(function (data) {
+            $scope.ingredients = data;
+            console.log("we have " + $scope.ingredients.length + " ingredients for " + $scope.user);
+            console.log("finished getting ingredients");
+        })
+    .error(function (status) {
+        console.log("something went wrong getting ingredients");
+        console.log(status);
     });
     $scope.getFromJSON = function () {
         $http.get("/Data/ingredients.json")
@@ -51,7 +61,7 @@ recipeApp.controller('recipeCtrl', function ($scope, $http) {
     }
     $scope.seedData = function () {
         for (var i = 0; i < $scope.ingredients.length; i++) {
-            $http.post("/api/Ingredients", $scope.ingredients[i]);
+            $http.post("/api/Ingredients", $scope.user, $scope.ingredients[i]);
         };
     };
 

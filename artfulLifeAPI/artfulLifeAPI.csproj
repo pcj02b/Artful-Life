@@ -191,7 +191,6 @@
     <Compile Include="Models\Store.cs" />
     <Compile Include="Models\Stores.cs" />
     <Compile Include="Models\Units.cs" />
-    <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

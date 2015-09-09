@@ -1,73 +1,69 @@
 ﻿{
     "ingredients": [
         {
+            "user": "phillip.c.jacobs@gmail.com",
             "name": "Ingredient 1",
-            "user": [ { "name": "phillip.c.jacobs@gmail.com", "store": 0 }, 
-                      { "name": "takisha.knight@gmail.com", "store": -1}
-            ]
+            "store": -1
         },
         {
+            "user": "phillip.c.jacobs@gmail.com",
             "name": "Ingredient 2",
-            "user": [
-                { "name": "phillip.c.jacobs@gmail.com", "store": 0 },
-                { "name": "takisha.knight@gmail.com", "store": -1 }
-            ]
+            "store": -1
         },
         {
+            "user": "phillip.c.jacobs@gmail.com",
             "name": "Ingredient 3",
-            "user": [
-                { "name": "phillip.c.jacobs@gmail.com", "store": 0 },
-                { "name": "takisha.knight@gmail.com", "store": -1 }
-            ]
+            "store": -1
         },
         {
+            "user": "phillip.c.jacobs@gmail.com",
             "name": "Ingredient 4",
-            "user": [
-                { "name": "phillip.c.jacobs@gmail.com", "store": 0 },
-                { "name": "takisha.knight@gmail.com", "store": -1 }
-            ]
+            "store": -1
         },
         {
+            "user": "phillip.c.jacobs@gmail.com",
             "name": "Ingredient 5",
-            "user": [
-                { "name": "phillip.c.jacobs@gmail.com", "store": 0 },
-                { "name": "takisha.knight@gmail.com", "store": -1 }
-            ]
+            "store": -1
         },
         {
+            "user": "phillip.c.jacobs@gmail.com",
             "name": "Ingredient 6",
-            "user": [
-                { "name": "phillip.c.jacobs@gmail.com", "store": 0 },
-                { "name": "takisha.knight@gmail.com", "store": -1 }
-            ]
+            "store": -1
         },
         {
+            "user": "phillip.c.jacobs@gmail.com",
             "name": "Ingredient 7",
-            "user": [
-                { "name": "phillip.c.jacobs@gmail.com", "store": 0 },
-                { "name": "takisha.knight@gmail.com", "store": -1 }
-            ]
+            "store": -1
         },
         {
+            "user": "phillip.c.jacobs@gmail.com",
             "name": "Ingredient 8",
-            "user": [
-                { "name": "phillip.c.jacobs@gmail.com", "store": 0 },
-                { "name": "takisha.knight@gmail.com", "store": -1 }
-            ]
+            "store": -1
         },
         {
+            "user": "phillip.c.jacobs@gmail.com",
             "name": "Ingredient 9",
-            "user": [
-                { "name": "phillip.c.jacobs@gmail.com", "store": 0 },
-                { "name": "takisha.knight@gmail.com", "store": -1 }
-            ]
+            "store": -1
         },
         {
+            "user": "phillip.c.jacobs@gmail.com",
             "name": "Ingredient 10",
-            "user": [ { "name": "phillip.c.jacobs@gmail.com", "store": 0 }, 
-                      { "name": "takisha.knight@gmail.com", "store": -1}
-            ]
-        }
+            "store": -1
+        },
+        {
+            "user": "takisha.knight@gmail.com",
+            "name": "Ingredient 2",
+            "store": -1
+        },
+        {
+            "user": "takisha.knight@gmail.com",
+            "name": "Ingredient 3",
+            "store": -1
+        },
+                {
+            "user": "takisha.knight@gmail.com",
+            "name": "Ingredient 4",
+            "store": -1
+        },
     ]
-
 }

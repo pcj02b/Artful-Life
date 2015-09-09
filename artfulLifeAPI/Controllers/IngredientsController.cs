@@ -26,9 +26,11 @@ namespace artfulLifeAPI.Controllers
             var recipes = db.GetCollection<Models.Ingredients>("Ingredients");
             //return from recipe in await recipes.Find(new BsonDocument()).ToListAsync()
             //       select recipe;
-            var filter = new BsonDocument("user.name", user);
-            var projection = Builders<Models.Ingredients>.Projection.Exclude("_id");
-            var output = await recipes.Find(filter).Project<Models.Ingredients>(projection).ToListAsync();
+            var filter = new BsonDocument("user", user);
+            //var projection = Builders<Models.Ingredients>.Projection.Exclude("_id");
+            //var output = await recipes.Find(filter).Project<Models.Ingredients>(projection).ToListAsync();
+            var output = await recipes.Find(filter).ToListAsync();
+
             return output;
         }
 
@@ -48,7 +50,8 @@ namespace artfulLifeAPI.Controllers
             var client = new MongoClient("mongodb://" + dbuser + ":" + dbpassword + "@ds036698.mongolab.com:36698/artful-life");
             var db = client.GetDatabase("artful-life");
             var recipes = db.GetCollection<Models.Ingredients>("Ingredients");
-            //string input = value.name;
+            var newID = ObjectId.GenerateNewId();
+            value._id = newID.ToString();
             await recipes.InsertOneAsync(value);
         }
 
@@ -59,7 +62,7 @@ namespace artfulLifeAPI.Controllers
             var db = client.GetDatabase("artful-life");
             var recipes = db.GetCollection<Models.Ingredients>("Ingredients");
             await recipes.ReplaceOneAsync(
-                filter: new BsonDocument("name", value.name),
+                filter: new BsonDocument("_id", value._id),
                 replacement: value);
         }
 

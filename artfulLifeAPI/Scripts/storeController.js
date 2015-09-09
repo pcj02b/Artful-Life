@@ -5,7 +5,8 @@ recipeApp.controller("storeCtrl", function ($scope, $http) {
     var allRecipes = [];
     var tempRecipe = {};
     $scope.user = sessionStorage.getItem("user");
-    $http.get("/api/Recipe").success(function (data) {
+    var getRecipeURI = "/api/Recipe?user=".concat($scope.user);
+    $http.get(getRecipeURI).success(function (data) {
         allRecipes = data;
         for (var i = 0 ; i < allRecipes.length ; i++) {
             if (allRecipes[i].owner === $scope.user) {
@@ -40,14 +41,8 @@ recipeApp.controller("storeCtrl", function ($scope, $http) {
     var getIngredientsURI = "/api/Ingredients?user=".concat($scope.user);
     $http.get(getIngredientsURI)
         .success(function (data) {
-            allIngredients = data;
-            for (var i = 0; i < allIngredients.length; i++) {
-                for (var n = 0; n < allIngredients[i].user.length; n++) {
-                    if (allIngredients[i].user[n].name === $scope.user) {
-                        $scope.ingredients.push({ name: allIngredients[i].name, store: allIngredients[i].user[n].store });
-                    }
-                }
-            }
+            $scope.ingredients = data;
+            console.log("we have " + $scope.ingredients.length + " ingredients for " + $scope.user);
             console.log("finished getting ingredients");
             $scope.updateStoreIngredientList();
             setStoreIsClicked();

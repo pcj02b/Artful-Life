@@ -2,9 +2,14 @@
 recipeApp.controller("storeCtrl", function ($scope, $http) {
     $scope.user = sessionStorage.getItem("user");
     $scope.recipes = [];
+    $scope.ingredients = [];
+    $scope.stores = [];
+    $scope.storeIsClicked = [];
+
     var allRecipes = [];
     var tempRecipe = {};
     $scope.user = sessionStorage.getItem("user");
+
     var getRecipeURI = "/api/Recipe?user=".concat($scope.user);
     $http.get(getRecipeURI).success(function (data) {
         allRecipes = data;
@@ -35,9 +40,7 @@ recipeApp.controller("storeCtrl", function ($scope, $http) {
         console.log("finished getting recipes");
     });
     var ogRecipes = JSON.parse(JSON.stringify($scope.recipes));
-    $scope.ingredients = [];
-    var allIngredients = [];
-    $scope.storeIsClicked = [];
+
     var getIngredientsURI = "/api/Ingredients?user=".concat($scope.user);
     $http.get(getIngredientsURI)
         .success(function (data) {
@@ -47,7 +50,7 @@ recipeApp.controller("storeCtrl", function ($scope, $http) {
             $scope.updateStoreIngredientList();
             setStoreIsClicked();
         });
-    $scope.stores = [];
+
     var getStoreURI = "/api/Store/?user=".concat($scope.user);
     $http.get(getStoreURI)
         .success(function (data) {
@@ -197,9 +200,10 @@ recipeApp.controller("storeCtrl", function ($scope, $http) {
         if (storeIndex === -1) {
             storeIndex = $scope.defaultStoreIndex;
         }
+        console.log("store index: " + storeIndex);
         for (var i = 0; i < $scope.storeIngredientList[storeIndex].ingredients.length; i++) {
-            if ($scope.storeIngredientList[storeIndex].ingredients[i].name == name &&
-                $scope.storeIngredientList[storeIndex].ingredients[i].unit == unit) {
+            if ($scope.storeIngredientList[storeIndex].ingredients[i].name === name &&
+                $scope.storeIngredientList[storeIndex].ingredients[i].unit === unit) {
                 isThere = true;
                 ingredientIndex = i;
                 break;
@@ -210,10 +214,11 @@ recipeApp.controller("storeCtrl", function ($scope, $http) {
     }
     $scope.updateStoreIngredientList = function () {
         var storeIndex = 0;
-        var isInStore = {};
+        var isInStore = [];
         $scope.storeIngredientList = new Array;
         var ingredientIndex = 0;
         var ingredientName = "";
+        //find default store
         for (var i = 0; i < $scope.stores.length; i++) {
             if ($scope.stores[i].defaultStore === true) {
                 $scope.defaultStoreIndex = i;
@@ -221,16 +226,7 @@ recipeApp.controller("storeCtrl", function ($scope, $http) {
         }
         for (var i = 0; i < $scope.stores.length; i++) {
             $scope.storeIngredientList.push($scope.stores[i]);
-        }
-
-        for (var i = 0; i < $scope.ingredients.length; i++) {
-            storeIndex = $scope.ingredients[i].store;
-            if (storeIndex === -1) {
-                $scope.storeIngredientList[$scope.defaultStoreIndex].ingredients = [];
-            }
-            else{
-                $scope.storeIngredientList[storeIndex].ingredients = [];
-            }
+            $scope.storeIngredientList[i].ingredients = [];
         }
         for (var i = 0; i < $scope.recipes.length; i++) {
             if ($scope.recipes[i].included) {

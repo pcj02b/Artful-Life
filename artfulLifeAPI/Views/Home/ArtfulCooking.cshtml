@@ -19,7 +19,8 @@
             </ul>
         </aside>
         <article>
-            <h4>Cooking Instructions</h4>
+            <h4 ng-show="showPrep">Prep Instructions</h4>
+            <h4 ng-hide="showPrep">Cooking Instructions</h4>
             <p><b>The Idea: </b>Prepare the recipes you've shopped for or cook the meals that are ready to go in your freezer. Click the title on the left to switch between preparation and cooking instructions.</p>
             <div ng-repeat="x in recipes">
                 <table class="recipe" ng-show="x.included">

@@ -254,7 +254,7 @@ recipeApp.controller('recipeCtrl', function ($scope, $http) {
             if (!isInIngredients) {
                 console.log("there was a new ingredient to add")
                 console.log("namely, " + $scope.editingRecipe.ingredients[i].name);
-                newIngredient = { name: $scope.editingRecipe.ingredients[i].name, store: -1 };
+                newIngredient = { user: $scope.user, name: $scope.editingRecipe.ingredients[i].name, store: -1 };
                 $scope.ingredients.push(newIngredient);
                 $http.post("/api/Ingredients", newIngredient);
             }

@@ -5,6 +5,7 @@ recipeApp.controller('recipeCtrl', function ($scope, $http) {
     var allRecipes = [];
     var tempRecipe = {};
     $scope.user = sessionStorage.getItem("user");
+
     var getRecipeURI = "/api/Recipe?user=".concat($scope.user);
     $http.get(getRecipeURI).success(function (data) {
         allRecipes = data;
@@ -34,6 +35,7 @@ recipeApp.controller('recipeCtrl', function ($scope, $http) {
         }
         console.log("finished getting recipes");
     });
+
     var getIngredientsURI = "/api/Ingredients?user=".concat($scope.user);
     $http.get(getIngredientsURI)
         .success(function (data) {
@@ -41,10 +43,15 @@ recipeApp.controller('recipeCtrl', function ($scope, $http) {
             console.log("we have " + $scope.ingredients.length + " ingredients for " + $scope.user);
             console.log("finished getting ingredients");
         })
-    .error(function (status) {
+        .error(function (status) {
         console.log("something went wrong getting ingredients");
         console.log(status);
-    });
+        });
+
+    $http.get("/api/Units").success(function (data) {
+        $scope.units = data;
+    })
+
     $scope.getFromJSON = function () {
         $http.get("/Data/ingredients.json")
             .success(function (data) {
@@ -208,7 +215,8 @@ recipeApp.controller('recipeCtrl', function ($scope, $http) {
                     }
                 }
                 else {
-                    console.log("no number found")
+                    console.log("no number found");
+                    $scope.count[i] = [0, 0, 2];
                 }
                 for (var n = 0 ; n < $scope.units.length ; n++) {
                     for (var r = 0; r < $scope.units[n].name.length ; r++) {

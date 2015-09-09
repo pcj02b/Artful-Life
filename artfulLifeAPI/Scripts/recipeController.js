@@ -6,8 +6,7 @@ recipeApp.controller('recipeCtrl', function ($scope, $http) {
     var tempRecipe = {};
     $scope.user = sessionStorage.getItem("user");
 
-    var getRecipeURI = "/api/Recipe?user=".concat($scope.user);
-    $http.get(getRecipeURI).success(function (data) {
+    $http.get("/api/Recipe?user=".concat($scope.user)).success(function (data) {
         allRecipes = data;
         for (var i = 0 ; i < allRecipes.length ; i++) {
             if (allRecipes[i].owner === $scope.user) {
@@ -36,8 +35,7 @@ recipeApp.controller('recipeCtrl', function ($scope, $http) {
         console.log("finished getting recipes");
     });
 
-    var getIngredientsURI = "/api/Ingredients?user=".concat($scope.user);
-    $http.get(getIngredientsURI)
+    $http.get("/api/Ingredients?user=".concat($scope.user))
         .success(function (data) {
             $scope.ingredients = data;
             console.log("we have " + $scope.ingredients.length + " ingredients for " + $scope.user);
@@ -78,6 +76,7 @@ recipeApp.controller('recipeCtrl', function ($scope, $http) {
     $scope.showSharePage = false;
 
     $scope.selectedRecipe = {};
+    $scope.editingRecipe = { };
     selectedRecipeIndex = 0;
 
     $scope.newIngredientCount = [0,0,2];
@@ -188,23 +187,19 @@ recipeApp.controller('recipeCtrl', function ($scope, $http) {
                 $scope.count[i] = [];
                 $scope.numberArray[i] = $scope.ingredientArray[i].match(fractionTest);
                 if (fractionTest.test($scope.ingredientArray[i])) {
-                    console.log("found number");
                     if ($scope.numberArray[i].length == 2) {
-                        console.log("found mixed fraction");
                         $scope.count[i][0] = $scope.numberArray[i][0];
                         $scope.count[i][1] = $scope.numberArray[i][1].match(/\d+/g)[0];
                         $scope.count[i][2] = $scope.numberArray[i][1].match(/\d+/g)[1];
                         $scope.ingredientArray[i] = $scope.ingredientArray[i].replace("/", "");
                     }
                     if ($scope.numberArray[i].length == 1 && $scope.numberArray[i][0].match(/[/]/) != null) {
-                        console.log("found simple fraction");
                         $scope.count[i][0] = 0;
                         $scope.count[i][1] = $scope.numberArray[i][0].match(/\d+/g)[0];
                         $scope.count[i][2] = $scope.numberArray[i][0].match(/\d+/g)[1];
                         $scope.ingredientArray[i] = $scope.ingredientArray[i].replace("/", "");
                     }
                     if ($scope.numberArray[i].length == 1 && $scope.numberArray[i][0].match(/[/]/) == null) {
-                        console.log("found whole number or decimal");
                         $scope.count[i][0] = $scope.numberArray[i][0];
                         $scope.count[i][1] = 0;
                         $scope.count[i][2] = 2;
@@ -215,7 +210,6 @@ recipeApp.controller('recipeCtrl', function ($scope, $http) {
                     }
                 }
                 else {
-                    console.log("no number found");
                     $scope.count[i] = [0, 0, 2];
                 }
                 for (var n = 0 ; n < $scope.units.length ; n++) {
@@ -240,11 +234,19 @@ recipeApp.controller('recipeCtrl', function ($scope, $http) {
         $scope.textIngredients = "";
     }
     $scope.addPrepStep = function () {
-        $scope.editingRecipe.prep.push({ step: $scope.newPrepStep });
+        var stepArray = $scope.newPrepStep.split(/\n/);
+        for (var i = 0; i < stepArray.length; i++) {
+            $scope.editingRecipe.prep.push({ step: stepArray[i] });
+        }
         $scope.newPrepStep = "";
     }
     $scope.addCookStep = function () {
-        $scope.editingRecipe.cook.push({ step: $scope.newCookStep });
+        var stepArray = $scope.newCookStep.split(/\n/);
+        for (var i = 0; i < stepArray.length; i++) {
+            $scope.editingRecipe.cook.push({
+                step: stepArray[i]
+            });
+            }
         $scope.newCookStep = "";
     }
     $scope.saveRecipe = function () {
@@ -269,7 +271,6 @@ recipeApp.controller('recipeCtrl', function ($scope, $http) {
             isInIngredients = false;
         }
         //check to see if recipe is already there
-        console.log($scope.editingRecipe._id);
         if (angular.equals($scope.editingRecipe._id, undefined)) {
             alreadyThere = false;
         }
@@ -294,8 +295,8 @@ recipeApp.controller('recipeCtrl', function ($scope, $http) {
                 });
             }
         }
-        $scope.editingRecipe = { name: "", ingredients: [], prep: [], cook: [], included: false, multiplier: 1 };
-        $scope.newIngredientCount = [0, 0, 2];
+        $scope.editingRecipe = { name: "", ingredients: [], prep: [], cook: [], included: false, multiplier: 1, owner: $scope.user, editors: [], viewers: []};
+        $scope.newIngredientCount =[0, 0, 2];
         $scope.newIngredientUnit = "";
         $scope.newIngredientName = "";
         $scope.newPrepStep = "";

@@ -188,6 +188,10 @@ table.recipe{
     font-size:14pt;
     width: 100%;
 }
+table.recipe form{
+    border:1px solid black;
+}
+
 table.recipe p{
     font-weight:bold;
 }

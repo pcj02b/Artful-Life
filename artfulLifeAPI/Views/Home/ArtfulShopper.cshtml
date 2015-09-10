@@ -62,7 +62,7 @@
                     <td class="delete">
                         <a href="" ng-click="deleteStore($index)">Delete store</a>
                         <br />
-                        <a href="" ng-click="setDefault($index)">Set as default</a>
+                        <a href="" ng-hide="x.defaultStore" ng-click="setDefaultStore($index)">Set as default</a>
                     </td>
                 </tr>
             </table>

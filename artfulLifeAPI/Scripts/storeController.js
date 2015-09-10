@@ -185,6 +185,13 @@ recipeApp.controller("storeCtrl", function ($scope, $http) {
             $scope.updateStoreIngredientList();
         }
     }
+    $scope.setDefaultStore = function (index) {
+        for (var i = 0; i < $scope.stores.length; i++) {
+            $scope.stores[i].defaultStore = false;
+        }
+        $scope.stores[index].defaultStore = true;
+        $scope.updateStoreIngredientList();
+    }
     function isInStores(ingredientObject) {
         var ingredientIndex = 0;
         var isThere = false;

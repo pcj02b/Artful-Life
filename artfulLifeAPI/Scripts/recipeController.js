@@ -423,8 +423,7 @@ recipeApp.controller('recipeCtrl', function ($scope, $http) {
             }
         }
         if (confirm("This will permanently remove " + $scope.recipes[selectedRecipeIndex].name)) {
-            var url = encodeURI("/api/Recipe/?name=" + $scope.recipes[selectedRecipeIndex].name);
-            $http.delete(url).success(function (status) {
+            $http.delete("/api/Recipe/?_id=".concat($scope.recipes[selectedRecipeIndex]._id)).success(function (status) {
             })
             .error(function (status) {
                 console.log("something went wrong deleting a recipe");

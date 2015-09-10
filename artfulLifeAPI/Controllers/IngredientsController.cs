@@ -67,14 +67,15 @@ namespace artfulLifeAPI.Controllers
         }
 
         // DELETE api/ingredients/5
-        public async void Delete(string name)
+        public async void Delete(string name, string user)
         {
             var client = new MongoClient("mongodb://" + dbuser + ":" + dbpassword + "@ds036698.mongolab.com:36698/artful-life");
             var db = client.GetDatabase("artful-life");
             var recipes = db.GetCollection<Models.Ingredients>("Ingredients");
-            //await recipes.DeleteOneAsync(r => r._id == id);
+            var filter = Builders<Models.Ingredients>.Filter.Eq("name", name) & Builders<Models.Ingredients>.Filter.Eq("user", user);
+
             await recipes.DeleteOneAsync(
-                filter: new BsonDocument("name", name)
+                filter: filter
                 );
         }
     }

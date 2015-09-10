@@ -417,12 +417,29 @@ recipeApp.controller('recipeCtrl', function ($scope, $http) {
     };
     $scope.removeRecipe = function () {
         var newRecipes = []; //local temp list
+        var isInAnotherRecipe = false;
         for (var i = 0; i < $scope.recipes.length; i++) {
             if (i != selectedRecipeIndex) {
                 newRecipes.push($scope.recipes[i]);
             }
         }
         if (confirm("This will permanently remove " + $scope.recipes[selectedRecipeIndex].name)) {
+            for (var i = 0; i < $scope.recipes[selectedRecipeIndex].ingredients.length; i++) {
+                for (var n = 0; n < newRecipes.length; n++) {
+                    for (var m = 0; m < newRecipes[n].ingredients.length; m++) {
+                        if (newRecipes[n].ingredients[m].name === $scope.recipes[selectedRecipeIndex].ingredients[i].name) {
+                            isInAnotherRecipe = true;
+                        }
+                    }
+                }
+                console.log($scope.recipes[selectedRecipeIndex].ingredients[i].name);
+                console.log(isInAnotherRecipe);
+                if (!isInAnotherRecipe) {
+                    console.log("deleting ingredient: " + $scope.recipes[selectedRecipeIndex].ingredients[i].name);
+                    var deleteURI = encodeURI("/api/Ingredients?name=".concat($scope.recipes[selectedRecipeIndex].ingredients[i].name, "&user=", $scope.user));
+                    $http.delete(deleteURI);
+                }
+            }
             $http.delete("/api/Recipe/?_id=".concat($scope.recipes[selectedRecipeIndex]._id)).success(function (status) {
             })
             .error(function (status) {

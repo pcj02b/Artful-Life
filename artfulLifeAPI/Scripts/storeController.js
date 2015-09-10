@@ -174,10 +174,10 @@ recipeApp.controller("storeCtrl", function ($scope, $http) {
                 }
             }
             //delete store in mongo
-            var uri = encodeURI("/api/Store/?name=" + $scope.stores[index].name);
-            $http.delete(uri).success(function (status) {
+            $http.put("/api/Store", { _id: $scope.user, store: newStores }).success(function (status) {
             })
             .error(function (status) {
+                window.alert(status);
                 console.log("something went wrong while deleting a store.");
             });
             //update local store list 

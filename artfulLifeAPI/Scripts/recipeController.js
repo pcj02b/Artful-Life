@@ -303,6 +303,7 @@ recipeApp.controller('recipeCtrl', function ($scope, $http) {
         $scope.newCookStep = "";
         $scope.showDisplayTable = true;
         $scope.showEditingTable = false;
+        updateRecipes();
     }
     $scope.addRecipe = function () {
         $scope.editingRecipe = { name: "", ingredients: [], prep: [], cook: [], included: false, multiplier: 1, owner: $scope.user, editors:[], viewers:[] };

@@ -8,8 +8,17 @@
     console.log("ID Token: " + id_token);
 
     sessionStorage.setItem("user", profile.getEmail());
-    updateRecipes();
-    updateStores();
+    console.log("type of updateStores: " + typeof (updateStores));
+    console.log("type of updateRecipes: " + typeof (updateRecipes));
+
+    if (typeof (updateStores) != "undefined") {
+        console.log("ran update Stores")
+        updateStores();
+    }
+    if (typeof (updateRecipes) != "undefined") {
+        console.log("ran update Recipes")
+        updateRecipes();
+    }
 }
 
 $(document).ready(function () {
@@ -38,7 +47,13 @@ function signOut() {
     auth2.signOut().then(function () {
         console.log('User signed out.');
         sessionStorage.removeItem("user");
-        updateRecipes();
-        updateStores();
+        if (typeof (updateStores) != "undefined") {
+            console.log("ran update Stores")
+            updateStores();
+        }
+        if (typeof (updateRecipes) != "undefined") {
+            console.log("ran update Recipes")
+            updateRecipes();
+        }
     });
 }

@@ -24,13 +24,8 @@ namespace artfulLifeAPI.Controllers
             var client = new MongoClient("mongodb://" + dbuser + ":" + dbpassword + "@ds036698.mongolab.com:36698/artful-life");
             var db = client.GetDatabase("artful-life");
             var recipes = db.GetCollection<Models.Ingredients>("Ingredients");
-            //return from recipe in await recipes.Find(new BsonDocument()).ToListAsync()
-            //       select recipe;
             var filter = new BsonDocument("user", user);
-            //var projection = Builders<Models.Ingredients>.Projection.Exclude("_id");
-            //var output = await recipes.Find(filter).Project<Models.Ingredients>(projection).ToListAsync();
             var output = await recipes.Find(filter).ToListAsync();
-
             return output;
         }
 

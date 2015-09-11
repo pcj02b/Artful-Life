@@ -89,8 +89,8 @@ recipeApp.controller("storeCtrl", function ($scope, $http) {
     }
 
     updateStores = function() {
-        console.log("updating stores");
         $scope.$apply(function () {
+            console.log("updating stores");
             $scope.user = sessionStorage.getItem("user");
             console.log("updating stores for " + $scope.user);
             $scope.recipes = [];

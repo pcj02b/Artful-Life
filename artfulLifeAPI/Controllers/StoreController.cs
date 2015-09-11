@@ -26,8 +26,6 @@ namespace artfulLifeAPI.Controllers
             var db = client.GetDatabase("artful-life");
             var stores = db.GetCollection<Models.Stores>("Stores");
             var filter = new BsonDocument("_id", user);
-            //var projection = Builders<Models.Stores>.Projection.Exclude("_id");
-            //var output = await stores.Find(filter).Project<Models.Stores>(projection).ToListAsync();
             var output = await stores.Find(filter).ToListAsync();
             return output;
         }

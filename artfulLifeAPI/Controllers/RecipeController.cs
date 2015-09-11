@@ -26,9 +26,6 @@ namespace artfulLifeAPI.Controllers
             var recipes = db.GetCollection<Models.Recipe>("Recipes");
             var builder = Builders<Models.Recipe>.Filter;
             var filter = builder.Eq("owner", user) | builder.Eq("editors", user) | builder.Eq("viewers", user);
-            //var projection = Builders<Models.Recipe>.Projection.Exclude("_id");
-            //var output = await recipes.Find(filter).Project<Models.Recipe>(projection).ToListAsync();
-            
             var output = await recipes.Find(filter).ToListAsync();
             return output;
         }
@@ -42,7 +39,6 @@ namespace artfulLifeAPI.Controllers
         //    return (from recipe in await recipes.Find(r => r.name == name).ToListAsync()
         //            select recipe).FirstOrDefault();
         //}
-
         // POST api/recipe
         public async void Post([FromBody]Models.Recipe value)
         {

@@ -92,8 +92,8 @@ recipeApp.controller("storeCtrl", function ($scope, $http) {
                     console.log("finished getting stores");
                     $scope.updateStoreIngredientList();
                 });
-
             $scope.defaultStoreIndex = -1;
+            $scope.updateStoreIngredientList();
         });
         $scope.updateStoreIngredientList();
     }
@@ -196,6 +196,7 @@ recipeApp.controller("storeCtrl", function ($scope, $http) {
         return output;
     }
     $scope.updateStoreIngredientList = function () {
+        console.log("updating store ingredient list");
         var storeIndex = 0;
         var isInStore = [];
         $scope.storeIngredientList = new Array;

@@ -6,46 +6,6 @@ recipeApp.controller('recipeCtrl', function ($scope, $http) {
     var tempRecipe = {};
     $scope.user = sessionStorage.getItem("user");
 
-    $http.get("/api/Recipe?user=".concat($scope.user)).success(function (data) {
-        allRecipes = data;
-        for (var i = 0 ; i < allRecipes.length ; i++) {
-            if (allRecipes[i].owner === $scope.user) {
-                console.log("owner of " + allRecipes[i].name);
-                tempRecipe = { recipe: allRecipes[i] };
-                $scope.recipes.push(tempRecipe.recipe);
-                $scope.recipes[$scope.recipes.length - 1].ownership = "owner";
-            }
-            for (var n = 0 ; n < allRecipes[i].editors.length ; n++) {
-                if (allRecipes[i].editors[n] === $scope.user) {
-                    console.log("editor of " + allRecipes[i].name);
-                    tempRecipe = { recipe: allRecipes[i] };
-                    $scope.recipes.push(tempRecipe.recipe);
-                    $scope.recipes[$scope.recipes.length - 1].ownership = "editor";
-                }
-            }
-            for (var n = 0 ; n < allRecipes[i].viewers.length ; n++) {
-                if (allRecipes[i].viewers[n] === $scope.user) {
-                    console.log("viewer of " + allRecipes[i].name);
-                    tempRecipe = { recipe: allRecipes[i] };
-                    $scope.recipes.push(tempRecipe.recipe);
-                    $scope.recipes[$scope.recipes.length - 1].ownership = "viewer";
-                }
-            }
-        }
-        console.log("finished getting recipes");
-    });
-
-    $http.get("/api/Ingredients?user=".concat($scope.user))
-        .success(function (data) {
-            $scope.ingredients = data;
-            console.log("we have " + $scope.ingredients.length + " ingredients for " + $scope.user);
-            console.log("finished getting ingredients");
-        })
-        .error(function (status) {
-        console.log("something went wrong getting ingredients");
-        console.log(status);
-        });
-
     $http.get("/api/Units").success(function (data) {
         $scope.units = data;
     })
@@ -106,30 +66,35 @@ recipeApp.controller('recipeCtrl', function ($scope, $http) {
             $scope.user = sessionStorage.getItem("user");
             console.log("updating recipes for " + $scope.user);
             $scope.recipes = [];
-            for (var i = 0 ; i < allRecipes.length ; i++) {
-                if (allRecipes[i].owner === $scope.user) {
-                    console.log("owner of " + allRecipes[i].name);
-                    tempRecipe = { recipe: allRecipes[i] };
-                    $scope.recipes.push(tempRecipe.recipe);
-                    $scope.recipes[$scope.recipes.length - 1].ownership = "owner";
-                }
-                for (var n = 0 ; n < allRecipes[i].editors.length ; n++) {
-                    if (allRecipes[i].editors[n] === $scope.user) {
-                        console.log("editor of " + allRecipes[i].name);
+            console.log($scope.recipes.length);
+            $http.get("/api/Recipe?user=".concat($scope.user)).success(function (data) {
+                allRecipes = data;
+                for (var i = 0 ; i < allRecipes.length ; i++) {
+                    if (allRecipes[i].owner === $scope.user) {
+                        console.log("owner of " + allRecipes[i].name);
                         tempRecipe = { recipe: allRecipes[i] };
                         $scope.recipes.push(tempRecipe.recipe);
-                        $scope.recipes[$scope.recipes.length - 1].ownership = "editor";
+                        $scope.recipes[$scope.recipes.length - 1].ownership = "owner";
+                    }
+                    for (var n = 0 ; n < allRecipes[i].editors.length ; n++) {
+                        if (allRecipes[i].editors[n] === $scope.user) {
+                            console.log("editor of " + allRecipes[i].name);
+                            tempRecipe = { recipe: allRecipes[i] };
+                            $scope.recipes.push(tempRecipe.recipe);
+                            $scope.recipes[$scope.recipes.length - 1].ownership = "editor";
+                        }
+                    }
+                    for (var n = 0 ; n < allRecipes[i].viewers.length ; n++) {
+                        if (allRecipes[i].viewers[n] === $scope.user) {
+                            console.log("viewer of " + allRecipes[i].name);
+                            tempRecipe = { recipe: allRecipes[i] };
+                            $scope.recipes.push(tempRecipe.recipe);
+                            $scope.recipes[$scope.recipes.length - 1].ownership = "viewer";
+                        }
                     }
                 }
-                for (var n = 0 ; n < allRecipes[i].viewers.length ; n++) {
-                    if (allRecipes[i].viewers[n] === $scope.user) {
-                        console.log("viewer of " + allRecipes[i].name);
-                        tempRecipe = { recipe: allRecipes[i] };
-                        $scope.recipes.push(tempRecipe.recipe);
-                        $scope.recipes[$scope.recipes.length - 1].ownership = "viewer";
-                    }
-                }
-            }
+                console.log("finished getting recipes");
+            });
         })
     }
     $scope.selectRecipe = function (index) {

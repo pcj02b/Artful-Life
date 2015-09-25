@@ -11,9 +11,9 @@
     console.log("type of updateStores: " + typeof (updateStores));
     console.log("type of updateRecipes: " + typeof (updateRecipes));
 
-    if (typeof (updateStores) != "undefined") {
+    if (typeof (updateShopper) != "undefined") {
         console.log("ran update Stores")
-        updateStores();
+        updateShopper();
     }
     if (typeof (updateRecipes) != "undefined") {
         console.log("ran update Recipes")
@@ -47,9 +47,9 @@ function signOut() {
     auth2.signOut().then(function () {
         console.log('User signed out.');
         sessionStorage.removeItem("user");
-        if (typeof (updateStores) != "undefined") {
+        if (typeof (updateShopper) != "undefined") {
             console.log("ran update Stores")
-            updateStores();
+            updateShopper();
         }
         if (typeof (updateRecipes) != "undefined") {
             console.log("ran update Recipes")

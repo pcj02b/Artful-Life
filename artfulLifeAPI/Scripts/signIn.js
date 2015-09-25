@@ -12,7 +12,7 @@
     console.log("type of updateRecipes: " + typeof (updateRecipes));
 
     if (typeof (updateShopper) != "undefined") {
-        console.log("ran update Stores")
+        console.log("ran update Shopper")
         updateShopper();
     }
     if (typeof (updateRecipes) != "undefined") {
@@ -48,7 +48,7 @@ function signOut() {
         console.log('User signed out.');
         sessionStorage.removeItem("user");
         if (typeof (updateShopper) != "undefined") {
-            console.log("ran update Stores")
+            console.log("ran update Shopper")
             updateShopper();
         }
         if (typeof (updateRecipes) != "undefined") {

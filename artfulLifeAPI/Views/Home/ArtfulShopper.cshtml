@@ -18,6 +18,32 @@
         </aside>
         <aside class="stores">
             <ul>
+                <li class="title">Ingredients by Store</li>
+                <li class="noHighlight" ng-repeat="x in stores">
+                    <p class="store" ng-show="$index === defaultStoreIndex">Default ({{x.name}})</p>
+                    <ul>
+                        <li ng-repeat="n in ingredients">
+                            <a href="" ng-show="$parent.$index===defaultStoreIndex && n.store===-1" ng-click="toggleStoreIsClicked($index)">{{n.name}} {{n.store}}</a>
+                            <p ng-repeat="r in stores" ng-show="storeIsClicked[$parent.$index]"><a href="">{{r.name}}</a></p>
+                        </li>
+                    </ul>
+                </li>
+                <li ng-repeat="x in stores" class="noHighlight">
+                    <p class="store">{{x.name}}</p>
+                    <ul>
+                        <li ng-repeat="n in ingredients">
+                            <a href="" ng-show="n.store===$parent.$index" ng-click="toggleStoreIsClicked($index)">{{n.name}} {{n.store}}</a>
+                            <a href="" ng-repeat="r in stores" ng-show="storeIsClicked[$parent.$index]">{{r.name}}</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+            <ul>
+                <li class="lineTop"><a href="" ng-click="addStore()">Add Store</a></li>
+            </ul>
+        </aside>
+        <aside class="stores">
+            <ul>
                 <li class="title">Ingredients</li>
                 <li class="noHighlight" ng-repeat="x in ingredients">
                     <p>{{x.name}} <button ng-show="storeIsClicked[$index]" ng-click="toggleStoreIsClicked($index)">x</button></p>@*Ingredient name and close button*@
@@ -37,6 +63,7 @@
             <button ng-click="seedData()">seed datat</button>*@
             @*<button ng-click="updateStoreIngredientList()">update list</button>*@
             <h4>Artful Shopping Lists</h4>
+            <p>{{defaultStoreIndex}}</p>
             <p><b>The Idea:</b> Select a recipe on the left. Multiply as desired. If you shop at more than one store, assign each ingredient to a store on the right. Then view the grocery list for each store.</p>
             <p ng-show="defaultStoreIndex === -1" class="alert">You have no default store. Please set a default store.</p>
             <table ng-repeat="x in storeIngredientList" class="store">

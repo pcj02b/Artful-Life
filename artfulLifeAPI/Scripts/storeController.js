@@ -75,6 +75,7 @@ recipeApp.controller("storeCtrl", function ($scope, $http) {
                     }
                 }
                 console.log("finished getting recipes");
+                $scope.updateStoreIngredientList();
             });
             var ogRecipes = JSON.parse(JSON.stringify($scope.recipes));
             $http.get("/api/Ingredients?user=".concat($scope.user))
@@ -92,10 +93,7 @@ recipeApp.controller("storeCtrl", function ($scope, $http) {
                     console.log("finished getting stores");
                     $scope.updateStoreIngredientList();
                 });
-            $scope.defaultStoreIndex = -1;
-            $scope.updateStoreIngredientList();
         });
-        $scope.updateStoreIngredientList();
     }
     function setStoreIsClicked() {
         for (var i = 0; i < $scope.ingredients.length; i++) {

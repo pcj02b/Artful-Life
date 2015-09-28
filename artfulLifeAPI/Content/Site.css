@@ -122,6 +122,10 @@ aside ul{
     padding:0px;
     list-style-type:none;
 }
+aside ul p.store{
+    font-weight:bold;
+    border-bottom:1px solid grey;
+}
 aside.stores{
     float:right;
     height:initial;

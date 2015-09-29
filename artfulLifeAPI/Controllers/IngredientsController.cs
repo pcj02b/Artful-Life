@@ -68,7 +68,6 @@ namespace artfulLifeAPI.Controllers
             var db = client.GetDatabase("artful-life");
             var recipes = db.GetCollection<Models.Ingredients>("Ingredients");
             var filter = Builders<Models.Ingredients>.Filter.Eq("name", name) & Builders<Models.Ingredients>.Filter.Eq("user", user);
-
             await recipes.DeleteOneAsync(
                 filter: filter
                 );

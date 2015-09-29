@@ -385,6 +385,25 @@ recipeApp.controller('recipeCtrl', function ($scope, $http) {
         $scope.newCookStep = "";
     }
     $scope.removeIngredient = function () {
+
+        var wasInIngredients = false;
+        var wasInOtherRecipe = false;
+        for (var i = 0; i < $scope.ingredients.length; i++) {
+            if ($scope.editingRecipe.ingredients[$scope.editingIngredientIndex].name === $scope.ingredients[i].name) {
+                wasInIngredients = true;
+            }
+        }
+        for (var i = 0; i < $scope.recipes.length; i++) {
+            for (var n = 0; n < $scope.recipes[i].ingredients.length; n++) {
+                if ($scope.recipes[i].ingredients[n].name === $scope.editingRecipe.ingredients[$scope.editingIngredientIndex].name && i != selectedRecipeIndex) {
+                    wasInOtherRecipe = true;
+                }
+            }
+        }
+        if (!wasInOtherRecipe && wasInIngredients) {
+            $scope.deleteIngredientList.push($scope.editingRecipe.ingredients[$scope.editingIngredientIndex].name);
+            console.log("will to delete " + $scope.editingRecipe.ingredients[$scope.editingIngredientIndex].name + " upon saving recipe");
+        }
         var editingIngredients = []; //local temp list
         for (var i = 0; i < $scope.editingRecipe.ingredients.length; i++) {
             if (i != $scope.editingIngredientIndex) {

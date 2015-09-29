@@ -21,19 +21,44 @@
                 <li class="title">Ingredients by Store</li>
                 <li class="noHighlight" ng-repeat="x in stores">
                     <p class="store" ng-show="$index === defaultStoreIndex">Default ({{x.name}})</p>
-                    <ul>
-                        <li ng-repeat="n in ingredients">
-                            <a href="" ng-show="$parent.$index===defaultStoreIndex && n.store===-1" ng-click="toggleStoreIsClicked($index)">{{n.name}} {{n.store}}</a>
-                            <p ng-repeat="r in stores" ng-show="storeIsClicked[$parent.$index]"><a href="">{{r.name}}</a></p>
+                    <ul ng-repeat="n in ingredients">
+                        <li ng-show="$parent.$index===defaultStoreIndex && n.store===-1" >
+                            <a href="" ng-show="!storeIsClicked[$index]" ng-click="toggleStoreIsClicked($index)">{{n.name}}</a>
+                            <span ng-show="storeIsClicked[$index]">
+                                <text>{{n.name}} </text>
+                                <button ng-click="toggleStoreIsClicked($index)">x</button>
+                            </span>
+                            <ul>
+                                <li ng-show="storeIsClicked[$parent.$index]" ng-repeat="r in stores" class="stores">
+                                    <p ng-click="updateIngredientStore($parent.$index, $index)">
+                                        <a href="">~ {{r.name}} ~</a>
+                                    </p>
+                                </li>
+                            </ul>
                         </li>
                     </ul>
                 </li>
-                <li ng-repeat="x in stores" class="noHighlight">
+                <li class="noHighlight" ng-repeat="x in stores">
                     <p class="store">{{x.name}}</p>
-                    <ul>
-                        <li ng-repeat="n in ingredients">
-                            <a href="" ng-show="n.store===$parent.$index" ng-click="toggleStoreIsClicked($index)">{{n.name}} {{n.store}}</a>
-                            <a href="" ng-repeat="r in stores" ng-show="storeIsClicked[$parent.$index]">{{r.name}}</a>
+                    <ul ng-repeat="n in ingredients">
+                        <li ng-show="$parent.$index===n.store && n.store === $parent.$index">
+                            <a href="" ng-show="!storeIsClicked[$index]" ng-click="toggleStoreIsClicked($index)">{{n.name}}</a>
+                            <span ng-show="storeIsClicked[$index]">
+                                <text>{{n.name}} </text>
+                                <button ng-click="toggleStoreIsClicked($index)">x</button>
+                            </span>
+                            <ul>
+                                <li ng-show="storeIsClicked[$parent.$index]" ng-repeat="r in stores">
+                                    <p ng-click="updateIngredientStore($parent.$index, $index)" ng-hide="x.name===r.name">
+                                        <a href="">~ {{r.name}} ~</a>
+                                    </p>
+                                </li>
+                                <li ng-show="storeIsClicked[$index]" style="border-bottom:1px solid grey">
+                                    <p ng-click="updateIngredientStore($parent.$index, -1)">
+                                        <a href="">~ Default ~</a>
+                                    </p>
+                                </li>
+                            </ul>
                         </li>
                     </ul>
                 </li>
@@ -42,7 +67,7 @@
                 <li class="lineTop"><a href="" ng-click="addStore()">Add Store</a></li>
             </ul>
         </aside>
-        <aside class="stores">
+        <aside class="stores" ng-hide="true">
             <ul>
                 <li class="title">Ingredients</li>
                 <li class="noHighlight" ng-repeat="x in ingredients">
@@ -63,7 +88,6 @@
             <button ng-click="seedData()">seed datat</button>*@
             @*<button ng-click="updateStoreIngredientList()">update list</button>*@
             <h4>Artful Shopping Lists</h4>
-            <p>changes from desktop</p>
             <p><b>The Idea:</b> Select a recipe on the left. Multiply as desired. If you shop at more than one store, assign each ingredient to a store on the right. Then view the grocery list for each store.</p>
             <p ng-show="defaultStoreIndex === -1" class="alert">You have no default store. Please set a default store.</p>
             <table ng-repeat="x in storeIngredientList" class="store">

@@ -2,6 +2,7 @@
 recipeApp.controller("storeCtrl", function ($scope, $http) {
     $scope.user = sessionStorage.getItem("user");
     $scope.recipes = [];
+    var ogRecipes = [];
     $scope.ingredients = [];
     $scope.stores = [];
     $scope.storeIsClicked = [];
@@ -45,9 +46,8 @@ recipeApp.controller("storeCtrl", function ($scope, $http) {
             $scope.ingredients = [];
             $scope.stores = [];
             $scope.storeIsClicked = [];
-
-            var allRecipes = [];
-            var tempRecipe = {};
+            allRecipes = [];
+            tempRecipe = {};
             $http.get("/api/Recipe?user=".concat($scope.user)).success(function (data) {
                 allRecipes = data;
                 for (var i = 0 ; i < allRecipes.length ; i++) {
@@ -77,7 +77,7 @@ recipeApp.controller("storeCtrl", function ($scope, $http) {
                 console.log("finished getting recipes");
                 $scope.updateStoreIngredientList();
             });
-            var ogRecipes = JSON.parse(JSON.stringify($scope.recipes));
+            ogRecipes = JSON.parse(JSON.stringify($scope.recipes));
             $http.get("/api/Ingredients?user=".concat($scope.user))
                 .success(function (data) {
                     $scope.ingredients = data;

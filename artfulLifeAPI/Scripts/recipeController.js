@@ -36,7 +36,7 @@ recipeApp.controller('recipeCtrl', function ($scope, $http) {
     $scope.showSharePage = false;
 
     $scope.selectedRecipe = {};
-    $scope.editingRecipe = { };
+    $scope.editingRecipe = {};
     selectedRecipeIndex = 0;
 
     $scope.newIngredientCount = [0,0,2];
@@ -94,6 +94,11 @@ recipeApp.controller('recipeCtrl', function ($scope, $http) {
                     }
                 }
                 console.log("finished getting recipes");
+                $http.get("/api/Ingredients?user=".concat($scope.user)).success(function (data) {
+                    $scope.ingredients = data;
+                    console.log("we have " + $scope.ingredients.length + " ingredients for " + $scope.user);
+                    console.log("finished getting ingredients");
+                });
             });
         })
     }
@@ -250,14 +255,19 @@ recipeApp.controller('recipeCtrl', function ($scope, $http) {
             });
         }
         else {
-            if (confirm("Save changes to " + $scope.recipes[selectedRecipeIndex].name)) {
-                $http.put("/api/Recipe", $scope.editingRecipe).success(function (status) {
-                    $scope.recipes[selectedRecipeIndex] = $scope.editingRecipe;
-                    $scope.showEditingTable = false;
-                })
-                .error(function (status) {
-                    console.log("something went wrong saving existing recipe");
-                });
+            if (angular.equals($scope.recipes[selectedRecipeIndex], $scope.editingRecipe)) {
+                window.alert("no changes to save");
+            }
+            else {
+                if (confirm("Save changes to " + $scope.recipes[selectedRecipeIndex].name)) {
+                    $http.put("/api/Recipe", $scope.editingRecipe).success(function (status) {
+                        $scope.recipes[selectedRecipeIndex] = $scope.editingRecipe;
+                        $scope.showEditingTable = false;
+                    })
+                    .error(function (status) {
+                        console.log("something went wrong saving existing recipe");
+                    });
+                }
             }
         }
         $scope.editingRecipe = { name: "", ingredients: [], prep: [], cook: [], included: false, multiplier: 1, owner: $scope.user, editors: [], viewers: []};

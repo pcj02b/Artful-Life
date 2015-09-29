@@ -131,7 +131,7 @@ aside.stores{
     height:initial;
 }
 .noHighlight:hover{
-    background-color:lightgrey;
+    background-color:initial;
 }
 aside li {
     width: 100%;
@@ -155,8 +155,11 @@ aside li.lineBottom:last-child{
 aside li.lineTop{
     border-top:2px solid rgba(180, 60, 180, 0.9);
 }
-aside li:hover{
-    background-color:rgba(180, 60, 180, 0.9);
+li.stores:last-child{
+    border-bottom:1px solid grey;
+}
+aside li.ingredient:last-child{
+        border-bottom:1px solid grey;
 }
 aside a{
     text-decoration:none;

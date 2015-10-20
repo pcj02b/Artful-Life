@@ -159,43 +159,53 @@ recipeApp.controller('recipeCtrl', function ($scope, $http) {
                 var fractionTest = new RegExp(/\d+([\/.]\d+)?/g);
                 $scope.count[i] = [];
                 $scope.numberArray[i] = $scope.ingredientArray[i].match(fractionTest);
-                if (fractionTest.test($scope.ingredientArray[i])) {
-                    if ($scope.numberArray[i].length == 2) {
-                        $scope.count[i][0] = $scope.numberArray[i][0];
-                        $scope.count[i][1] = $scope.numberArray[i][1].match(/\d+/g)[0];
-                        $scope.count[i][2] = $scope.numberArray[i][1].match(/\d+/g)[1];
-                        $scope.ingredientArray[i] = $scope.ingredientArray[i].replace("/", "");
+                if ($scope.ingredientArray[i].search(/\d \d/i) === -1) {
+                    if (fractionTest.test($scope.ingredientArray[i])) {
+                        if ($scope.numberArray[i].length == 2) {
+                            $scope.count[i][0] = $scope.numberArray[i][0];
+                            $scope.count[i][1] = $scope.numberArray[i][1].match(/\d+/g)[0];
+                            $scope.count[i][2] = $scope.numberArray[i][1].match(/\d+/g)[1];
+                            $scope.ingredientArray[i] = $scope.ingredientArray[i].replace("/", "");
+                        }
+                        if ($scope.numberArray[i].length == 1 && $scope.numberArray[i][0].match(/[/]/) != null) {
+                            $scope.count[i][0] = 0;
+                            $scope.count[i][1] = $scope.numberArray[i][0].match(/\d+/g)[0];
+                            $scope.count[i][2] = $scope.numberArray[i][0].match(/\d+/g)[1];
+                            $scope.ingredientArray[i] = $scope.ingredientArray[i].replace("/", "");
+                        }
+                        if ($scope.numberArray[i].length == 1 && $scope.numberArray[i][0].match(/[/]/) == null) {
+                            $scope.count[i][0] = $scope.numberArray[i][0];
+                            $scope.count[i][1] = 0;
+                            $scope.count[i][2] = 2;
+                            $scope.ingredientArray[i] = $scope.ingredientArray[i].replace("/", "");
+                        }
+                        for (var n = 0; n < 3; n++) {
+                            $scope.ingredientArray[i] = $scope.ingredientArray[i].replace($scope.count[i][n], "");
+                        }
                     }
-                    if ($scope.numberArray[i].length == 1 && $scope.numberArray[i][0].match(/[/]/) != null) {
-                        $scope.count[i][0] = 0;
-                        $scope.count[i][1] = $scope.numberArray[i][0].match(/\d+/g)[0];
-                        $scope.count[i][2] = $scope.numberArray[i][0].match(/\d+/g)[1];
-                        $scope.ingredientArray[i] = $scope.ingredientArray[i].replace("/", "");
+                    else {
+                        $scope.count[i] = [0, 0, 2];
                     }
-                    if ($scope.numberArray[i].length == 1 && $scope.numberArray[i][0].match(/[/]/) == null) {
-                        $scope.count[i][0] = $scope.numberArray[i][0];
-                        $scope.count[i][1] = 0;
-                        $scope.count[i][2] = 2;
-                        $scope.ingredientArray[i] = $scope.ingredientArray[i].replace("/", "");
-                    }
-                    for (var n = 0; n < 3; n++) {
-                        $scope.ingredientArray[i] = $scope.ingredientArray[i].replace($scope.count[i][n], "");
+                    for (var n = 0 ; n < $scope.units.length ; n++) {
+                        for (var r = 0; r < $scope.units[n].name.length ; r++) {
+                            $scope.marker = $scope.ingredientArray[i].search(" " + $scope.units[n].name[r] + " ");
+                            if ($scope.marker != -1) {
+                                $scope.unit[i] = $scope.units[n].unit;
+                                $scope.ingredientArray[i] = $scope.ingredientArray[i].replace($scope.units[n].name[r], "");
+                            }
+                            if (r == $scope.units[n].name.length - 1 && $scope.unit[i] == undefined) {
+                                $scope.unit[i] = "";
+                            }
+                        }
                     }
                 }
                 else {
-                    $scope.count[i] = [0, 0, 2];
-                }
-                for (var n = 0 ; n < $scope.units.length ; n++) {
-                    for (var r = 0; r < $scope.units[n].name.length ; r++) {
-                        $scope.marker = $scope.ingredientArray[i].search(" " + $scope.units[n].name[r] + " ");
-                        if ($scope.marker != -1) {
-                            $scope.unit[i] = $scope.units[n].unit;
-                            $scope.ingredientArray[i] = $scope.ingredientArray[i].replace($scope.units[n].name[r], "");
-                        }
-                        if (r == $scope.units[n].name.length - 1 && $scope.unit[i] == undefined) {
-                            $scope.unit[i] = "";
-                        }
-                    }
+                    $scope.count[i][0] = $scope.ingredientArray[i].charAt($scope.ingredientArray[i].search(/\d \d/i));
+                    $scope.ingredientArray[i] = $scope.ingredientArray[i].replace(/\d /i, "");
+                    $scope.count[i][1] = 0;
+                    $scope.count[i][2] = 2;
+                    $scope.unit[i] = "";
+
                 }
                 $scope.ingredientArray[i] = $scope.ingredientArray[i].trim();
                 $scope.count[i][0] = Number($scope.count[i][0]);

@@ -34,8 +34,8 @@
                             <p>Ingredients:</p>
                             <ul id="ingredient">
                                 <li ng-repeat="n in x.ingredients">
-                                    <span>{{n.count[0]}}</span>
-                                    <span ng-hide="n.count[1]==0"> {{n.count[1]}}/{{n.count[2]}}</span>
+                                    <span ng-hide="n.count[0]===0">{{n.count[0]}}</span>
+                                    <span ng-hide="n.count[1]===0"> {{n.count[1]}}/{{n.count[2]}}</span>
                                     <span>{{n.unit}}</span>
                                     <span> </span>
                                     <span>{{n.name}}</span>

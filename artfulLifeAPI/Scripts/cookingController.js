@@ -1,11 +1,12 @@
 ﻿var recipeApp = angular.module("recipeApp");
-
-recipeApp.controller('cookingCtrl', function ($scope, $http) {
-    $scope.user = sessionStorage.getItem("user");
+recipeApp.controller("cookingCtrl", function ($scope, $http) {
     $scope.showPrep = true;
+    $scope.user = sessionStorage.getItem("user");
     $scope.recipes = [];
-    var getRecipeURI = "/api/Recipe?user=".concat($scope.user);
-    $http.get(getRecipeURI).success(function (data) {
+    $scope.ingredients = [];
+    $scope.stores = [];
+    $scope.storeIsClicked = [];
+    $http.get("/api/Recipe?user=".concat($scope.user)).success(function (data) {
         allRecipes = data;
         for (var i = 0 ; i < allRecipes.length ; i++) {
             if (allRecipes[i].owner === $scope.user) {
@@ -31,6 +32,5 @@ recipeApp.controller('cookingCtrl', function ($scope, $http) {
                 }
             }
         }
-        console.log("finished getting recipes");
-    });
+    })
 })

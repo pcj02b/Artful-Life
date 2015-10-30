@@ -95,12 +95,12 @@ recipeApp.controller("storeCtrl", function ($scope, $http) {
                 });
         });
     }
-    function setStoreIsClicked() {
+    var setStoreIsClicked = function() {
         for (var i = 0; i < $scope.ingredients.length; i++) {
             $scope.storeIsClicked[i] = false;
         }
     }
-    $scope.addStore = function () {
+    $scope.addStore = function() {
         var newStoreName = prompt("Enter the store name");
         var isDefault = confirm("Will " + newStoreName + " be your primary store?\nYes:OK No:Cancel")
         var output = {};
@@ -166,7 +166,7 @@ recipeApp.controller("storeCtrl", function ($scope, $http) {
         $scope.stores[index].defaultStore = true;
         $scope.updateStoreIngredientList();
     }
-    function isInStores(ingredientObject) {
+    var isInStores = function(ingredientObject) {
         var ingredientIndex = 0;
         var isThere = false;
         var storeIndex = 0;

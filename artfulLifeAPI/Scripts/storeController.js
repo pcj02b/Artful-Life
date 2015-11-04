@@ -1,6 +1,5 @@
 ﻿var recipeApp = angular.module("recipeApp");
-recipeApp.controller("storeCtrl", function ($scope, $http) {
-    $scope.user = sessionStorage.getItem("user");
+recipeApp.controller("storeCtrl", function ($scope, $http, AuthService) {
     $scope.recipes = [];
     var ogRecipes = [];
     $scope.ingredients = [];
@@ -9,6 +8,26 @@ recipeApp.controller("storeCtrl", function ($scope, $http) {
     $scope.defaultStoreIndex = -1;
     var allRecipes = [];
     var tempRecipe = {};
+
+    $scope.user = AuthService.getUser();
+    console.log($scope.user);
+    var logOut = document.getElementById("logOut");
+    var logIn = document.getElementById("logIn");
+    var logOutClass = document.createAttribute("class");
+    var logInClass = document.createAttribute("class");
+    logOutClass.value = "noDisplay";
+    logInClass.value = "noDisplay";
+    logOut.setAttributeNode(logOutClass);
+    logIn.setAttributeNode(logInClass);
+    if ($scope.user === undefined) {
+        logInClass.value = "yesDisplay";
+        logOutClass.value = "noDisplay";
+
+    }
+    else {
+        logOutClass.value = "yesDisplay";
+        logInClass.value = "noDisplay";
+    }
 
     $scope.seedData = function () {
         for (var i = 0; i < $scope.stores.length; i++) {
@@ -39,7 +58,17 @@ recipeApp.controller("storeCtrl", function ($scope, $http) {
     updateShopper = function() {
         $scope.$apply(function () {
             console.log("updating shopper");
-            $scope.user = sessionStorage.getItem("user");
+            $scope.user = AuthService.getUser();
+            if ($scope.user === undefined) {
+                logInClass.value = "yesDisplay";
+                logOutClass.value = "noDisplay";
+
+            }
+            else {
+                logOutClass.value = "yesDisplay";
+                logInClass.value = "noDisplay";
+            }
+
             console.log("updating shopper for " + $scope.user);
 
             $scope.recipes = [];

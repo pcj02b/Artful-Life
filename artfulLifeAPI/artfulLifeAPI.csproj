@@ -296,7 +296,7 @@
     <Content Include="Scripts\navBar.js" />
     <Content Include="Scripts\recipeApp.js" />
     <Content Include="Scripts\recipeController.js" />
-    <Content Include="Scripts\signIn.js" />
+    <Content Include="Scripts\homeController.js" />
     <Content Include="Scripts\storeController.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>

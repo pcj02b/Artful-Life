@@ -1,6 +1,12 @@
 ﻿html, body, section, aside {
     height:100vh;
 }
+.noDisplay{
+    display:none;
+}
+.yesDisplay{
+    display:initial;
+}
 body {
     font-family:Josefin Slab;
     margin:0px 16px;
@@ -223,7 +229,7 @@ table.recipe textarea.recipeName{
     height:40px;
     font-weight:inherit;
 }
-table.recipe ul#ingredient{
+table.recipe ul.ingredient{
     font-weight:normal;
     text-align:left;
 }

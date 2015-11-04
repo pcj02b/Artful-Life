@@ -1,10 +1,28 @@
 ﻿var recipeApp = angular.module("recipeApp");
 
-recipeApp.controller('recipeCtrl', function ($scope, $http) {
+recipeApp.controller('recipeCtrl', function ($scope, $http, AuthService) {
     $scope.recipes = [];
     var allRecipes = [];
     var tempRecipe = {};
-    $scope.user = sessionStorage.getItem("user");
+    $scope.user = AuthService.getUser();
+    console.log($scope.user);
+    var logOut = document.getElementById("logOut");
+    var logIn = document.getElementById("logIn");
+    var logOutClass = document.createAttribute("class");
+    var logInClass = document.createAttribute("class");
+    logOutClass.value = "noDisplay";
+    logInClass.value = "noDisplay";
+    logOut.setAttributeNode(logOutClass);
+    logIn.setAttributeNode(logInClass);
+    if ($scope.user === undefined) {
+        logInClass.value = "yesDisplay";
+        logOutClass.value = "noDisplay";
+
+    }
+    else {
+        logOutClass.value = "yesDisplay";
+        logInClass.value = "noDisplay";
+    }
 
     $http.get("/api/Units").success(function (data) {
         $scope.units = data;
@@ -65,7 +83,16 @@ recipeApp.controller('recipeCtrl', function ($scope, $http) {
 
     updateRecipes = function () {
         $scope.$apply(function () {
-            $scope.user = sessionStorage.getItem("user");
+            $scope.user = AuthService.getUser();
+            if ($scope.user === undefined) {
+                logInClass.value = "yesDisplay";
+                logOutClass.value = "noDisplay";
+
+            }
+            else {
+                logOutClass.value = "yesDisplay";
+                logInClass.value = "noDisplay";
+            }
             console.log("updating recipes for " + $scope.user);
             $scope.recipes = [];
             console.log($scope.recipes.length);

@@ -12,8 +12,6 @@ recipeApp.factory("AuthService", function () {
         console.log("ID Token: " + id_token);
 
         currentUser = profile.getEmail();
-        console.log("type of updateStores: " + typeof (updateStores));
-        console.log("type of updateRecipes: " + typeof (updateRecipes));
 
         if (typeof (updateShopper) != "undefined") {
             console.log("ran update Shopper")

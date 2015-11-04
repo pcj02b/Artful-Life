@@ -19,7 +19,8 @@ recipeApp.controller("cookingCtrl", function ($scope, $http, AuthService) {
     else {
         logOutClass.value = "yesDisplay";
         logInClass.value = "noDisplay";
-    } $scope.recipes = [];
+    }
+    $scope.recipes = [];
     $scope.ingredients = [];
     $scope.stores = [];
     $scope.storeIsClicked = [];
@@ -61,6 +62,7 @@ recipeApp.controller("cookingCtrl", function ($scope, $http, AuthService) {
             logOutClass.value = "yesDisplay";
             logInClass.value = "noDisplay";
         }
+        $scope.recipes = [];
         $http.get("/api/Recipe?user=".concat($scope.user)).success(function (data) {
             allRecipes = data;
             for (var i = 0 ; i < allRecipes.length ; i++) {

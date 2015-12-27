@@ -179,7 +179,8 @@ aside p{
     padding:0px;
 }
 article{
-    display:inline;
+    width:calc(100% - 210px);
+    float:left;
 }
 section{
     margin:0px; 
@@ -195,7 +196,7 @@ section ul{
 }
 
 table.recipe{
-    min-width:600px;
+    width:100%;
     box-sizing:border-box;
     /*border-collapse:collapse;*/
     box-sizing:border-box;

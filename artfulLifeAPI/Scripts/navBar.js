@@ -36,4 +36,16 @@
         $("section").css("min-height", sectionHeight);
         $("aside").css("height", asideHeight);
     });
+    $(".recipe").change(function () {
+        bodyHeightValue = $("body").outerHeight(true);
+        headerHeight = $("header").outerHeight(true);
+        navHeightValue = $("nav").outerHeight(true);
+
+        asideHeightValue = (bodyHeightValue + scrollTop - headerHeight - navHeightValue);
+        asideHeight = asideHeightValue + "px";
+        sectionHeightValue = (bodyHeightValue - headerHeight);
+        sectionHeight = sectionHeightValue + "px";
+        $("section").css("min-height", sectionHeight);
+        $("aside").css("height", asideHeight);
+    });
 });

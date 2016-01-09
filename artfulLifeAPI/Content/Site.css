@@ -1,5 +1,5 @@
-﻿html, body, section, aside {
-    height:100vh;
+﻿html, body, article, aside{
+    height:100%;
 }
 body {
     font-family:Josefin Slab;
@@ -42,6 +42,9 @@ nav a{
 }
 nav a:hover, a:active{
     background-color:rgba(180, 60, 180, 0.9);
+}
+
+section {
 }
 .float-left {
     float: left;
@@ -104,18 +107,15 @@ hr{color:rgba(180, 60, 180, 0.5);}
 }
 
 aside{
-    float:left;
-    min-width:180px;
-    max-width:200px;
-    min-height:100vh;
+    float: left;
+    width: 200px;
     background-color:lightgrey;
-    margin:0px 8px 0px 0px;
-    padding:0px;
+    margin: 0;
+    padding: 4px;
     line-height:28px;
     text-align:center;
     box-sizing:border-box;
     overflow:auto;
-    min-height:100vh;
 }
 aside ul{
     margin:0px;
@@ -166,7 +166,9 @@ aside p{
     padding:0px;
 }
 article{
-    display:inline;
+    width: calc(100% - 208px);
+    float: left;
+    padding: 4px 0 4px 4px;
 }
 section{
     margin:0px; 
@@ -182,12 +184,9 @@ section ul{
 }
 
 table.recipe{
-    min-width:600px;
-    box-sizing:border-box;
-    /*border-collapse:collapse;*/
     box-sizing:border-box;
     font-size:14pt;
-    float:left;
+    width: 100%;
 }
 table.recipe p{
     font-weight:bold;
@@ -619,9 +618,6 @@ input[type="checkbox"].input-validation-error {
         }
 
     /* menu */
-    nav {
-        margin-bottom: 5px;
-    }
 
     ul#menu {
         margin: 0;

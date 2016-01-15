@@ -1,57 +1,62 @@
 ﻿@{
     ViewBag.Title = "Artful Cooking";
 }
-<!DOCTYPE html>
-<html>
-<body ng-app="recipeApp">
-    <section ng-controller="recipeCtrl">
-        <aside>
-            <ul>
-                <li ng-repeat="x in recipes">
-                    <span ng-show="x.included">
-                        <span>{{x.name}}
-                        x </span>{{x.multiplier}}
-                    </span>
-                </li>
-            </ul>
-        </aside>
-        <article>
-            <h4>Cooking Instructions</h4>
-            <p><b>The Idea: </b>Prepare any one of the recipes that are ready to be cooked from your freezer.</p>
-            <div ng-repeat="x in recipes">
-                <table id="recipe" ng-show="x.included">
-                    <tr>
-                        <th colspan="2">
-                            {{x.name}}
-                        </th>
-                    </tr>
-                    <tr>
-                        <td rowspan="2">
-                            <p>Ingredients:</p>
-                            <ul id="ingredient">
-                                <li ng-repeat="n in x.ingredients">
-                                    <span>{{n.count * x.multiplier}}</span>
-                                    <span> </span>
-                                    <span>{{n.unit}}</span>
-                                    <span> </span>
-                                    <span>{{n.name}}</span>
-                                </li>
-                            </ul>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <p>Cooking Instructions:</p>
-                            <ol>
-                                <li ng-repeat="x in x.cook">
-                                    {{x.step}}
-                                </li>
-                            </ol>
-                        </td>
-                    </tr>
-                </table>
-            </div>
-        </article>
-    </section>
-</body>
-</html>
+
+<section ng-controller="cookingCtrl">
+    <aside>
+        <ul>
+            <li ng-show="showPrep" ng-click="showPrep = false" class="title-link">Prep Instructions</li>
+            <li ng-hide="showPrep" ng-click="showPrep = true" class="title-link">Cooking Instructions</li>
+            <li ng-repeat="x in recipes" class="noHighlight">
+                <span ng-show="x.included">
+                    {{x.name}}
+                    x
+                    {{x.multiplier}}
+                </span>
+            </li>
+        </ul>
+    </aside>
+    <article>
+        <h4>Cooking Instructions</h4>
+        <p><b>The Idea: </b>Prepare the recipes you've shopped for or cook the meals that are ready to go in your freezer. Click the title on the left to switch between preparation and cooking instructions.</p>
+        <div ng-repeat="x in recipes">
+            <table class="recipe" ng-show="x.included">
+                <tr>
+                    <th colspan="2">
+                        {{x.name}}
+                    </th>
+                </tr>
+                <tr>
+                    <td>
+                        <p>Ingredients:</p>
+                        <ul id="ingredient">
+                            <li ng-repeat="n in x.ingredients">
+                                <span>{{n.count[0]}}</span>
+                                <span ng-hide="n.count[1]==0"> {{n.count[1]}}/{{n.count[2]}}</span>
+                                <span>{{n.unit}}</span>
+                                <span> </span>
+                                <span>{{n.name}}</span>
+                            </li>
+                        </ul>
+                    </td>
+                    <td ng-show="showPrep">
+                        <p>Preparation Instructions:</p>
+                        <ol>
+                            <li ng-repeat="x in x.prep">
+                                {{x.step}}
+                            </li>
+                        </ol>
+                    </td>
+                    <td ng-hide="showPrep">
+                        <p>Cooking Instructions:</p>
+                        <ol>
+                            <li ng-repeat="x in x.cook">
+                                {{x.step}}
+                            </li>
+                        </ol>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </article>
+</section>

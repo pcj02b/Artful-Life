@@ -7,7 +7,7 @@ namespace artfulLifeAPI.Models
 {
     public class Ingredient
     {
-        public int count { get; set; }
+        public IEnumerable<float> count { get; set; }
         public string unit { get; set; }
         public string name { get; set; }
     }

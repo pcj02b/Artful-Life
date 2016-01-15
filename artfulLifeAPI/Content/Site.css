@@ -1,10 +1,14 @@
-﻿html {
+﻿html, body, article, aside{
     height:100%;
+}
+.noDisplay{
+    display:none;
+}
+.yesDisplay{
+    display:initial;
 }
 body {
     font-family:Josefin Slab;
-    height:100%;
-    position:relative;
     margin:0px 16px;
 }
 
@@ -13,7 +17,6 @@ header{
     padding:0px;
     text-align:center;
 }
-
 nav{
     background-color:grey;
     border:1px solid black;
@@ -33,7 +36,7 @@ nav ul{
 nav li {
     float:left;
     width:14.28%;
-    min-width:204px;
+    min-width:100px;
 }
 nav a{
     color:white;
@@ -45,6 +48,9 @@ nav a{
 }
 nav a:hover, a:active{
     background-color:rgba(180, 60, 180, 0.9);
+}
+
+section {
 }
 .float-left {
     float: left;
@@ -85,33 +91,52 @@ h5, h6 {
     margin:0px; 
 }
 
-hr{color:rgba(180, 60, 180, 0.5);}
+hr{color:rgb(180, 60, 180);}
 
+.alert {
+    color:red;
+    font-weight:bold;
+}
 
 /* main layout
 ----------------------------------------------------------*/
+.link:hover{
+    background-color:rgba(180, 60, 180, 0.75);
+}
+.title-link{
+    border-bottom:2px solid rgba(180, 60, 180, 0.9);
+    padding-bottom:2px;
+    font-weight:bold;
+}
+.title-link:hover{
+    background-color:rgba(180, 60, 180, 0.9);
+}
+
 aside{
-    float:left;
-    min-width:180px;
-    max-width:200px;
-    height:100%;
+    float: left;
+    width: 200px;
     background-color:lightgrey;
-    margin:0px 8px 0px 0px;
-    padding:0px;
+    margin: 0;
+    padding: 4px;
     line-height:28px;
     text-align:center;
     box-sizing:border-box;
+    overflow:auto;
 }
 aside ul{
     margin:0px;
     padding:0px;
     list-style-type:none;
 }
+aside ul p.store{
+    font-weight:bold;
+    border-bottom:1px solid grey;
+}
 aside.stores{
     float:right;
     height:initial;
 }
-aside.stores li.noHighlight:hover{
+.noHighlight:hover{
     background-color:initial;
 }
 aside li {
@@ -136,8 +161,11 @@ aside li.lineBottom:last-child{
 aside li.lineTop{
     border-top:2px solid rgba(180, 60, 180, 0.9);
 }
-aside li:hover{
-    background-color:rgba(180, 60, 180, 0.9);
+li.stores:last-child{
+    border-bottom:1px solid grey;
+}
+aside li.ingredient:last-child{
+        border-bottom:1px solid grey;
 }
 aside a{
     text-decoration:none;
@@ -151,13 +179,14 @@ aside p{
     padding:0px;
 }
 article{
-    display:inline;
+    width: calc(100% - 208px);
+    float: left;
+    padding: 4px 0 4px 4px;
 }
 section{
     margin:0px; 
     padding:0px;
     box-sizing:border-box;
-    height:100%;
 }
 section textarea{
     min-width:250px;
@@ -167,45 +196,54 @@ section ul{
     font-size:large;
 }
 
-table#recipe{
-    min-width:600px;
-    box-sizing:border-box;
-    border-collapse:collapse;
+table.recipe{
     box-sizing:border-box;
     font-size:14pt;
-    margin:0px;
-    float:left;
+    width: 100%;
 }
-table#recipe p{
-    font-weight:bold;
-}
-table#recipe table,th,tr,td{
+table.recipe form{
     border:1px solid black;
 }
-table#recipe th{
+
+table.recipe p{
+    font-weight:bold;
+}
+table.recipe table,th,tr,td{
+    border:1px solid black;
+}
+table.recipe th{
     font-size:24pt;
     padding:8px;
     text-align:center;
 }
-table#recipe textarea{
+table.recipe textarea{
     width:100%; 
     box-sizing:border-box;
     font-family:Josefin Slab;
     height:20px;
 }
-table#recipe textarea#recipeName{
+table.recipe textarea.recipeName{
     font-size:x-large;
     text-align:center;
     height:40px;
     font-weight:inherit;
 }
-table#recipe ul#ingredient{
+table.recipe ul.ingredient{
     font-weight:normal;
     text-align:left;
 }
+
+.selected{
+    background-color:rgba(180, 60, 180, 0.75)
+}
+
+td.steps{
+min-width:250px;
+max-width:400px;
+}
 table.store{
     float:left;
-    min-width: 200px;
+    min-width: 250px;
 }
 table.store th{
     font-size:x-large;
@@ -601,9 +639,6 @@ input[type="checkbox"].input-validation-error {
         }
 
     /* menu */
-    nav {
-        margin-bottom: 5px;
-    }
 
     ul#menu {
         margin: 0;

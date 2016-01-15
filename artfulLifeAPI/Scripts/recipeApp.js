@@ -1,118 +1,65 @@
 ﻿var recipeApp = angular.module('recipeApp', []);
 
-recipeApp.controller('recipeCtrl', function ($scope, $http) {
-    $scope.recipes = [];
-    $http.get("http://localhost:60864/Data/recipes.json").success(function (response) {
-        $scope.recipes = response.recipes;
-    });
-    $scope.showDisplayTable = false;
-    $scope.showCreationTable = false;
-    $scope.showEditingTable = false;
+recipeApp.factory("AuthService", function () {
+    var currentUser;
+    onSignIn = function (googleUser) {
+        var profile = googleUser.getBasicProfile();
+        console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
+        console.log('Name: ' + profile.getName());
+        console.log('Image URL: ' + profile.getImageUrl());
+        console.log('Email: ' + profile.getEmail());
+        var id_token = googleUser.getAuthResponse().id_token;
+        console.log("ID Token: " + id_token);
 
-    $scope.newName = "";
-    $scope.newIngredients = [];
-    $scope.newIngredient = [];
-    $scope.newIngredientCount = 1;
-    $scope.newIngredientUnit = "";
-    $scope.newIngredientName = "";
-    $scope.newPrep = [];
-    $scope.newPrepStep = "";
-    $scope.newCook = [];
-    $scope.newCookStep = "";
+        currentUser = profile.getEmail();
 
-    $scope.editingRecipe = []
-    selectedRecipeIndex = 0;
-
-    $scope.selectRecipe = function (name, ingredients, prep, cook) {
-        $scope.showDisplayTable = true;
-        $scope.showCreationTable = false;
-        $scope.showEditingTable = false;
-        for (var i = 0; i < $scope.recipes.length; i++) {
-            if (angular.equals(name, $scope.recipes[i].name)) {
-                selectedRecipeIndex = i;
-                break;
+        if (typeof (updateShopper) != "undefined") {
+            console.log("ran update Shopper")
+            updateShopper();
+        }
+        if (typeof (updateRecipes) != "undefined") {
+            console.log("ran update Recipes")
+            updateRecipes();
+        }
+        if (typeof (updateHome) != "undefined") {
+            console.log("ran update Home")
+            updateHome();
+        }
+        if (typeof (updateCooking) != "undefined") {
+            console.log("ran update Cooking")
+            updateCooking();
+        }
+    };
+    signOut = function () {
+        var auth2 = gapi.auth2.getAuthInstance();
+        auth2.signOut().then(function () {
+            console.log('User signed out.');
+            currentUser = undefined;
+            if (typeof (updateShopper) != "undefined") {
+                console.log("ran update Shopper")
+                updateShopper();
             }
-        }
-        $scope.recipes[selectedRecipeIndex].included = true;
-        $scope.selectedRecipe = $scope.recipes[selectedRecipeIndex];
-        $scope.showTable = true;
-        $scope.selectedName = name;
-        $scope.selectedIngredients = ingredients;
-        $scope.selectedPrep = prep;
-        $scope.selectedCook = cook;
-    }
-    $scope.addIngredient = function () {
-        $scope.newIngredients.push({ count: $scope.newIngredientCount, unit: $scope.newIngredientUnit, ingredient: $scope.newIngredientName, included: false, store: -1 });
-        $scope.newIngredient = [];
-        $scope.newIngredientCount = 1;
-        $scope.newIngredientUnit = "";
-        $scope.newIngredientName = "";
-    }
-    $scope.addPrepStep = function () {
-        $scope.newPrep.push({ step: $scope.newPrepStep });
-        $scope.newPrepStep = "";
-    }
-    $scope.addCookStep = function () {
-        $scope.newCook.push({ step: $scope.newCookStep });
-        $scope.newCookStep = "";
-    }
-    $scope.saveNewRecipe = function () {
-        var alreadyThere = false;
-        for (var i = 0; i < $scope.recipes.length; i++) {
-            if (angular.equals($scope.newName, $scope.recipes[i].name)) {
-                alreadyThere = true;
+            if (typeof (updateRecipes) != "undefined") {
+                console.log("ran update Recipes")
+                updateRecipes();
             }
-        }
-        if (!alreadyThere) {
-            $scope.recipes.push({ name: $scope.newName, ingredients: $scope.newIngredients, prep: $scope.newPrep, cook: $scope.newCook });
-            $http.post("http://localhost:60864/Data/recipes.json", $scope.recipes).success(function (data, status) {
-                window.alert("good stuff");
-            })
-            .error(function (data, status) {
-                window.alert(status);
-            });
-            window.alert("data saved");
-        }
-        else { window.alert("already there"); }
-        $scope.showTable = true;
+            if (typeof (updateHome) != "undefined") {
+                console.log("ran update Home")
+                updateHome();
+            }
+            if (typeof (updateCooking) != "undefined") {
+                console.log("ran update Cooking")
+                updateCooking();
+            }
+        });
+    };
 
-    }
-    $scope.addRecipe = function () {
-        $scope.showDisplayTable = false;
-        $scope.showCreationTable = true;
-        $scope.showEditingTable = false;
-        $scope.selectedName = "";
-        $scope.selectedIngredients = [];
-        $scope.selectedPrep = "";
-        $scope.selectedCook = "";
-    }
-    $scope.editRecipe = function () {
-        $scope.showDisplayTable = false;
-        $scope.showCreationTable = false;
-        $scope.showEditingTable = true;
-        $scope.editingRecipe = $scope.recipes[selectedRecipeIndex];
-    }
-    $scope.addToEditingIngredients = function () {
-        $scope.editingRecipe.ingredients.push({ count: $scope.newIngredientCount, unit: $scope.newIngredientUnit, ingredient: $scope.newIngredientName, included: false, store: -1 });
-        $scope.newIngredient = [];
-        $scope.newIngredientCount = 1;
-        $scope.newIngredientUnit = "";
-        $scope.newIngredientName = "";
-    }
-    $scope.addToEditingPrep = function () {
-        $scope.editingRecipe.prep.push({ step: $scope.newPrepStep });
-        $scope.newPrepStep = "";
-    }
-    $scope.addToEditingCook = function () {
-        $scope.editingRecipe.cook.push({ step: $scope.newCookStep });
-        $scope.newCookStep = "";
-    }
-    $scope.saveEditedRecipe = function () {
-        if (confirm("Save changes to " + $scope.recipes[selectedRecipeIndex].name)) {
-            $scope.recipes[selectedRecipeIndex] = $scope.editingRecipe;
+    return {
+        setUser: function (user) {
+            currentUser = user;
+        },
+        getUser: function () {
+            return currentUser;
         }
-        $scope.showDisplayTable = true;
-        $scope.showCreationTable = false;
-        $scope.showEditingTable = false;
-    }
+    };
 });

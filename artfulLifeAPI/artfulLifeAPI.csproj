@@ -20,6 +20,16 @@
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
+    <MvcProjectUpgradeChecked>true</MvcProjectUpgradeChecked>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>12.0</OldToolsVersion>
+<<<<<<< HEAD
+=======
+    <UseGlobalApplicationHostFile />
+>>>>>>> refs/remotes/origin/master
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -179,6 +189,7 @@
     <Compile Include="Controllers\IngredientsController.cs" />
     <Compile Include="Controllers\RecipeController.cs" />
     <Compile Include="Controllers\StoreController.cs" />
+    <Compile Include="Controllers\UnitsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -188,6 +199,8 @@
     <Compile Include="Models\Prep.cs" />
     <Compile Include="Models\Recipe.cs" />
     <Compile Include="Models\Store.cs" />
+    <Compile Include="Models\Stores.cs" />
+    <Compile Include="Models\Units.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -260,16 +273,22 @@
     <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\HelpPageApiModel.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\ApiGroup.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\Api.cshtml" />
-    <Content Include="ClassDiagram1.cd" />
     <Content Include="Areas\RecipeTest\Views\Web.config" />
     <Content Include="Areas\RecipeTest\Views\Test\Index.cshtml" />
-    <Content Include="ClassDiagram2.cd" />
     <Content Include="Data\recipes.json" />
     <Content Include="Data\stores.json" />
     <Content Include="Data\ingredients.json" />
+    <Content Include="Data\units.json" />
+    <None Include="Properties\PublishProfiles\artfullife - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\artfullife.pubxml" />
     <None Include="Scripts\jquery-1.8.2.intellisense.js" />
     <Content Include="Images\deleteIcon.png" />
+    <Content Include="Scripts\cookingController.js" />
+<<<<<<< HEAD
+=======
+    <Content Include="Scripts\googleSignIn.js" />
+    <Content Include="Scripts\headerController.js" />
+>>>>>>> refs/remotes/origin/master
     <Content Include="Scripts\jquery-1.8.2.js" />
     <Content Include="Scripts\jquery-1.8.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
@@ -286,8 +305,8 @@
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\navBar.js" />
     <Content Include="Scripts\recipeApp.js" />
-    <Content Include="Scripts\ingredientApp.js" />
     <Content Include="Scripts\recipeController.js" />
+    <Content Include="Scripts\homeController.js" />
     <Content Include="Scripts\storeController.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -325,13 +344,11 @@
     <Content Include="Views\Home\ArtfulShopper.cshtml" />
     <Content Include="Views\Home\ArtfulResourceful.cshtml" />
     <Content Include="Views\Home\TipsAndAdvise.cshtml" />
-    <Content Include="Views\Home\ArtfulStores.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\RecipeTest\Models\" />
     <Folder Include="Areas\RecipeTest\Views\Shared\" />
-    <Folder Include="JavaScript\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

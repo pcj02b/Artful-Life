@@ -17,9 +17,15 @@
             ],
             "included": false,
             "multiplier": 1,
+<<<<<<< HEAD
             "owner": "phillip.c.jacobs@gmail.com",
             "editors": [],
             "viewers": []
+=======
+            "owner": "eyJhbGciOiJSUzI1NiIsImtpZCI6IjM4OTI4NmI0M2Q4YjA2NmFlNDI3ZWE3ZGE1YzJhNzU3ZDA0ODcyMDkifQ.eyJpc3MiOiJhY2NvdW50cy5nb29nbGUuY29tIiwiYXRfaGFzaCI6Im1CdlNZUV9nRTROWjRYMm9PZExYMXciLCJhdWQiOiI1MDYxODEyMjU5NTgtMjZsNm9wMWRiNjkxdGVoc2VxNnFmcDExZWV0amtvYTUuYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJzdWIiOiIxMTM1NDk1MTU2NjkxNDEwNjY5MTQiLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiYXpwIjoiNTA2MTgxMjI1OTU4LTI2bDZvcDFkYjY5MXRlaHNlcTZxZnAxMWVldGprb2E1LmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwiZW1haWwiOiJwaGlsbGlwLmMuamFjb2JzQGdtYWlsLmNvbSIsImlhdCI6MTQ0MDYzMDY4NywiZXhwIjoxNDQwNjM0Mjg3LCJuYW1lIjoiUGhpbGxpcCBKYWNvYnMiLCJwaWN0dXJlIjoiaHR0cHM6Ly9saDUuZ29vZ2xldXNlcmNvbnRlbnQuY29tLy1lNEZoa1Z0QVpXVS9BQUFBQUFBQUFBSS9BQUFBQUFBQUNsWS8tNFg2MWFqMjVXQS9zOTYtYy9waG90by5qcGciLCJnaXZlbl9uYW1lIjoiUGhpbGxpcCIsImZhbWlseV9uYW1lIjoiSmFjb2JzIiwibG9jYWxlIjoiZW4ifQ.KUCYkbNnPd5OmToqVOBZBPHKUF5uc2waXfac0Arde-aKhODIB8japt_fRHJGcSVY4wSLCV-O5Pn-XJKkqAKi4eilPetGcCcKjbCAChERF3xGxfxH9ccln93rdlx3TnnMm_HXoAH_racY4fwWewJXsIAfn_MWttshNM3k53wVGUMq8kFEBhEmP8qYf-6DpgcLtLesfO9GnmQwUKP0vyFYNwV5P--IADDVPwoaJFEYtaBgp48_8vSz_2rZIt2MciKWbJO7JBDwcZeOzvtcW3avZ8EjazCMWGm7R-wy3XmAx-SsE3wVMGkooVtUtY4j1GnRGj9Ewh9l6Fqaytk5Mew4eg",
+            "editers": [ ],
+            "viewers": [ ]
+>>>>>>> refs/remotes/origin/master
         },
         {
             "name": "Recipe 2",
@@ -38,9 +44,15 @@
             ],
             "included": true,
             "multiplier": 1,
+<<<<<<< HEAD
             "owner": "phillip.c.jacobs@gmail.com",
             "editors": [],
             "viewers": []
+=======
+            "owner": "eyJhbGciOiJSUzI1NiIsImtpZCI6IjM4OTI4NmI0M2Q4YjA2NmFlNDI3ZWE3ZGE1YzJhNzU3ZDA0ODcyMDkifQ.eyJpc3MiOiJhY2NvdW50cy5nb29nbGUuY29tIiwiYXRfaGFzaCI6Im1CdlNZUV9nRTROWjRYMm9PZExYMXciLCJhdWQiOiI1MDYxODEyMjU5NTgtMjZsNm9wMWRiNjkxdGVoc2VxNnFmcDExZWV0amtvYTUuYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJzdWIiOiIxMTM1NDk1MTU2NjkxNDEwNjY5MTQiLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiYXpwIjoiNTA2MTgxMjI1OTU4LTI2bDZvcDFkYjY5MXRlaHNlcTZxZnAxMWVldGprb2E1LmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwiZW1haWwiOiJwaGlsbGlwLmMuamFjb2JzQGdtYWlsLmNvbSIsImlhdCI6MTQ0MDYzMDY4NywiZXhwIjoxNDQwNjM0Mjg3LCJuYW1lIjoiUGhpbGxpcCBKYWNvYnMiLCJwaWN0dXJlIjoiaHR0cHM6Ly9saDUuZ29vZ2xldXNlcmNvbnRlbnQuY29tLy1lNEZoa1Z0QVpXVS9BQUFBQUFBQUFBSS9BQUFBQUFBQUNsWS8tNFg2MWFqMjVXQS9zOTYtYy9waG90by5qcGciLCJnaXZlbl9uYW1lIjoiUGhpbGxpcCIsImZhbWlseV9uYW1lIjoiSmFjb2JzIiwibG9jYWxlIjoiZW4ifQ.KUCYkbNnPd5OmToqVOBZBPHKUF5uc2waXfac0Arde-aKhODIB8japt_fRHJGcSVY4wSLCV-O5Pn-XJKkqAKi4eilPetGcCcKjbCAChERF3xGxfxH9ccln93rdlx3TnnMm_HXoAH_racY4fwWewJXsIAfn_MWttshNM3k53wVGUMq8kFEBhEmP8qYf-6DpgcLtLesfO9GnmQwUKP0vyFYNwV5P--IADDVPwoaJFEYtaBgp48_8vSz_2rZIt2MciKWbJO7JBDwcZeOzvtcW3avZ8EjazCMWGm7R-wy3XmAx-SsE3wVMGkooVtUtY4j1GnRGj9Ewh9l6Fqaytk5Mew4eg",
+            "editers": [ ],
+            "viewers": [ ]
+>>>>>>> refs/remotes/origin/master
         },
         {
             "name": "Recipe 3",
@@ -59,9 +71,15 @@
             ],
             "included": false,
             "multiplier": 1,
+<<<<<<< HEAD
             "owner": "phillip.c.jacobs@gmail.com",
             "editors": [],
             "viewers": []
+=======
+            "owner": "eyJhbGciOiJSUzI1NiIsImtpZCI6IjM4OTI4NmI0M2Q4YjA2NmFlNDI3ZWE3ZGE1YzJhNzU3ZDA0ODcyMDkifQ.eyJpc3MiOiJhY2NvdW50cy5nb29nbGUuY29tIiwiYXRfaGFzaCI6Im1CdlNZUV9nRTROWjRYMm9PZExYMXciLCJhdWQiOiI1MDYxODEyMjU5NTgtMjZsNm9wMWRiNjkxdGVoc2VxNnFmcDExZWV0amtvYTUuYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJzdWIiOiIxMTM1NDk1MTU2NjkxNDEwNjY5MTQiLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiYXpwIjoiNTA2MTgxMjI1OTU4LTI2bDZvcDFkYjY5MXRlaHNlcTZxZnAxMWVldGprb2E1LmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwiZW1haWwiOiJwaGlsbGlwLmMuamFjb2JzQGdtYWlsLmNvbSIsImlhdCI6MTQ0MDYzMDY4NywiZXhwIjoxNDQwNjM0Mjg3LCJuYW1lIjoiUGhpbGxpcCBKYWNvYnMiLCJwaWN0dXJlIjoiaHR0cHM6Ly9saDUuZ29vZ2xldXNlcmNvbnRlbnQuY29tLy1lNEZoa1Z0QVpXVS9BQUFBQUFBQUFBSS9BQUFBQUFBQUNsWS8tNFg2MWFqMjVXQS9zOTYtYy9waG90by5qcGciLCJnaXZlbl9uYW1lIjoiUGhpbGxpcCIsImZhbWlseV9uYW1lIjoiSmFjb2JzIiwibG9jYWxlIjoiZW4ifQ.KUCYkbNnPd5OmToqVOBZBPHKUF5uc2waXfac0Arde-aKhODIB8japt_fRHJGcSVY4wSLCV-O5Pn-XJKkqAKi4eilPetGcCcKjbCAChERF3xGxfxH9ccln93rdlx3TnnMm_HXoAH_racY4fwWewJXsIAfn_MWttshNM3k53wVGUMq8kFEBhEmP8qYf-6DpgcLtLesfO9GnmQwUKP0vyFYNwV5P--IADDVPwoaJFEYtaBgp48_8vSz_2rZIt2MciKWbJO7JBDwcZeOzvtcW3avZ8EjazCMWGm7R-wy3XmAx-SsE3wVMGkooVtUtY4j1GnRGj9Ewh9l6Fqaytk5Mew4eg",
+            "editers": [ ],
+            "viewers": [ ]
+>>>>>>> refs/remotes/origin/master
         },
         {
             "name": "Recipe 4",
@@ -80,9 +98,15 @@
             ],
             "included": true,
             "multiplier": 2,
+<<<<<<< HEAD
             "owner": "phillip.c.jacobs@gmail.com",
             "editors": [],
             "viewers": []
+=======
+            "owner": "eyJhbGciOiJSUzI1NiIsImtpZCI6IjM4OTI4NmI0M2Q4YjA2NmFlNDI3ZWE3ZGE1YzJhNzU3ZDA0ODcyMDkifQ.eyJpc3MiOiJhY2NvdW50cy5nb29nbGUuY29tIiwiYXRfaGFzaCI6Im1CdlNZUV9nRTROWjRYMm9PZExYMXciLCJhdWQiOiI1MDYxODEyMjU5NTgtMjZsNm9wMWRiNjkxdGVoc2VxNnFmcDExZWV0amtvYTUuYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJzdWIiOiIxMTM1NDk1MTU2NjkxNDEwNjY5MTQiLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiYXpwIjoiNTA2MTgxMjI1OTU4LTI2bDZvcDFkYjY5MXRlaHNlcTZxZnAxMWVldGprb2E1LmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwiZW1haWwiOiJwaGlsbGlwLmMuamFjb2JzQGdtYWlsLmNvbSIsImlhdCI6MTQ0MDYzMDY4NywiZXhwIjoxNDQwNjM0Mjg3LCJuYW1lIjoiUGhpbGxpcCBKYWNvYnMiLCJwaWN0dXJlIjoiaHR0cHM6Ly9saDUuZ29vZ2xldXNlcmNvbnRlbnQuY29tLy1lNEZoa1Z0QVpXVS9BQUFBQUFBQUFBSS9BQUFBQUFBQUNsWS8tNFg2MWFqMjVXQS9zOTYtYy9waG90by5qcGciLCJnaXZlbl9uYW1lIjoiUGhpbGxpcCIsImZhbWlseV9uYW1lIjoiSmFjb2JzIiwibG9jYWxlIjoiZW4ifQ.KUCYkbNnPd5OmToqVOBZBPHKUF5uc2waXfac0Arde-aKhODIB8japt_fRHJGcSVY4wSLCV-O5Pn-XJKkqAKi4eilPetGcCcKjbCAChERF3xGxfxH9ccln93rdlx3TnnMm_HXoAH_racY4fwWewJXsIAfn_MWttshNM3k53wVGUMq8kFEBhEmP8qYf-6DpgcLtLesfO9GnmQwUKP0vyFYNwV5P--IADDVPwoaJFEYtaBgp48_8vSz_2rZIt2MciKWbJO7JBDwcZeOzvtcW3avZ8EjazCMWGm7R-wy3XmAx-SsE3wVMGkooVtUtY4j1GnRGj9Ewh9l6Fqaytk5Mew4eg",
+            "editers": [ ],
+            "viewers": [ ]
+>>>>>>> refs/remotes/origin/master
         },
         {
             "name": "Recipe 5",
@@ -101,9 +125,15 @@
             ],
             "included": false,
             "multiplier": 1,
+<<<<<<< HEAD
             "owner": "phillip.c.jacobs@gmail.com",
             "editors": [],
             "viewers": []
+=======
+            "owner": "eyJhbGciOiJSUzI1NiIsImtpZCI6IjM4OTI4NmI0M2Q4YjA2NmFlNDI3ZWE3ZGE1YzJhNzU3ZDA0ODcyMDkifQ.eyJpc3MiOiJhY2NvdW50cy5nb29nbGUuY29tIiwiYXRfaGFzaCI6Im1CdlNZUV9nRTROWjRYMm9PZExYMXciLCJhdWQiOiI1MDYxODEyMjU5NTgtMjZsNm9wMWRiNjkxdGVoc2VxNnFmcDExZWV0amtvYTUuYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJzdWIiOiIxMTM1NDk1MTU2NjkxNDEwNjY5MTQiLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiYXpwIjoiNTA2MTgxMjI1OTU4LTI2bDZvcDFkYjY5MXRlaHNlcTZxZnAxMWVldGprb2E1LmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwiZW1haWwiOiJwaGlsbGlwLmMuamFjb2JzQGdtYWlsLmNvbSIsImlhdCI6MTQ0MDYzMDY4NywiZXhwIjoxNDQwNjM0Mjg3LCJuYW1lIjoiUGhpbGxpcCBKYWNvYnMiLCJwaWN0dXJlIjoiaHR0cHM6Ly9saDUuZ29vZ2xldXNlcmNvbnRlbnQuY29tLy1lNEZoa1Z0QVpXVS9BQUFBQUFBQUFBSS9BQUFBQUFBQUNsWS8tNFg2MWFqMjVXQS9zOTYtYy9waG90by5qcGciLCJnaXZlbl9uYW1lIjoiUGhpbGxpcCIsImZhbWlseV9uYW1lIjoiSmFjb2JzIiwibG9jYWxlIjoiZW4ifQ.KUCYkbNnPd5OmToqVOBZBPHKUF5uc2waXfac0Arde-aKhODIB8japt_fRHJGcSVY4wSLCV-O5Pn-XJKkqAKi4eilPetGcCcKjbCAChERF3xGxfxH9ccln93rdlx3TnnMm_HXoAH_racY4fwWewJXsIAfn_MWttshNM3k53wVGUMq8kFEBhEmP8qYf-6DpgcLtLesfO9GnmQwUKP0vyFYNwV5P--IADDVPwoaJFEYtaBgp48_8vSz_2rZIt2MciKWbJO7JBDwcZeOzvtcW3avZ8EjazCMWGm7R-wy3XmAx-SsE3wVMGkooVtUtY4j1GnRGj9Ewh9l6Fqaytk5Mew4eg",
+            "editers": [ ],
+            "viewers": [ ]
+>>>>>>> refs/remotes/origin/master
         },
         {
             "name": "Recipe 6",
@@ -122,9 +152,15 @@
             ],
             "included": true,
             "multiplier": 3,
+<<<<<<< HEAD
             "owner": "phillip.c.jacobs@gmail.com",
             "editors": [],
             "viewers": []
+=======
+            "owner": "eyJhbGciOiJSUzI1NiIsImtpZCI6IjM4OTI4NmI0M2Q4YjA2NmFlNDI3ZWE3ZGE1YzJhNzU3ZDA0ODcyMDkifQ.eyJpc3MiOiJhY2NvdW50cy5nb29nbGUuY29tIiwiYXRfaGFzaCI6Im1CdlNZUV9nRTROWjRYMm9PZExYMXciLCJhdWQiOiI1MDYxODEyMjU5NTgtMjZsNm9wMWRiNjkxdGVoc2VxNnFmcDExZWV0amtvYTUuYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJzdWIiOiIxMTM1NDk1MTU2NjkxNDEwNjY5MTQiLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiYXpwIjoiNTA2MTgxMjI1OTU4LTI2bDZvcDFkYjY5MXRlaHNlcTZxZnAxMWVldGprb2E1LmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwiZW1haWwiOiJwaGlsbGlwLmMuamFjb2JzQGdtYWlsLmNvbSIsImlhdCI6MTQ0MDYzMDY4NywiZXhwIjoxNDQwNjM0Mjg3LCJuYW1lIjoiUGhpbGxpcCBKYWNvYnMiLCJwaWN0dXJlIjoiaHR0cHM6Ly9saDUuZ29vZ2xldXNlcmNvbnRlbnQuY29tLy1lNEZoa1Z0QVpXVS9BQUFBQUFBQUFBSS9BQUFBQUFBQUNsWS8tNFg2MWFqMjVXQS9zOTYtYy9waG90by5qcGciLCJnaXZlbl9uYW1lIjoiUGhpbGxpcCIsImZhbWlseV9uYW1lIjoiSmFjb2JzIiwibG9jYWxlIjoiZW4ifQ.KUCYkbNnPd5OmToqVOBZBPHKUF5uc2waXfac0Arde-aKhODIB8japt_fRHJGcSVY4wSLCV-O5Pn-XJKkqAKi4eilPetGcCcKjbCAChERF3xGxfxH9ccln93rdlx3TnnMm_HXoAH_racY4fwWewJXsIAfn_MWttshNM3k53wVGUMq8kFEBhEmP8qYf-6DpgcLtLesfO9GnmQwUKP0vyFYNwV5P--IADDVPwoaJFEYtaBgp48_8vSz_2rZIt2MciKWbJO7JBDwcZeOzvtcW3avZ8EjazCMWGm7R-wy3XmAx-SsE3wVMGkooVtUtY4j1GnRGj9Ewh9l6Fqaytk5Mew4eg",
+            "editers": [ ],
+            "viewers": [ ]
+>>>>>>> refs/remotes/origin/master
         },
         {
             "name": "Recipe 7",
@@ -143,9 +179,15 @@
             ],
             "included": false,
             "multiplier": 1,
+<<<<<<< HEAD
             "owner": "phillip.c.jacobs@gmail.com",
             "editors": [],
             "viewers": []
+=======
+            "owner": "eyJhbGciOiJSUzI1NiIsImtpZCI6IjM4OTI4NmI0M2Q4YjA2NmFlNDI3ZWE3ZGE1YzJhNzU3ZDA0ODcyMDkifQ.eyJpc3MiOiJhY2NvdW50cy5nb29nbGUuY29tIiwiYXRfaGFzaCI6Im1CdlNZUV9nRTROWjRYMm9PZExYMXciLCJhdWQiOiI1MDYxODEyMjU5NTgtMjZsNm9wMWRiNjkxdGVoc2VxNnFmcDExZWV0amtvYTUuYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJzdWIiOiIxMTM1NDk1MTU2NjkxNDEwNjY5MTQiLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiYXpwIjoiNTA2MTgxMjI1OTU4LTI2bDZvcDFkYjY5MXRlaHNlcTZxZnAxMWVldGprb2E1LmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwiZW1haWwiOiJwaGlsbGlwLmMuamFjb2JzQGdtYWlsLmNvbSIsImlhdCI6MTQ0MDYzMDY4NywiZXhwIjoxNDQwNjM0Mjg3LCJuYW1lIjoiUGhpbGxpcCBKYWNvYnMiLCJwaWN0dXJlIjoiaHR0cHM6Ly9saDUuZ29vZ2xldXNlcmNvbnRlbnQuY29tLy1lNEZoa1Z0QVpXVS9BQUFBQUFBQUFBSS9BQUFBQUFBQUNsWS8tNFg2MWFqMjVXQS9zOTYtYy9waG90by5qcGciLCJnaXZlbl9uYW1lIjoiUGhpbGxpcCIsImZhbWlseV9uYW1lIjoiSmFjb2JzIiwibG9jYWxlIjoiZW4ifQ.KUCYkbNnPd5OmToqVOBZBPHKUF5uc2waXfac0Arde-aKhODIB8japt_fRHJGcSVY4wSLCV-O5Pn-XJKkqAKi4eilPetGcCcKjbCAChERF3xGxfxH9ccln93rdlx3TnnMm_HXoAH_racY4fwWewJXsIAfn_MWttshNM3k53wVGUMq8kFEBhEmP8qYf-6DpgcLtLesfO9GnmQwUKP0vyFYNwV5P--IADDVPwoaJFEYtaBgp48_8vSz_2rZIt2MciKWbJO7JBDwcZeOzvtcW3avZ8EjazCMWGm7R-wy3XmAx-SsE3wVMGkooVtUtY4j1GnRGj9Ewh9l6Fqaytk5Mew4eg",
+            "editers": [ ],
+            "viewers": [ ]
+>>>>>>> refs/remotes/origin/master
         },
         {
             "name": "Recipe 8",
@@ -164,9 +206,15 @@
             ],
             "included": true,
             "multiplier": 4,
+<<<<<<< HEAD
             "owner": "phillip.c.jacobs@gmail.com",
             "editors": [],
             "viewers": []
+=======
+            "owner": "eyJhbGciOiJSUzI1NiIsImtpZCI6IjM4OTI4NmI0M2Q4YjA2NmFlNDI3ZWE3ZGE1YzJhNzU3ZDA0ODcyMDkifQ.eyJpc3MiOiJhY2NvdW50cy5nb29nbGUuY29tIiwiYXRfaGFzaCI6Im1CdlNZUV9nRTROWjRYMm9PZExYMXciLCJhdWQiOiI1MDYxODEyMjU5NTgtMjZsNm9wMWRiNjkxdGVoc2VxNnFmcDExZWV0amtvYTUuYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJzdWIiOiIxMTM1NDk1MTU2NjkxNDEwNjY5MTQiLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiYXpwIjoiNTA2MTgxMjI1OTU4LTI2bDZvcDFkYjY5MXRlaHNlcTZxZnAxMWVldGprb2E1LmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwiZW1haWwiOiJwaGlsbGlwLmMuamFjb2JzQGdtYWlsLmNvbSIsImlhdCI6MTQ0MDYzMDY4NywiZXhwIjoxNDQwNjM0Mjg3LCJuYW1lIjoiUGhpbGxpcCBKYWNvYnMiLCJwaWN0dXJlIjoiaHR0cHM6Ly9saDUuZ29vZ2xldXNlcmNvbnRlbnQuY29tLy1lNEZoa1Z0QVpXVS9BQUFBQUFBQUFBSS9BQUFBQUFBQUNsWS8tNFg2MWFqMjVXQS9zOTYtYy9waG90by5qcGciLCJnaXZlbl9uYW1lIjoiUGhpbGxpcCIsImZhbWlseV9uYW1lIjoiSmFjb2JzIiwibG9jYWxlIjoiZW4ifQ.KUCYkbNnPd5OmToqVOBZBPHKUF5uc2waXfac0Arde-aKhODIB8japt_fRHJGcSVY4wSLCV-O5Pn-XJKkqAKi4eilPetGcCcKjbCAChERF3xGxfxH9ccln93rdlx3TnnMm_HXoAH_racY4fwWewJXsIAfn_MWttshNM3k53wVGUMq8kFEBhEmP8qYf-6DpgcLtLesfO9GnmQwUKP0vyFYNwV5P--IADDVPwoaJFEYtaBgp48_8vSz_2rZIt2MciKWbJO7JBDwcZeOzvtcW3avZ8EjazCMWGm7R-wy3XmAx-SsE3wVMGkooVtUtY4j1GnRGj9Ewh9l6Fqaytk5Mew4eg",
+            "editers": [ ],
+            "viewers": [ ]
+>>>>>>> refs/remotes/origin/master
         }
     ]
 }

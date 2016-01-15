@@ -26,6 +26,10 @@
     <UpgradeBackupLocation>
     </UpgradeBackupLocation>
     <OldToolsVersion>12.0</OldToolsVersion>
+<<<<<<< HEAD
+=======
+    <UseGlobalApplicationHostFile />
+>>>>>>> refs/remotes/origin/master
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -275,10 +279,16 @@
     <Content Include="Data\stores.json" />
     <Content Include="Data\ingredients.json" />
     <Content Include="Data\units.json" />
+    <None Include="Properties\PublishProfiles\artfullife - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\artfullife.pubxml" />
     <None Include="Scripts\jquery-1.8.2.intellisense.js" />
     <Content Include="Images\deleteIcon.png" />
     <Content Include="Scripts\cookingController.js" />
+<<<<<<< HEAD
+=======
+    <Content Include="Scripts\googleSignIn.js" />
+    <Content Include="Scripts\headerController.js" />
+>>>>>>> refs/remotes/origin/master
     <Content Include="Scripts\jquery-1.8.2.js" />
     <Content Include="Scripts\jquery-1.8.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />

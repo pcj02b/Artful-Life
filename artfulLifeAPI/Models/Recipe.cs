@@ -23,6 +23,9 @@ namespace artfulLifeAPI.Models
         public string owner { get; set; }
         public IEnumerable<string> editors { get; set; }
         public IEnumerable<string> viewers { get; set; }
+<<<<<<< HEAD
 
+=======
+>>>>>>> refs/remotes/origin/master
     }
 }

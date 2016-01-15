@@ -20,45 +20,44 @@ namespace artfulLifeAPI.Controllers
         public string dbpassword = "cloakd";
 
         // GET api/store
-        public async Task<IEnumerable<Models.Store>> Get()
+        public async Task<IEnumerable<Models.Stores>> Get(string user)
         {
             var client = new MongoClient("mongodb://" + dbuser + ":" + dbpassword + "@ds036698.mongolab.com:36698/artful-life");
             var db = client.GetDatabase("artful-life");
-            var stores = db.GetCollection<Models.Store>("Stores");
-            var filter = new BsonDocument();
-            var projection = Builders<Models.Store>.Projection.Exclude("_id");
-            var output = await stores.Find(filter).Project<Models.Store>(projection).ToListAsync();
+            var stores = db.GetCollection<Models.Stores>("Stores");
+            var filter = new BsonDocument("_id", user);
+            var output = await stores.Find(filter).ToListAsync();
             return output;
         }
 
         // GET api/store/5
-        public async Task<Models.Store> Get(string name)
-        {
-            var client = new MongoClient("mongodb://" + dbuser + ":" + dbpassword + "@ds036698.mongolab.com:36698/artful-life");
-            var db = client.GetDatabase("artful-life");
-            var stores = db.GetCollection<Models.Store>("Stores");
-            var projection = Builders<Models.Store>.Projection.Exclude("_id");
-            return (from store in await stores.Find(r => r.name == name).Project<Models.Store>(projection).ToListAsync()
-                    select store).FirstOrDefault();
-        }
+        //public async Task<Models.Stores> Get(string name)
+        //{
+        //    var client = new MongoClient("mongodb://" + dbuser + ":" + dbpassword + "@ds036698.mongolab.com:36698/artful-life");
+        //    var db = client.GetDatabase("artful-life");
+        //    var stores = db.GetCollection<Models.Stores>("Stores");
+        //    var projection = Builders<Models.Stores>.Projection.Exclude("_id");
+        //    return (from store in await stores.Find(r => r._id == name).Project<Models.Stores>(projection).ToListAsync()
+        //            select store).FirstOrDefault();
+        //}
 
         // POST api/store
-        public async void Post([FromBody]Models.Store value)
+        public async void Post([FromBody]Models.Stores value)
         {
             var client = new MongoClient("mongodb://" + dbuser + ":" + dbpassword + "@ds036698.mongolab.com:36698/artful-life");
             var db = client.GetDatabase("artful-life");
-            var stores = db.GetCollection<Models.Store>("Stores");
+            var stores = db.GetCollection<Models.Stores>("Stores");
             await stores.InsertOneAsync(value);
         }
 
         // PUT api/store/5
-        public async void Put([FromBody]Models.Store value)
+        public async void Put([FromBody]Models.Stores value)
         {
             var client = new MongoClient("mongodb://" + dbuser + ":" + dbpassword + "@ds036698.mongolab.com:36698/artful-life");
             var db = client.GetDatabase("artful-life");
-            var stores = db.GetCollection<Models.Store>("Stores");
+            var stores = db.GetCollection<Models.Stores>("Stores");
             await stores.ReplaceOneAsync(
-                filter: new BsonDocument("name", value.name),
+                filter: new BsonDocument("_id", value._id),
                 replacement: value);
         }
 
@@ -67,7 +66,7 @@ namespace artfulLifeAPI.Controllers
         {
             var client = new MongoClient("mongodb://" + dbuser + ":" + dbpassword + "@ds036698.mongolab.com:36698/artful-life");
             var db = client.GetDatabase("artful-life");
-            var stores = db.GetCollection<Models.Store>("Stores");
+            var stores = db.GetCollection<Models.Stores>("Stores");
             await stores.DeleteOneAsync(
                 filter: new BsonDocument("name", name)
                 );

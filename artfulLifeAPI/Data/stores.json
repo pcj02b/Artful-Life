@@ -1,12 +1,30 @@
 ﻿{
     "stores": [
         {
-            "name": "Store 1",
-            "defaultStore": true
+            "_id": "phillip.c.jacobs@gmail.com",
+            "store": [
+                {
+                    "name": "Store 1",
+                    "defaultStore": true
+                },
+                {
+                    "name": "Store 2",
+                    "defaultStore": false
+                }
+            ]
         },
         {
-            "name": "Store 2",
-            "defaultStore": false
+            "_id": "takisha.knight@gmail.com",
+            "store": [
+                {
+                    "name": "Jons",
+                    "defaultStore": true
+                },
+                {
+                    "name": "Store 2",
+                    "defaultStore": false
+                }
+            ]
         }
     ]
 }

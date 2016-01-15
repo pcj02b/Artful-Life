@@ -1,6 +1,12 @@
 ﻿html, body, article, aside{
     height:100%;
 }
+.noDisplay{
+    display:none;
+}
+.yesDisplay{
+    display:initial;
+}
 body {
     font-family:Josefin Slab;
     margin:0px 16px;
@@ -29,8 +35,8 @@ nav ul{
 }
 nav li {
     float:left;
-    width:16.66%;
-    min-width:204px;
+    width:14.28%;
+    min-width:100px;
 }
 nav a{
     color:white;
@@ -85,7 +91,7 @@ h5, h6 {
     margin:0px; 
 }
 
-hr{color:rgba(180, 60, 180, 0.5);}
+hr{color:rgb(180, 60, 180);}
 
 .alert {
     color:red;
@@ -95,7 +101,7 @@ hr{color:rgba(180, 60, 180, 0.5);}
 /* main layout
 ----------------------------------------------------------*/
 .link:hover{
-    background-color:rgba(180, 60, 180, 0.5);
+    background-color:rgba(180, 60, 180, 0.75);
 }
 .title-link{
     border-bottom:2px solid rgba(180, 60, 180, 0.9);
@@ -103,7 +109,7 @@ hr{color:rgba(180, 60, 180, 0.5);}
     font-weight:bold;
 }
 .title-link:hover{
-    background-color:rgba(180, 60, 180, 0.5);
+    background-color:rgba(180, 60, 180, 0.9);
 }
 
 aside{
@@ -122,12 +128,16 @@ aside ul{
     padding:0px;
     list-style-type:none;
 }
+aside ul p.store{
+    font-weight:bold;
+    border-bottom:1px solid grey;
+}
 aside.stores{
     float:right;
     height:initial;
 }
 .noHighlight:hover{
-    background-color:lightgrey;
+    background-color:initial;
 }
 aside li {
     width: 100%;
@@ -151,8 +161,11 @@ aside li.lineBottom:last-child{
 aside li.lineTop{
     border-top:2px solid rgba(180, 60, 180, 0.9);
 }
-aside li:hover{
-    background-color:rgba(180, 60, 180, 0.9);
+li.stores:last-child{
+    border-bottom:1px solid grey;
+}
+aside li.ingredient:last-child{
+        border-bottom:1px solid grey;
 }
 aside a{
     text-decoration:none;
@@ -188,6 +201,10 @@ table.recipe{
     font-size:14pt;
     width: 100%;
 }
+table.recipe form{
+    border:1px solid black;
+}
+
 table.recipe p{
     font-weight:bold;
 }
@@ -211,9 +228,13 @@ table.recipe textarea.recipeName{
     height:40px;
     font-weight:inherit;
 }
-table.recipe ul#ingredient{
+table.recipe ul.ingredient{
     font-weight:normal;
     text-align:left;
+}
+
+.selected{
+    background-color:rgba(180, 60, 180, 0.75)
 }
 
 td.steps{

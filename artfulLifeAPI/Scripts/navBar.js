@@ -3,14 +3,17 @@
     var bodyHeightValue = $("body").outerHeight(true);
     var headerHeight = $("header").outerHeight(true);
     var navHeightValue = $("nav").outerHeight(true);
-
+    var sectionWidth = $("section").width();
+    
+    var articleWidth = sectionWidth - 208;
     var asideWidth = $("aside").width() + "px";
     var sectionHeightValue = (bodyHeightValue - headerHeight);
     var sectionHeight = sectionHeightValue + "px";
     var asideHeightValue = (bodyHeightValue + scrollTop - headerHeight - navHeightValue);
     var asideHeight = asideHeightValue + "px";
 
-    $("section").css("min-height", sectionHeight);
+    $("article").css("width", articleWidth);
+    $("section").css("height", sectionHeight);
     $("aside").css("height", asideHeight);
 
     $(window).scroll(function () {
@@ -28,12 +31,15 @@
         bodyHeightValue = $("body").outerHeight(true);
         headerHeight = $("header").outerHeight(true);
         navHeightValue = $("nav").outerHeight(true);
+        sectionWidth = $("section").width();
+        articleWidth = sectionWidth - 208;
 
         asideHeightValue = (bodyHeightValue + scrollTop- headerHeight - navHeightValue);
         asideHeight = asideHeightValue + "px";
         sectionHeightValue = (bodyHeightValue - headerHeight);
         sectionHeight = sectionHeightValue + "px";
-        $("section").css("min-height", sectionHeight);
+        $("article").css("width", articleWidth);
+        $("section").css("height", sectionHeight);
         $("aside").css("height", asideHeight);
     });
     $(".recipe").change(function () {
@@ -45,7 +51,7 @@
         asideHeight = asideHeightValue + "px";
         sectionHeightValue = (bodyHeightValue - headerHeight);
         sectionHeight = sectionHeightValue + "px";
-        $("section").css("min-height", sectionHeight);
+        $("section").css("height", sectionHeight);
         $("aside").css("height", asideHeight);
     });
 });

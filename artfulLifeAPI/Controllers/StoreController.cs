@@ -30,19 +30,8 @@ namespace artfulLifeAPI.Controllers
             return output;
         }
 
-        // GET api/store/5
-        //public async Task<Models.Stores> Get(string name)
-        //{
-        //    var client = new MongoClient("mongodb://" + dbuser + ":" + dbpassword + "@ds036698.mongolab.com:36698/artful-life");
-        //    var db = client.GetDatabase("artful-life");
-        //    var stores = db.GetCollection<Models.Stores>("Stores");
-        //    var projection = Builders<Models.Stores>.Projection.Exclude("_id");
-        //    return (from store in await stores.Find(r => r._id == name).Project<Models.Stores>(projection).ToListAsync()
-        //            select store).FirstOrDefault();
-        //}
-
         // POST api/store
-        public async void Post([FromBody]Models.Stores value)
+        public async Task Post([FromBody]Models.Stores value)
         {
             var client = new MongoClient("mongodb://" + dbuser + ":" + dbpassword + "@ds036698.mongolab.com:36698/artful-life");
             var db = client.GetDatabase("artful-life");
@@ -56,9 +45,8 @@ namespace artfulLifeAPI.Controllers
             var client = new MongoClient("mongodb://" + dbuser + ":" + dbpassword + "@ds036698.mongolab.com:36698/artful-life");
             var db = client.GetDatabase("artful-life");
             var stores = db.GetCollection<Models.Stores>("Stores");
-            await stores.ReplaceOneAsync(
-                filter: new BsonDocument("_id", value._id),
-                replacement: value);
+            var filter = new BsonDocument("_id", value._id);
+            await stores.ReplaceOneAsync(filter, value);
         }
 
         // DELETE api/store/5
@@ -67,9 +55,8 @@ namespace artfulLifeAPI.Controllers
             var client = new MongoClient("mongodb://" + dbuser + ":" + dbpassword + "@ds036698.mongolab.com:36698/artful-life");
             var db = client.GetDatabase("artful-life");
             var stores = db.GetCollection<Models.Stores>("Stores");
-            await stores.DeleteOneAsync(
-                filter: new BsonDocument("name", name)
-                );
+            var filter = new BsonDocument("name", name);
+            await stores.DeleteOneAsync(filter);
         }
     }
 }

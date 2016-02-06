@@ -31,44 +31,45 @@ namespace artfulLifeAPI.Controllers
         }
 
         // GET api/Units/5
-        public async Task<Models.Units> Get(string unit)
+        public async Task<Models.Units> Get(string unitName)
         {
             var client = new MongoClient("mongodb://" + dbuser + ":" + dbpassword + "@ds036698.mongolab.com:36698/artful-life");
             var db = client.GetDatabase("artful-life");
             var units = db.GetCollection<Models.Units>("Units");
-            return (from recipe in await units.Find(r => r.unit == unit).ToListAsync()
-                    select recipe).FirstOrDefault();
+            return (from unit in await units.Find(r => r.unit == unitName).ToListAsync()
+                    select unit).FirstOrDefault();
         }
 
         // POST api/Units
-        public async void Post([FromBody]Models.Units value)
+        public async Task<bool> Post([FromBody]Models.Units value)
         {
             var client = new MongoClient("mongodb://" + dbuser + ":" + dbpassword + "@ds036698.mongolab.com:36698/artful-life");
             var db = client.GetDatabase("artful-life");
             var units = db.GetCollection<Models.Units>("Units");
             await units.InsertOneAsync(value);
+            return true;
         }
 
         // PUT api/Units/5
-        public async void Put([FromBody]Models.Units value)
+        public async Task<bool> Put([FromBody]Models.Units value)
         {
             var client = new MongoClient("mongodb://" + dbuser + ":" + dbpassword + "@ds036698.mongolab.com:36698/artful-life");
             var db = client.GetDatabase("artful-life");
             var recipes = db.GetCollection<Models.Units>("Units");
-            await recipes.ReplaceOneAsync(
-                filter: new BsonDocument("unit", value.unit),
-                replacement: value);
+            var filter = new BsonDocument("unit", value.unit);
+            await recipes.ReplaceOneAsync(filter, value);
+            return true;
         }
 
         // DELETE api/Units/5
-        public async void Delete(string unit)
+        public async Task<bool> Delete(string unit)
         {
             var client = new MongoClient("mongodb://" + dbuser + ":" + dbpassword + "@ds036698.mongolab.com:36698/artful-life");
             var db = client.GetDatabase("artful-life");
             var recipes = db.GetCollection<Models.Units>("Units");
-            await recipes.DeleteOneAsync(
-                filter: new BsonDocument("unit", unit)
-                );
+            var filter = new BsonDocument("unit", unit);
+            await recipes.DeleteOneAsync(filter);
+            return true;
         }
     }
 }

@@ -289,24 +289,39 @@ recipeApp.controller('recipeCtrl', function ($scope, $http, AuthService) {
         if (angular.equals($scope.editingRecipe._id, undefined)) {
             alreadyThere = false;
         }
-        if (!alreadyThere) {
+        if (!alreadyThere)
+        {
             console.log("creating new recipe");
-            $http.post("/api/Recipe", $scope.editingRecipe).success(function (status) {
+            var success = $http.post("/api/Recipe", $scope.editingRecipe)
+                .success(function (status) {
+                })
+                .error(function (status) {
+                    console.log("something went wrong saving new recipe");
+                });
+            if (success)
+            {
                 $scope.recipes.push($scope.editingRecipe);
                 $scope.showDisplayTable = false;
-            })
-            .error(function (status) {
-                console.log("something went wrong saving new recipe");
-            });
-        }            
-        if (confirm("Save changes to " + $scope.editingRecipe.name)) {
-            $http.put("/api/Recipe", $scope.editingRecipe).success(function (status) {
-                        $scope.recipes[selectedRecipeIndex] = $scope.editingRecipe;
-                        $scope.showEditingTable = false;
-            })
-                .error(function (status) {
+                selectedRecipeIndex = $scope.recipes.length;
+            }
+        }
+        else
+        {
+            if (confirm("Save changes to " + $scope.editingRecipe.name))
+            {
+                var success = $http.put("/api/Recipe", $scope.editingRecipe)
+                    .success(function (status) {
+                        console.log(status);
+                    })
+                    .error(function (status) {
                         console.log("something went wrong saving existing recipe");
-                });
+                    });
+                if (success)
+                {
+                    $scope.recipes[selectedRecipeIndex] = $scope.editingRecipe;
+                    $scope.showEditingTable = false;
+                }
+            }
         }
         $scope.editingRecipe = { name: "", ingredients: [], prep: [], cook: [], included: false, multiplier: 1, owner: $scope.user, editors: [], viewers: []};
         $scope.newIngredientCount =[0, 0, 2];
@@ -498,6 +513,9 @@ recipeApp.controller('recipeCtrl', function ($scope, $http, AuthService) {
                 console.log("something went wrong deleting a recipe");
             });
             $scope.recipes = newRecipes;
+            selectedRecipeIndex = 0;
+            $scope.showDisplayTable = false;
+            $scope.showEditingTable = false;
         }
     }
     $scope.moveIngredientUp = function () {

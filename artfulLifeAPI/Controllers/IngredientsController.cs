@@ -29,48 +29,37 @@ namespace artfulLifeAPI.Controllers
             return output;
         }
 
-        // GET api/ingredients/5
-        //public async Task<Models.Ingredients> Get(string name)
-        //{
-        //    var client = new MongoClient("mongodb://" + dbuser + ":" + dbpassword + "@ds036698.mongolab.com:36698/artful-life");
-        //    var db = client.GetDatabase("artful-life");
-        //    var recipes = db.GetCollection<Models.Ingredients>("Ingredients");
-        //    return (from recipe in await recipes.Find(r => r.name == name).ToListAsync()
-        //            select recipe).FirstOrDefault();
-        //}
-
         // POST api/ingredients
-        public async void Post([FromBody]Models.Ingredients value)
+        public async Task<bool> Post([FromBody]Models.Ingredients value)
         {
             var client = new MongoClient("mongodb://" + dbuser + ":" + dbpassword + "@ds036698.mongolab.com:36698/artful-life");
             var db = client.GetDatabase("artful-life");
             var recipes = db.GetCollection<Models.Ingredients>("Ingredients");
-            var newID = ObjectId.GenerateNewId();
-            value._id = newID.ToString();
+            value._id = ObjectId.GenerateNewId().ToString();
             await recipes.InsertOneAsync(value);
+            return true;
         }
 
         // PUT api/ingredients/5
-        public async void Put([FromBody]Models.Ingredients value)
+        public async Task<bool> Put([FromBody]Models.Ingredients value)
         {
             var client = new MongoClient("mongodb://" + dbuser + ":" + dbpassword + "@ds036698.mongolab.com:36698/artful-life");
             var db = client.GetDatabase("artful-life");
             var recipes = db.GetCollection<Models.Ingredients>("Ingredients");
-            await recipes.ReplaceOneAsync(
-                filter: new BsonDocument("_id", value._id),
-                replacement: value);
+            var filter = new BsonDocument("_id", value._id);
+            await recipes.ReplaceOneAsync(filter, value);
+            return true;
         }
 
         // DELETE api/ingredients/5
-        public async void Delete(string name, string user)
+        public async Task<bool> Delete(string name, string user)
         {
             var client = new MongoClient("mongodb://" + dbuser + ":" + dbpassword + "@ds036698.mongolab.com:36698/artful-life");
             var db = client.GetDatabase("artful-life");
             var recipes = db.GetCollection<Models.Ingredients>("Ingredients");
             var filter = Builders<Models.Ingredients>.Filter.Eq("name", name) & Builders<Models.Ingredients>.Filter.Eq("user", user);
-            await recipes.DeleteOneAsync(
-                filter: filter
-                );
+            await recipes.DeleteOneAsync(filter);
+            return true;
         }
     }
 }

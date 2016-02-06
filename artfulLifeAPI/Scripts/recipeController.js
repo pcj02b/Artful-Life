@@ -299,7 +299,7 @@ recipeApp.controller('recipeCtrl', function ($scope, $http, AuthService) {
                 console.log("something went wrong saving new recipe");
             });
         }            
-        if (confirm("Save changes to " + $scope.recipes[selectedRecipeIndex].name)) {
+        if (confirm("Save changes to " + $scope.editingRecipe.name)) {
             $http.put("/api/Recipe", $scope.editingRecipe).success(function (status) {
                         $scope.recipes[selectedRecipeIndex] = $scope.editingRecipe;
                         $scope.showEditingTable = false;
@@ -492,7 +492,7 @@ recipeApp.controller('recipeCtrl', function ($scope, $http, AuthService) {
                     $http.delete(deleteURI);
                 }
             }
-            $http.delete("/api/Recipe/?_id=".concat($scope.recipes[selectedRecipeIndex]._id)).success(function (status) {
+            $http.delete("/api/Recipe?_id=".concat($scope.recipes[selectedRecipeIndex]._id)).success(function (status) {
             })
             .error(function (status) {
                 console.log("something went wrong deleting a recipe");

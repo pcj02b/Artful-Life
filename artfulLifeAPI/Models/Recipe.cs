@@ -13,27 +13,15 @@ namespace artfulLifeAPI.Models
 {
     public class Recipe
     {
-<<<<<<< HEAD
-=======
         public string _id { get; set; }
->>>>>>> master
         public string name { get; set; }
         public IEnumerable<Ingredient> ingredients { get; set; }
         public IEnumerable<Prep> prep { get; set; }
         public IEnumerable<Cook> cook { get; set; }
         public Boolean included { get; set; }
         public int multiplier { get; set; }
-<<<<<<< HEAD
         public IEnumerable<string> editors { get; set; }
         public IEnumerable<string> viewers { get; set; }
-=======
         public string owner { get; set; }
-        public IEnumerable<string> editors { get; set; }
-        public IEnumerable<string> viewers { get; set; }
-<<<<<<< HEAD
-
-=======
->>>>>>> refs/remotes/origin/master
->>>>>>> master
     }
 }

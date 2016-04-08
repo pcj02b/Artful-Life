@@ -1,25 +1,6 @@
-﻿var recipeApp = angular.module("recipeApp");
-recipeApp.controller("cookingCtrl", function ($scope, $http, AuthService) {
+﻿recipeApp.controller("cookingCtrl", ['$scope', '$http', 'authService', function ($scope, $http, authService) {
     $scope.showPrep = true;
-    $scope.user = AuthService.getUser();
-    console.log($scope.user);
-    var logOut = document.getElementById("logOut");
-    var logIn = document.getElementById("logIn");
-    var logOutClass = document.createAttribute("class");
-    var logInClass = document.createAttribute("class");
-    logOutClass.value = "noDisplay";
-    logInClass.value = "noDisplay";
-    logOut.setAttributeNode(logOutClass);
-    logIn.setAttributeNode(logInClass);
-    if ($scope.user === undefined) {
-        logInClass.value = "yesDisplay";
-        logOutClass.value = "noDisplay";
-
-    }
-    else {
-        logOutClass.value = "yesDisplay";
-        logInClass.value = "noDisplay";
-    }
+    $scope.user = authService.getUser();
     $scope.recipes = [];
     $scope.ingredients = [];
     $scope.stores = [];
@@ -52,16 +33,7 @@ recipeApp.controller("cookingCtrl", function ($scope, $http, AuthService) {
         }
     })
     updateCooking = function () {
-        $scope.user = AuthService.getUser();
-        if ($scope.user === undefined) {
-            logInClass.value = "yesDisplay";
-            logOutClass.value = "noDisplay";
-
-        }
-        else {
-            logOutClass.value = "yesDisplay";
-            logInClass.value = "noDisplay";
-        }
+        $scope.user = authService.getUser();
         $scope.recipes = [];
         $http.get("/api/Recipe?user=".concat($scope.user)).success(function (data) {
             allRecipes = data;
@@ -91,4 +63,4 @@ recipeApp.controller("cookingCtrl", function ($scope, $http, AuthService) {
             }
         })
     };
-})
+}]);

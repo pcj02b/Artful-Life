@@ -280,8 +280,9 @@
     <None Include="Properties\PublishProfiles\artfullife.pubxml" />
     <None Include="Scripts\jquery-1.8.2.intellisense.js" />
     <Content Include="Images\deleteIcon.png" />
-    <Content Include="Scripts\cookingController.js" />
-    <Content Include="Scripts\googleSignIn.js" />
+    <Content Include="Scripts\controllers\cookingController.js" />
+    <Content Include="Scripts\controllers\mainController.js" />
+    <Content Include="Scripts\controllers\recipeApp.js" />
     <Content Include="Scripts\jquery-1.8.2.js" />
     <Content Include="Scripts\jquery-1.8.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
@@ -297,10 +298,10 @@
     <Content Include="Scripts\knockout-2.2.0.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\navBar.js" />
-    <Content Include="Scripts\recipeApp.js" />
-    <Content Include="Scripts\recipeController.js" />
-    <Content Include="Scripts\navController.js" />
-    <Content Include="Scripts\storeController.js" />
+    <Content Include="Scripts\services\authService.js" />
+    <Content Include="Scripts\controllers\recipeController.js" />
+    <Content Include="Scripts\controllers\navController.js" />
+    <Content Include="Scripts\controllers\storeController.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>

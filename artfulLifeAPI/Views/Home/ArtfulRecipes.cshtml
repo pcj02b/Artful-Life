@@ -13,17 +13,19 @@
                 </li>
             </ul>
             <ul>
-                <li><a ng-hide="showEditingTable" ng-click="addRecipe()">Add Recipe</a></li>
-                <li><a ng-show="showDisplayTable" ng-click="editRecipe()">Edit Recipe</a></li>
-                <li><a ng-show="showEditingTable" ng-click="saveRecipe()">Save Recipe</a></li>
-                <li><a ng-show="showDisplayTable" ng-click="removeRecipe()">Remove Recipe</a></li>
+                <li><a href="" ng-hide="showEditingTable" ng-click="addRecipe()">Add Recipe</a></li>
+                <li><a href="" ng-show="showDisplayTable" ng-click="editRecipe()">Edit Recipe</a></li>
+                <li><a href="" ng-show="showEditingTable" ng-click="saveRecipe()">Save Recipe</a></li>
+                <li><a href="" ng-show="showShareLink" ng-click="showShareRecipe()">Share Recipe</a></li>
+                <li><a href="" ng-show="showDisplayTable" ng-click="removeRecipe()">Remove Recipe</a></li>
             </ul>
         </aside>
         <article>
             @*<button ng-click="getFromJSON()">get from JSON</button>
             <button ng-click="seedData()">send data to Mongo</button>*@
-            <h4>@ViewBag.Title</h4>
-            <p><b>The Idea: </b>Click a recipe to view, edit or delete.  Or create a new recipe by using the copy and paste feature or manually inputting a recipe.</p>
+            <h4 ng-hide="showSharePage">@ViewBag.Title</h4>
+            <h4>{{test}}</h4>
+            <p ng-hide="showSharePage"><b>The Idea: </b>Click a recipe to view, edit or delete.  Or create a new recipe by using the copy and paste feature or manually inputting a recipe.</p>
             <br style="height:22px" ng-show="showTable" />
             <!--Display Table-->
             <table class="recipe" ng-show="showDisplayTable">
@@ -35,11 +37,11 @@
                 <tr>
                     <td rowspan="2">
                         <p>Ingredients:</p>
-                        <ul id="ingredient">
+                        <ul class="ingredient">
                             <li ng-repeat="x in selectedRecipe.ingredients">
-                                <span>{{x.count[0]}}</span>
+                                <span ng-hide="x.count[0]==0">{{x.count[0]}}</span>
                                 <span ng-hide="x.count[1]==0"> {{x.count[1]}}/{{x.count[2]}}</span>
-                                <span> </span>
+                                <span ng-hide="x.count[0]==0 && x.count[1]==0"> </span>
                                 <span>{{x.unit}}</span>
                                 <span> </span>
                                 <span>{{x.name}}</span>
@@ -75,14 +77,10 @@
                 </tr>
                 <tr>
                     <td rowspan="2">
-                        <form>
-                            <textarea placeholder='Copy and paste ingredients here, i.e. "3 oz butter"' ng-model="textIngredients" style="height:auto"></textarea>
-                            <button ng-click="addTextIngredients()">add</button>
-                        </form>
                         <p>Ingredients:</p>
-                        <ul id="ingredient">
-                            <li ng-repeat="x in editingRecipe.ingredients">
-                                <span ng-click="selectEditingIngredient($index)" class="link">
+                        <ul class="ingredient">
+                            <li ng-repeat="x in editingRecipe.ingredients" >
+                                <span ng-click="selectEditingIngredient($index)" ng-class="($index == editingIngredientIndex) ? 'selected':'link'">
                                     <span ng-hide="x.count[0]==0">{{x.count[0]}}</span>
                                     <span ng-hide="x.count[1]==0"> {{x.count[1]}}/{{x.count[2]}}</span>
                                     <span> </span>
@@ -92,11 +90,21 @@
                                 </span>
                             </li>
                         </ul>
+                        <span>
+                            <span ng-show="editingIngredient && editingIngredientIndex!=(editingRecipe.ingredients.length-1)" title="move ingredient down"><a href="" ng-click="moveIngredientDown()">down</a></span>
+                            <span ng-show="editingIngredient" title="delete"><a href="" ng-click="removeIngredient()"><img src="../Images/deleteIcon.png" alt="delete item" height="15" width="15" /></a></span>
+                            <span ng-show="editingIngredient && editingIngredientIndex!=0" title="move ingredient up"><a href="" ng-click="moveIngredientUp()">up</a></span>
+                        </span>
                         <hr />
                         <form>
+                            <textarea placeholder='Copy and paste ingredients here, i.e. "3 oz butter"' ng-model="textIngredients" style="height:auto"></textarea>
+                            <button ng-click="addTextIngredients()">add</button>
+                        </form>
+                        <p style="text-align:center">Or</p>
+                        <form>
                             <input type="number" step="any" style="width:40px" min="0" ng-model="newIngredientCount[0]" />and
-                            <input type="number" style="width:30px" min="0" ng-model="newIngredientCount[1]" />/
-                            <input type="number" style="width:30px" min="2" ng-model="newIngredientCount[2]" />
+                            <input type="number" style="width:30px" step="1" min="0" ng-model="newIngredientCount[1]" />/
+                            <input type="number" style="width:30px" step="1" min="2" ng-model="newIngredientCount[2]" />
                             <select ng-model="newIngredientUnit">
                                 <option value="" disabled selected style="display:none;">Unit</option>
                                 <option value="fl. oz.">Fluid Ounce</option>
@@ -115,29 +123,27 @@
                             <input type="text" style="height:20px" ng-model="newIngredientName" placeholder="New Ingredient" />
                             <button ng-hide="editingIngredient" ng-click="addIngredient()">add</button>
                             <button ng-show="editingIngredient" ng-click="saveIngredient()">save</button>
-                        </form>
-                        <form>
-                            <span ng-show="editingIngredient && editingIngredientIndex!=(editingRecipe.ingredients.length-1)" title="move ingredient down"><a href="" ng-click="moveIngredientDown()">down</a></span>
-                            <span ng-show="editingIngredient" title="delete"><a href="" ng-click="removeIngredient()"><img src="../Images/deleteIcon.png" alt="delete item" height="15" width="15" /></a></span>
-                            <span ng-show="editingIngredient && editingIngredientIndex!=0" title="move ingredient up"><a href="" ng-click="moveIngredientUp()">up</a></span>
+                            <button ng-show="editingIngredient" ng-click="unsaveIngredient()">X</button>
                         </form>
                     </td>
                     <td class="steps">
                         <p>Prep Instructions:</p>
                         <ol>
                             <li ng-repeat="x in editingRecipe.prep" ng-click="selectEditingPrep($index)">
-                                <span class="link">{{x.step}}</span>
+                                <span ng-class="($index == editingPrepIndex) ? 'selected':'link'">{{x.step}}</span>
                             </li>
                         </ol>
+                        <span>
+                            <span ng-show="editingPrep && editingPrepIndex!=(editingRecipe.prep.length-1)" title="move prep step down"><a href="" ng-click="movePrepDown()">down</a></span>
+                            <span ng-show="editingPrep"><a href="" ng-click="removePrep(editingPrepIndex);"><img src="../Images/deleteIcon.png" alt="delete item" height="15" width="15" /></a></span>
+                            <span ng-show="editingPrep && editingPrepIndex!=0" title="move prep step up"><a href="" ng-click="movePrepUp()">up</a></span>
+                        </span>
                         <hr />
                         <form>
-                            <input type="text" ng-model="newPrepStep" placeholder="New Prep Step" />
-                            <button ng-click="addPrepStep()">add</button>
-                        </form>
-                        <form>
-                            <span ng-show="editingPrep && editingPrepIndex!=(editingRecipe.prep.length-1)" title="move prep step down"><a href="" ng-click="movePrepDown(editingPrepIndex)">down</a></span>
-                            <span ng-show="editingPrep"><a href="" ng-click="removePrep(editingPrepIndex);"><img src="../Images/deleteIcon.png" alt="delete item" height="15" width="15" /></a></span>
-                            <span ng-show="editingPrep && editingPrepIndex!=0" title="move prep step up"><a href="" ng-click="movePrepUp(editingPrepIndex)">up</a></span>
+                            <textarea ng-model="newPrepStep" placeholder="New Prep Steps" style="height:auto"></textarea>
+                            <button ng-hide="editingPrep" ng-click="addPrepStep()">add</button>
+                            <button ng-show="editingPrep" ng-click="savePrepStep()">save</button>
+                            <button ng-show="editingPrep" ng-click="unsavePrepStep()">X</button>
                         </form>
                     </td>
                 </tr>
@@ -146,22 +152,42 @@
                         <p>Cooking Instructions:</p>
                         <ol>
                             <li ng-repeat="x in editingRecipe.cook" ng-click="selectEditingCook($index)">
-                                <span class="link">{{x.step}}</span>
+                                <span ng-class="($index == editingCookIndex) ? 'selected':'link'">{{x.step}}</span>
                             </li>
                         </ol>
-                        <hr />
-                        <form>
-                            <input type="text" ng-model="newCookStep" placeholder="New Cook Step" />
-                            <button ng-click="addCookStep()">add</button>
-                        </form>
-                        <form>
+                        <span>
                             <span ng-show="editingCook && editingCookIndex!=(editingRecipe.cook.length-1)" title="move cook step down"><a href="" ng-click="moveCookDown(editingCookIndex)">down</a></span>
                             <span ng-show="editingCook"><a href="" ng-click="removeCook(editingCookIndex);"><img src="../Images/deleteIcon.png" alt="delete item" height="15" width="15" /></a></span>
                             <span ng-show="editingCook && editingCookIndex!=0" title="move cook step up"><a href="" ng-click="moveCookUp(editingCookIndex)">up</a></span>
+                        </span>
+                        <hr />
+                        <form>
+                            <textarea ng-model="newCookStep" placeholder="New Cook Steps" style="height:auto"></textarea>
+                            <button ng-hide="editingCook" ng-click="addCookStep()">add</button>
+                            <button ng-show="editingCook" ng-click="saveCookStep()">save</button>
+                            <button ng-show="editingCook" ng-click="unsaveCookStep()">X</button>
                         </form>
                     </td>
                 </tr>
             </table>
+            @*Share page*@
+            <div class="sharePage" ng-show="showSharePage">
+                <h4>Share {{selectedRecipe.name}}</h4>
+                <h5>You may allow any Artful Life member to view this recipe. They may create a copy of your recipe and edit it if they desire. If you created this recipe, you may also allow another user to edit your recipe directly.</h5>
+                <form>
+                    <p>Who would you like to share this recipe with?</p>
+                    <input type="email" ng-model="shareEmail" required/>
+                    <div ng-show="showShareEdit">
+                        <p>May this person edit this recipe?</p>
+                        <span>Yes</span>
+                        <input type="radio" name="canEdit" value=true ng-model="shareCanEdit" required/>
+                        <span>No</span>
+                        <input type="radio" name="canEdit" value=false ng-model="shareCanEdit" required/>
+                    </div>
+                    <br /><br />
+                    <button type="submit" ng-click="shareRecipe()">Share</button>
+                </form>
+            </div>
         </article>
     </section>
 </body>

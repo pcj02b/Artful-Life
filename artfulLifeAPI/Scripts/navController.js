@@ -1,6 +1,6 @@
 ﻿var recipeApp = angular.module("recipeApp");
 
-recipeApp.controller('homeCtrl', function ($scope, AuthService) {
+recipeApp.controller('navCtrl', function ($scope, AuthService) {
     $scope.user = AuthService.getUser();
     console.log($scope.user);
     var logOut = document.getElementById("logOut");

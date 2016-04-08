@@ -1,0 +1,1 @@
+﻿recipeApp = angular.module('recipeApp', []);

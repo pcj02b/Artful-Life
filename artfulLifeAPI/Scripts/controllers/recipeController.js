@@ -1,33 +1,12 @@
-﻿var recipeApp = angular.module("recipeApp");
-
-recipeApp.controller('recipeCtrl', function ($scope, $http, AuthService) {
+﻿recipeApp.controller('recipeCtrl', ['$scope', '$http', 'authService', function ($scope, $http, authService) {
     $scope.recipes = [];
     var allRecipes = [];
     var tempRecipe = {};
-    $scope.user = AuthService.getUser();
-    console.log($scope.user);
-    var logOut = document.getElementById("logOut");
-    var logIn = document.getElementById("logIn");
-    var logOutClass = document.createAttribute("class");
-    var logInClass = document.createAttribute("class");
-    logOutClass.value = "noDisplay";
-    logInClass.value = "noDisplay";
-    logOut.setAttributeNode(logOutClass);
-    logIn.setAttributeNode(logInClass);
-    if ($scope.user === undefined) {
-        logInClass.value = "yesDisplay";
-        logOutClass.value = "noDisplay";
-
-    }
-    else {
-        logOutClass.value = "yesDisplay";
-        logInClass.value = "noDisplay";
-    }
+    $scope.user = authService.getUser();
 
     $http.get("/api/Units").success(function (data) {
         $scope.units = data;
     })
-
     $scope.getFromJSON = function () {
         $http.get("/Data/ingredients.json")
             .success(function (data) {
@@ -36,11 +15,6 @@ recipeApp.controller('recipeCtrl', function ($scope, $http, AuthService) {
             .error(function (status) {
                 window.alert(status);
             });
-    }
-    $scope.getFromMongo = function () {
-        $http.get("/api/Recipe").success(function (data, status) {
-            $scope.recipes = data;
-        });
     }
     $scope.seedData = function () {
         for (var i = 0; i < $scope.ingredients.length; i++) {
@@ -57,7 +31,7 @@ recipeApp.controller('recipeCtrl', function ($scope, $http, AuthService) {
     $scope.editingRecipe = {};
     selectedRecipeIndex = 0;
 
-    $scope.newIngredientCount = [0,0,2];
+    $scope.newIngredientCount = [0, 0, 2];
     $scope.newIngredientUnit = "";
     $scope.newIngredientName = "";
     $scope.newPrepStep = "";
@@ -83,16 +57,7 @@ recipeApp.controller('recipeCtrl', function ($scope, $http, AuthService) {
 
     updateRecipes = function () {
         $scope.$apply(function () {
-            $scope.user = AuthService.getUser();
-            if ($scope.user === undefined) {
-                logInClass.value = "yesDisplay";
-                logOutClass.value = "noDisplay";
-
-            }
-            else {
-                logOutClass.value = "yesDisplay";
-                logInClass.value = "noDisplay";
-            }
+            $scope.user = authService.getUser();
             console.log("updating recipes for " + $scope.user);
             $scope.recipes = [];
             console.log($scope.recipes.length);
@@ -105,20 +70,22 @@ recipeApp.controller('recipeCtrl', function ($scope, $http, AuthService) {
                         $scope.recipes.push(tempRecipe.recipe);
                         $scope.recipes[$scope.recipes.length - 1].ownership = "owner";
                     }
-                    for (var n = 0 ; n < allRecipes[i].editors.length ; n++) {
-                        if (allRecipes[i].editors[n] === $scope.user) {
-                            console.log("editor of " + allRecipes[i].name);
-                            tempRecipe = { recipe: allRecipes[i] };
-                            $scope.recipes.push(tempRecipe.recipe);
-                            $scope.recipes[$scope.recipes.length - 1].ownership = "editor";
+                    else {
+                        for (var n = 0 ; n < allRecipes[i].editors.length ; n++) {
+                            if (allRecipes[i].editors[n] === $scope.user) {
+                                console.log("editor of " + allRecipes[i].name);
+                                tempRecipe = { recipe: allRecipes[i] };
+                                $scope.recipes.push(tempRecipe.recipe);
+                                $scope.recipes[$scope.recipes.length - 1].ownership = "editor";
+                            }
                         }
-                    }
-                    for (var n = 0 ; n < allRecipes[i].viewers.length ; n++) {
-                        if (allRecipes[i].viewers[n] === $scope.user) {
-                            console.log("viewer of " + allRecipes[i].name);
-                            tempRecipe = { recipe: allRecipes[i] };
-                            $scope.recipes.push(tempRecipe.recipe);
-                            $scope.recipes[$scope.recipes.length - 1].ownership = "viewer";
+                        for (var n = 0 ; n < allRecipes[i].viewers.length ; n++) {
+                            if (allRecipes[i].viewers[n] === $scope.user) {
+                                console.log("viewer of " + allRecipes[i].name);
+                                tempRecipe = { recipe: allRecipes[i] };
+                                $scope.recipes.push(tempRecipe.recipe);
+                                $scope.recipes[$scope.recipes.length - 1].ownership = "viewer";
+                            }
                         }
                     }
                 }
@@ -169,9 +136,9 @@ recipeApp.controller('recipeCtrl', function ($scope, $http, AuthService) {
         $scope.showShareEdit = false;
     }
     $scope.addIngredient = function () {
-        var newIngredient = { count: [$scope.newIngredientCount[0],$scope.newIngredientCount[1],$scope.newIngredientCount[2]], unit: $scope.newIngredientUnit, name: $scope.newIngredientName };
+        var newIngredient = { count: [$scope.newIngredientCount[0], $scope.newIngredientCount[1], $scope.newIngredientCount[2]], unit: $scope.newIngredientUnit, name: $scope.newIngredientName };
         $scope.editingRecipe.ingredients.push(newIngredient);
-        $scope.newIngredientCount = [0,0,2];
+        $scope.newIngredientCount = [0, 0, 2];
         $scope.newIngredientUnit = "";
         $scope.newIngredientName = "";
     }
@@ -256,7 +223,7 @@ recipeApp.controller('recipeCtrl', function ($scope, $http, AuthService) {
             $scope.editingRecipe.cook.push({
                 step: stepArray[i]
             });
-            }
+        }
         $scope.newCookStep = "";
     }
     $scope.saveRecipe = function () {
@@ -265,7 +232,7 @@ recipeApp.controller('recipeCtrl', function ($scope, $http, AuthService) {
         var alreadyThere = true;
         //for each ingredient in editing recipe check to see if it's already in the ingredient list
         for (var i = 0 ; i < $scope.editingRecipe.ingredients.length ; i++) {
-            for (var n = 0 ; n < $scope.ingredients.length ; n++){
+            for (var n = 0 ; n < $scope.ingredients.length ; n++) {
                 if ($scope.editingRecipe.ingredients[i].name === $scope.ingredients[n].name) {
                     console.log($scope.editingRecipe.ingredients[i].name + " already there");
                     isInIngredients = true;
@@ -289,8 +256,7 @@ recipeApp.controller('recipeCtrl', function ($scope, $http, AuthService) {
         if (angular.equals($scope.editingRecipe._id, undefined)) {
             alreadyThere = false;
         }
-        if (!alreadyThere)
-        {
+        if (!alreadyThere) {
             console.log("creating new recipe");
             var success = $http.post("/api/Recipe", $scope.editingRecipe)
                 .success(function (status) {
@@ -298,17 +264,14 @@ recipeApp.controller('recipeCtrl', function ($scope, $http, AuthService) {
                 .error(function (status) {
                     console.log("something went wrong saving new recipe");
                 });
-            if (success)
-            {
+            if (success) {
                 $scope.recipes.push($scope.editingRecipe);
                 $scope.showDisplayTable = false;
                 selectedRecipeIndex = $scope.recipes.length;
             }
         }
-        else
-        {
-            if (confirm("Save changes to " + $scope.editingRecipe.name))
-            {
+        else {
+            if (confirm("Save changes to " + $scope.editingRecipe.name)) {
                 var success = $http.put("/api/Recipe", $scope.editingRecipe)
                     .success(function (status) {
                         console.log(status);
@@ -316,15 +279,14 @@ recipeApp.controller('recipeCtrl', function ($scope, $http, AuthService) {
                     .error(function (status) {
                         console.log("something went wrong saving existing recipe");
                     });
-                if (success)
-                {
+                if (success) {
                     $scope.recipes[selectedRecipeIndex] = $scope.editingRecipe;
                     $scope.showEditingTable = false;
                 }
             }
         }
-        $scope.editingRecipe = { name: "", ingredients: [], prep: [], cook: [], included: false, multiplier: 1, owner: $scope.user, editors: [], viewers: []};
-        $scope.newIngredientCount =[0, 0, 2];
+        $scope.editingRecipe = { name: "", ingredients: [], prep: [], cook: [], included: false, multiplier: 1, owner: $scope.user, editors: [], viewers: [] };
+        $scope.newIngredientCount = [0, 0, 2];
         $scope.newIngredientUnit = "";
         $scope.newIngredientName = "";
         $scope.newPrepStep = "";
@@ -334,7 +296,7 @@ recipeApp.controller('recipeCtrl', function ($scope, $http, AuthService) {
         //updateRecipes();
     }
     $scope.addRecipe = function () {
-        $scope.editingRecipe = { name: "", ingredients: [], prep: [], cook: [], included: false, multiplier: 1, owner: $scope.user, editors:[], viewers:[] };
+        $scope.editingRecipe = { name: "", ingredients: [], prep: [], cook: [], included: false, multiplier: 1, owner: $scope.user, editors: [], viewers: [] };
         $scope.newIngredientCount = [0, 0, 2];
         $scope.newIngredientUnit = "";
         $scope.newIngredientName = "";
@@ -431,7 +393,7 @@ recipeApp.controller('recipeCtrl', function ($scope, $http, AuthService) {
         $scope.editingPrepIndex = -1;
         $scope.newCookStep = "";
     }
-    $scope.unsaveCookStep = function(){
+    $scope.unsaveCookStep = function () {
         $scope.editingCook = false;
         $scope.editingCookIndex = -1;
         $scope.newCookStep = "";
@@ -567,4 +529,4 @@ recipeApp.controller('recipeCtrl', function ($scope, $http, AuthService) {
         $scope.selectEditingCook($scope.editingCookIndex + 1);
 
     }
-})
+}]);

@@ -1,5 +1,4 @@
-﻿var recipeApp = angular.module("recipeApp");
-recipeApp.controller("storeCtrl", function ($scope, $http, AuthService) {
+﻿recipeApp.controller("storeCtrl", ['$scope', '$http', 'authService', function ($scope, $http, authService) {
     $scope.recipes = [];
     var ogRecipes = [];
     $scope.ingredients = [];
@@ -9,25 +8,7 @@ recipeApp.controller("storeCtrl", function ($scope, $http, AuthService) {
     var allRecipes = [];
     var tempRecipe = {};
 
-    $scope.user = AuthService.getUser();
-    console.log($scope.user);
-    var logOut = document.getElementById("logOut");
-    var logIn = document.getElementById("logIn");
-    var logOutClass = document.createAttribute("class");
-    var logInClass = document.createAttribute("class");
-    logOutClass.value = "noDisplay";
-    logInClass.value = "noDisplay";
-    logOut.setAttributeNode(logOutClass);
-    logIn.setAttributeNode(logInClass);
-    if ($scope.user === undefined) {
-        logInClass.value = "yesDisplay";
-        logOutClass.value = "noDisplay";
-
-    }
-    else {
-        logOutClass.value = "yesDisplay";
-        logInClass.value = "noDisplay";
-    }
+    $scope.user = authService.getUser();
 
     $scope.seedData = function () {
         for (var i = 0; i < $scope.stores.length; i++) {
@@ -55,22 +36,11 @@ recipeApp.controller("storeCtrl", function ($scope, $http, AuthService) {
             $scope.stores = data;
         });
     }
-    updateShopper = function() {
+    updateShopper = function () {
         $scope.$apply(function () {
             console.log("updating shopper");
-            $scope.user = AuthService.getUser();
-            if ($scope.user === undefined) {
-                logInClass.value = "yesDisplay";
-                logOutClass.value = "noDisplay";
-
-            }
-            else {
-                logOutClass.value = "yesDisplay";
-                logInClass.value = "noDisplay";
-            }
-
+            $scope.user = authService.getUser();
             console.log("updating shopper for " + $scope.user);
-
             $scope.recipes = [];
             $scope.ingredients = [];
             $scope.stores = [];
@@ -124,12 +94,12 @@ recipeApp.controller("storeCtrl", function ($scope, $http, AuthService) {
                 });
         });
     }
-    var setStoreIsClicked = function() {
+    var setStoreIsClicked = function () {
         for (var i = 0; i < $scope.ingredients.length; i++) {
             $scope.storeIsClicked[i] = false;
         }
     }
-    $scope.addStore = function() {
+    $scope.addStore = function () {
         var newStoreName = prompt("Enter the store name");
         var isDefault = confirm("Will " + newStoreName + " be your primary store?\nYes:OK No:Cancel")
         var output = {};
@@ -195,7 +165,7 @@ recipeApp.controller("storeCtrl", function ($scope, $http, AuthService) {
         $scope.stores[index].defaultStore = true;
         $scope.updateStoreIngredientList();
     }
-    var isInStores = function(ingredientObject) {
+    var isInStores = function (ingredientObject) {
         var ingredientIndex = 0;
         var isThere = false;
         var storeIndex = 0;
@@ -288,7 +258,7 @@ recipeApp.controller("storeCtrl", function ($scope, $http, AuthService) {
     $scope.updateIngredientStore = function (ingredientIndex, storeIndex) {
         $scope.storeIsClicked[ingredientIndex] = false;
         $scope.ingredients[ingredientIndex].store = storeIndex;
-        $http.put("/api/Ingredients", $scope.ingredients[ingredientIndex]).success(function(){
+        $http.put("/api/Ingredients", $scope.ingredients[ingredientIndex]).success(function () {
         });
         $scope.updateStoreIngredientList();
     }
@@ -305,4 +275,4 @@ recipeApp.controller("storeCtrl", function ($scope, $http, AuthService) {
             $scope.storeIsClicked[index] = true;
         }
     }
-})
+}]);

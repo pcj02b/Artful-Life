@@ -1,4 +1,4 @@
-﻿<section ng-controller="recipeCtrl">
+﻿<section ng-controller="recipeCtrl" class="clearfix">
     <aside>
         <ul>
             <li class="title">Recipes</li>
@@ -17,6 +17,7 @@
         @*<button ng-click="getFromJSON()">get from JSON</button>
             <button ng-click="seedData()">send data to Mongo</button>*@
         <h4>@ViewBag.Title</h4>
+        <h4 ng-show="loading"><img src="../Images/loading.gif" width="49" height="50" /></h4>
         <p><b>The Idea: </b>Click a recipe to view, edit or delete.  Or create a new recipe by using the copy and paste feature or manually inputting a recipe.</p>
         <br style="height:22px" ng-show="showTable" />
         <!--Display Table-->

@@ -1,27 +1,17 @@
-﻿html, body, article, aside{
-    height:100%;
-}
-.noDisplay{
-    display:none;
-}
-.yesDisplay{
-    display:initial;
-}
-body {
-    font-family:Josefin Slab;
-    margin:0px 16px;
+﻿html, body {
+    font-family: Josefin Slab;
+    margin: 0;
 }
 
 header{
-    margin:0px; 
-    padding:0px;
+    margin:0; 
+    padding:0;
     text-align:center;
 }
 nav{
     background-color:grey;
     border:1px solid black;
     margin:0px;
-    min-width:408px; 
     padding:0px;
 }
 nav ul{
@@ -58,7 +48,7 @@ section {
 .float-right {
     float: right;
 }
-.clear-fix:after {
+.clearfix:after {
     content: ".";
     clear: both;
     display: block;
@@ -179,14 +169,21 @@ aside p{
     padding:0px;
 }
 article{
-    width:calc(100% - 210px);
+    width:calc(100% - 200px);
     float:left;
+    overflow:auto;
+
+}
+article.stores {
+    width: calc(100% - 400px);
 }
 section{
     margin:0px; 
     padding:0px;
     box-sizing:border-box;
 }
+
+
 section textarea{
     min-width:250px;
     height:20px;

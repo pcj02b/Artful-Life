@@ -55,9 +55,12 @@
 
     $scope.deleteIngredientList = [];
 
+    $scope.loading = false;
+
     updateRecipes = function () {
         $scope.$apply(function () {
             $scope.user = authService.getUser();
+            $scope.loading = true;
             console.log("updating recipes for " + $scope.user);
             $scope.recipes = [];
             console.log($scope.recipes.length);
@@ -95,6 +98,7 @@
                     console.log("we have " + $scope.ingredients.length + " ingredients for " + $scope.user);
                     console.log("finished getting ingredients");
                 });
+                $scope.loading = false;
             });
         })
     }

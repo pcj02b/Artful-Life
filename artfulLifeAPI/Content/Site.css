@@ -42,12 +42,7 @@ nav a:hover, a:active{
 
 section {
 }
-.float-left {
-    float: left;
-}
-.float-right {
-    float: right;
-}
+
 .clearfix:after {
     content: ".";
     clear: both;

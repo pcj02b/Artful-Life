@@ -1,21 +1,18 @@
 ﻿$(document).ready(function () {
-    var windowHeightValue = $(window).height();
+    var windowHeightValue = $(window).outerHeight(false);
     var headerHeightValue = $("header").height();
     var navHeightValue = $("nav").height();
-    var sectionHeightValue = (windowHeightValue - navHeightValue);
+    var sectionHeightValue = windowHeightValue - headerHeightValue - navHeightValue - 2;
     var sectionHeight = sectionHeightValue + "px";
 
-    $("article").css("height", sectionHeight);
-    $("aside").css("height", sectionHeight);
+    $("section").css("height", sectionHeight);
 
     $(window).resize(function () {
         windowHeightValue = $(window).height();
         headerHeightValue = $("header").height();
         navHeightValue = $("nav").height();
-        sectionHeightValue = (windowHeightValue - navHeightValue - 18);
+        sectionHeightValue = windowHeightValue - headerHeightValue - navHeightValue - 2;
         sectionHeight = sectionHeightValue + "px";
-
-        $("article").css("height", sectionHeight);
-        $("aside").css("height", sectionHeight);
+        $("section").css("height", sectionHeight);
     });
 });

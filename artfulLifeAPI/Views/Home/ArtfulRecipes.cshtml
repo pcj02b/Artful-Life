@@ -2,20 +2,24 @@
     <aside>
         <ul>
             <li class="title">Recipes</li>
-            <li class="lineBottom" ng-repeat="x in recipes" ng-click="selectRecipe($index);">
-                <a href="">{{x.name}}</a>
+            <li class="lineBottom" ng-repeat="recipe in recipes" ng-click="selectRecipe($index)" ng-class="{'purple-back' : selectedRecipeIndex === $index}">
+                <a href="">{{recipe.name}}</a>
             </li>
         </ul>
         <ul>
-            <li><a ng-hide="showEditingTable" ng-click="addRecipe()">Add Recipe</a></li>
-            <li><a ng-show="showDisplayTable" ng-click="editRecipe()">Edit Recipe</a></li>
-            <li><a ng-show="showEditingTable" ng-click="saveRecipe()">Save Recipe</a></li>
-            <li><a ng-show="showDisplayTable" ng-click="removeRecipe()">Remove Recipe</a></li>
+            <li><a href="" ng-hide="showEditingTable" ng-click="addRecipe()">Add Recipe</a></li>
+            <li><a href="" ng-show="showDisplayTable" ng-click="editRecipe()">Edit Recipe</a></li>
+            <li><a href="" ng-show="showEditingTable" ng-click="saveRecipe()">Save Recipe</a></li>
+            <li><a href="" ng-show="showDisplayTable" ng-click="removeRecipe()">Remove Recipe</a></li>
         </ul>
     </aside>
     <article>
         @*<button ng-click="getFromJSON()">get from JSON</button>
             <button ng-click="seedData()">send data to Mongo</button>*@
+        @*<button href="" ng-click="migrateIngredients()">Migrate Ingredients</button>
+        <button href="" ng-click="migrateRecipes()">Migrate Recipes</button>
+        <button href="" ng-click="migrateStores()">Migrate Stores</button>
+        <button href="" ng-click="migrateUnits()">Migrate Units</button>*@
         <h4>@ViewBag.Title</h4>
         <h4 ng-show="loading"><img src="../Images/loading.gif" width="49" height="50" /></h4>
         <p><b>The Idea: </b>Click a recipe to view, edit or delete.  Or create a new recipe by using the copy and paste feature or manually inputting a recipe.</p>
@@ -31,31 +35,33 @@
                 <td rowspan="2">
                     <p>Ingredients:</p>
                     <ul id="ingredient">
-                        <li ng-repeat="x in selectedRecipe.ingredients">
-                            <span>{{x.count[0]}}</span>
-                            <span ng-hide="x.count[1]==0"> {{x.count[1]}}/{{x.count[2]}}</span>
+                        <li ng-repeat="ingredient in selectedRecipe.ingredients">
+                            <span>{{ingredient.count[0]}}</span>
+                            <span ng-hide="ingredient.count[1]==0"> {{ingredient.count[1]}}/{{ingredient.count[2]}}</span>
                             <span> </span>
-                            <span>{{x.unit}}</span>
+                            <span>{{ingredient.unit}}</span>
                             <span> </span>
-                            <span>{{x.name}}</span>
+                            <span>{{ingredient.name}}</span>
                         </li>
                     </ul>
                 </td>
-                <td class="steps">
-                    <p>Prep Instructions:</p>
-                    <ol>
-                        <li ng-repeat="x in selectedRecipe.prep">
-                            {{x.step}}
-                        </li>
-                    </ol>
+                <td class="stats">
+                    <p>Stats:</p>
+                    <ul>
+                        <li>Meal: {{selectedRecipe.stats.meal}}</li>
+                        <li>Meat: {{selectedRecipe.stats.meat}}</li>
+                        <li>Prep Time: {{selectedRecipe.stats.prepTime}}</li>
+                        <li>Cook Time: {{selectedRecipe.stats.cookTime}}</li>
+                        <li>Total Time: {{selectedRecipe.stats.totalTime}}</li>
+                    </ul>
                 </td>
             </tr>
             <tr>
                 <td class="steps">
-                    <p>Cooking Instructions:</p>
+                    <p>Instructions:</p>
                     <ol>
-                        <li ng-repeat="x in selectedRecipe.cook">
-                            {{x.step}}
+                        <li ng-repeat="step in selectedRecipe.steps">
+                            {{step}}
                         </li>
                     </ol>
                 </td>
@@ -75,24 +81,22 @@
                         <button ng-click="addTextIngredients()">add</button>
                     </form>
                     <p>Ingredients:</p>
-                    <ul id="ingredient">
-                        <li ng-repeat="x in editingRecipe.ingredients">
+                    <ul class="ingredients">
+                        <li ng-repeat="x in editingRecipe.ingredients"  ng-class="{'purple-back' : editingIngredientIndex === $index}">
                             <span ng-click="selectEditingIngredient($index)" class="link">
                                 <span ng-hide="x.count[0]==0">{{x.count[0]}}</span>
                                 <span ng-hide="x.count[1]==0"> {{x.count[1]}}/{{x.count[2]}}</span>
                                 <span ng-hide="x.count[0]==0 && x.count[1]==0"> </span>
-                                <span>{{x.unit}}</span>
-                                <span> </span>
-                                <span>{{x.name}}</span>
+                                <span>{{x.unit}} {{x.name}}</span>
                             </span>
                         </li>
                     </ul>
                     <hr />
                     <form>
-                        <input type="number" step="any" style="width:40px" min="0" ng-model="newIngredientCount[0]" />and
-                        <input type="number" style="width:30px" min="0" ng-model="newIngredientCount[1]" />/
-                        <input type="number" style="width:30px" min="2" ng-model="newIngredientCount[2]" />
-                        <select ng-model="newIngredientUnit">
+                        <input type="number" step="any" style="width:40px" min="0" ng-model="newIngredient.count[0]" />and
+                        <input type="number" style="width:30px" min="0" ng-model="newIngredient.count[1]" />/
+                        <input type="number" style="width:30px" min="2" ng-model="newIngredient.count[2]" />
+                        <select ng-model="newIngredient.unit">
                             <option value="" disabled selected style="display:none;">Unit</option>
                             <option value="fl. oz.">Fluid Ounce</option>
                             <option value="tsp.">Teaspoon</option>
@@ -107,52 +111,81 @@
                             <option value="kg.">Kilogram</option>
                             <option value="">None</option>
                         </select>
-                        <input type="text" style="height:20px" ng-model="newIngredientName" placeholder="New Ingredient" />
+                        <input type="text" style="height:20px" ng-model="newIngredient.name" placeholder="New Ingredient" />
                         <button ng-hide="editingIngredient" ng-click="addIngredient()">add</button>
                         <button ng-show="editingIngredient" ng-click="saveIngredient()">save</button>
                     </form>
-                    <form>
-                        <span ng-show="editingIngredient && editingIngredientIndex!=(editingRecipe.ingredients.length-1)" title="move ingredient down"><a href="" ng-click="moveIngredientDown()">down</a></span>
-                        <span ng-show="editingIngredient" title="delete"><a href="" ng-click="removeIngredient()"><img src="../Images/deleteIcon.png" alt="delete item" height="15" width="15" /></a></span>
-                        <span ng-show="editingIngredient && editingIngredientIndex!=0" title="move ingredient up"><a href="" ng-click="moveIngredientUp()">up</a></span>
+                    <form ng-show="editingIngredient">
+                        <span ng-show="editingIngredientIndex!=(editingRecipe.ingredients.length-1)" title="move ingredient down"><a href="" ng-click="moveIngredientDown()">down</a></span>
+                        <span title="delete"><a href="" ng-click="removeIngredient()"><img src="../Images/deleteIcon.png" alt="delete item" height="15" width="15" /></a></span>
+                        <span ng-show="editingIngredientIndex!=0" title="move ingredient up"><a href="" ng-click="moveIngredientUp()">up</a></span>
                     </form>
                 </td>
-                <td class="steps">
-                    <p>Prep Instructions:</p>
-                    <ol>
-                        <li ng-repeat="x in editingRecipe.prep" ng-click="selectEditingPrep($index)">
-                            <span class="link">{{x.step}}</span>
-                        </li>
-                    </ol>
-                    <hr />
-                    <form>
-                        <input type="text" ng-model="newPrepStep" placeholder="New Prep Step" />
-                        <button ng-click="addPrepStep()">add</button>
-                    </form>
-                    <form>
-                        <span ng-show="editingPrep && editingPrepIndex!=(editingRecipe.prep.length-1)" title="move prep step down"><a href="" ng-click="movePrepDown(editingPrepIndex)">down</a></span>
-                        <span ng-show="editingPrep"><a href="" ng-click="removePrep(editingPrepIndex);"><img src="../Images/deleteIcon.png" alt="delete item" height="15" width="15" /></a></span>
-                        <span ng-show="editingPrep && editingPrepIndex!=0" title="move prep step up"><a href="" ng-click="movePrepUp(editingPrepIndex)">up</a></span>
-                    </form>
+                <td class="stats">
+                    <p>Stats:</p>
+                    <div class="stat">
+                        <label for="meal">Meal: </label>
+                        <select name="meal" ng-model="editingRecipe.stats.meal">
+                            <option>Breakfast</option>
+                            <option>Lunch</option>
+                            <option>Dinner</option>
+                            <option>Snack</option>
+                        </select>
+                    </div>
+                    <div class="stat">
+                        <label for="meat">Meat: </label>
+                        <select name="meat" ng-model="editingRecipe.stats.meat">
+                            <option>Beef</option>
+                            <option>Chicken</option>
+                            <option>Seafood</option>
+                            <option>Vegetarian</option>
+                        </select>
+                    </div>
+                    <div class="stat">
+                        <label>Prep Time: </label>
+                        <label for="prepHours">Hr</label>
+                        <select name="prepHours" ng-model="editingRecipe.stats.prepTime.hours">
+                            <option ng-repeat="hour in [0,1,2,3,4,5,6,7,8,9,10,11,12]" value="{{hour}}">{{hour}}</option>
+                        </select>
+                        <label for="prepMins">Min</label>
+                        <select name="prepMins" ng-model="editingRecipe.stats.prepTime.mins">
+                            <option ng-repeat="mins in [0,5,10,15,20,25,30,35,40,45,50,55,60]" value="{{mins}}">{{mins}}</option>
+                        </select>
+                    </div>
+                    <div class="stat">
+                        <label>Cook Time: </label>
+                        <label for="cookHours">Hr</label>
+                        <select name="cookHours" ng-model="editingRecipe.stats.cookTime.hours">
+                            <option ng-repeat="hour in [0,1,2,3,4,5,6,7,8,9,10,11,12]" value="{{hour}}">{{hour}}</option>
+                        </select>
+                        <label for="cookMins">Min</label>
+                        <select name="precookMinspMins" ng-model="editingRecipe.stats.cookTime.mins">
+                            <option ng-repeat="mins in [0,5,10,15,20,25,30,35,40,45,50,55,60]" value="{{mins}}">{{mins}}</option>
+                        </select>
+                    </div>
                 </td>
             </tr>
             <tr>
                 <td class="steps">
                     <p>Cooking Instructions:</p>
                     <ol>
-                        <li ng-repeat="x in editingRecipe.cook" ng-click="selectEditingCook($index)">
-                            <span class="link">{{x.step}}</span>
+                        <li ng-repeat="step in editingRecipe.steps" ng-click="selectEditingStep($index)">
+                            <span class="link" ng-class="{'purple-back' : editingStepIndex === $index}">{{step}}</span>
                         </li>
                     </ol>
                     <hr />
-                    <form>
-                        <input type="text" ng-model="newCookStep" placeholder="New Cook Step" />
-                        <button ng-click="addCookStep()">add</button>
+                    <form ng-hide="editingStep" ng-submit="addStep()">
+                        <input type="text" ng-model="newStep" placeholder="New Step" />
+                        <button value="Submit">add</button>
                     </form>
-                    <form>
-                        <span ng-show="editingCook && editingCookIndex!=(editingRecipe.cook.length-1)" title="move cook step down"><a href="" ng-click="moveCookDown(editingCookIndex)">down</a></span>
-                        <span ng-show="editingCook"><a href="" ng-click="removeCook(editingCookIndex);"><img src="../Images/deleteIcon.png" alt="delete item" height="15" width="15" /></a></span>
-                        <span ng-show="editingCook && editingCookIndex!=0" title="move cook step up"><a href="" ng-click="moveCookUp(editingCookIndex)">up</a></span>
+                    <form ng-show="editingStep" ng-submit="saveStep()">
+                        <input type="text" ng-model="newStep" />
+                        <button value="Submit">save</button>
+                    </form>
+                    <form ng-show="editingStep">
+                        <span ng-show="editingStepIndex != (editingRecipe.steps.length - 1)" title="move step down"><a href="" ng-click="moveStepDown(editingStepIndex)">down</a></span>
+                        <span><a href="" ng-click="removeStep(editingStepIndex)" title="remove step"><img src="../Images/deleteIcon.png" height="15" width="15" /></a></span>
+                        <span ng-show="editingStepIndex != 0" title="move step up"><a href="" ng-click="moveStepUp(editingStepIndex)">up</a></span>
                     </form>
                 </td>
             </tr>

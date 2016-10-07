@@ -83,7 +83,11 @@ hr{color:rgb(180, 60, 180);}
 /* main layout
 ----------------------------------------------------------*/
 .link:hover{
-    background-color:rgba(180, 60, 180, 0.75);
+    background-color: rgba(180, 60, 180, 0.75);
+}
+
+.purple-back {
+    background-color: rgba(180, 60, 180, 0.75);
 }
 .title-link{
     border-bottom:2px solid rgba(180, 60, 180, 0.9);
@@ -216,6 +220,14 @@ table.recipe ul.ingredient{
     text-align:left;
 }
 
+table.recipe ul.ingredients li{
+    margin: 5px 0;
+}
+
+table.recipe .stat {
+    margin: 10px 0;
+}
+
 .selected{
     background-color:rgba(180, 60, 180, 0.75)
 }
@@ -223,6 +235,10 @@ table.recipe ul.ingredient{
 td.steps{
 min-width:250px;
 max-width:400px;
+}
+
+td.steps li {
+    margin: 5px 0;
 }
 
 table.store p{ 

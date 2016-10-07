@@ -15,51 +15,77 @@ namespace artfulLifeAPI.Controllers
 {
     public class IngredientsController : ApiController
     {
-        public string dbuser = "pcj02b";
-        public string dbpassword = "cloakd";
+        private static MongoClient client = new MongoClient("mongodb://pcj02b:cloakd@ds036698.mongolab.com:36698/artful-life");
+        private IMongoDatabase database;
+        private IMongoCollection<UserIngredients> collection;
 
         // GET api/ingredients
-        public async Task<IEnumerable<Models.Ingredients>> Get(string user)
+        public async Task<UserIngredients> Get(string user)
         {
-            var client = new MongoClient("mongodb://" + dbuser + ":" + dbpassword + "@ds036698.mongolab.com:36698/artful-life");
-            var db = client.GetDatabase("artful-life");
-            var recipes = db.GetCollection<Models.Ingredients>("Ingredients");
-            var filter = new BsonDocument("user", user);
-            var output = await recipes.Find(filter).ToListAsync();
-            return output;
+            database = client.GetDatabase("artful-life");
+            collection = database.GetCollection<UserIngredients>("Ingredients");
+            var filter = new BsonDocument("_id", user);
+            return await collection.Find(filter).FirstAsync();
         }
 
         // POST api/ingredients
-        public async Task<bool> Post([FromBody]Models.Ingredients value)
+        public async Task Post([FromBody]UserIngredients value)
         {
-            var client = new MongoClient("mongodb://" + dbuser + ":" + dbpassword + "@ds036698.mongolab.com:36698/artful-life");
-            var db = client.GetDatabase("artful-life");
-            var recipes = db.GetCollection<Models.Ingredients>("Ingredients");
-            value._id = ObjectId.GenerateNewId().ToString();
-            await recipes.InsertOneAsync(value);
-            return true;
+            database = client.GetDatabase("artful-life");
+            collection = database.GetCollection<UserIngredients>("Ingredients");
+            await collection.InsertOneAsync(value);
         }
 
         // PUT api/ingredients/5
-        public async Task<bool> Put([FromBody]Models.Ingredients value)
+        public async Task Put([FromBody]UserIngredients value)
         {
-            var client = new MongoClient("mongodb://" + dbuser + ":" + dbpassword + "@ds036698.mongolab.com:36698/artful-life");
-            var db = client.GetDatabase("artful-life");
-            var recipes = db.GetCollection<Models.Ingredients>("Ingredients");
+            database = client.GetDatabase("artful-life");
+            collection = database.GetCollection<UserIngredients>("Ingredients");
             var filter = new BsonDocument("_id", value._id);
-            await recipes.ReplaceOneAsync(filter, value);
-            return true;
+            var ingredientsObject = await collection.Find(filter).FirstAsync();
+            var ingredients = ingredientsObject.ingredients.ToList();
+            foreach (var ingredient in value.ingredients)
+            {
+                ingredients.Add(ingredient);
+            }
+            await collection.ReplaceOneAsync(filter, new UserIngredients {
+                _id = value._id,
+                ingredients = ingredients
+            });
         }
 
         // DELETE api/ingredients/5
-        public async Task<bool> Delete(string name, string user)
+        public async Task Delete([FromBody]string user, string ingredientName)
         {
-            var client = new MongoClient("mongodb://" + dbuser + ":" + dbpassword + "@ds036698.mongolab.com:36698/artful-life");
-            var db = client.GetDatabase("artful-life");
-            var recipes = db.GetCollection<Models.Ingredients>("Ingredients");
-            var filter = Builders<Models.Ingredients>.Filter.Eq("name", name) & Builders<Models.Ingredients>.Filter.Eq("user", user);
-            await recipes.DeleteOneAsync(filter);
-            return true;
+            database = client.GetDatabase("artful-life");
+            collection = database.GetCollection<UserIngredients>("Ingredients");
+            var filter = Builders<UserIngredients>.Filter.Eq("_id", user);
+            var ingredientsObject = await collection.Find(filter).FirstAsync();
+            var ingredients = ingredientsObject.ingredients.Where(i => i.name != ingredientName);
+            await collection.ReplaceOneAsync(filter, new UserIngredients {
+                _id = user,
+                ingredients = ingredients
+            });
+        }
+
+        public async Task Migrate(string user)
+        {
+            database = client.GetDatabase("artful-life");
+            var oldIngredientsCollection = database.GetCollection<OldIngredients>("OldIngredients");
+            var filter = new BsonDocument("user", user);
+            var oldIngredients = await oldIngredientsCollection.Find(filter).ToListAsync();
+            var UserIngredients = new UserIngredients
+            {
+                _id = user,
+                ingredients = (from ingredient in oldIngredients
+                               select new UserIngredients.Ingredient
+                               {
+                                   name = ingredient.name,
+                                   store = ingredient.store
+                               }).ToArray()
+            };
+            await database.GetCollection<UserIngredients>("NewIngredients").InsertOneAsync(UserIngredients);
+            await database.RenameCollectionAsync("NewIngredients", "Ingredients");
         }
     }
 }

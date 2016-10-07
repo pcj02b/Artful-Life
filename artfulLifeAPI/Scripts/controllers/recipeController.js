@@ -22,6 +22,18 @@
         };
     };
 
+    $scope.migrateIngredients = function () {
+        $http.post("/api/Ingredients?user=" + $scope.user);
+    }
+    $scope.migrateRecipes = function () {
+        $http.post("/api/Recipe?user=" + $scope.user);
+    }
+    $scope.migrateStores = function () {
+        $http.post("/api/Store?user=" + $scope.user);
+    }
+    $scope.migrateUnits = function () {
+        $http.post("/api/Units?user=" + $scope.user);
+    }
     $scope.showDisplayTable = false;
     $scope.showEditingTable = false;
     $scope.showShareLink = false;
@@ -29,26 +41,21 @@
 
     $scope.selectedRecipe = {};
     $scope.editingRecipe = {};
-    selectedRecipeIndex = 0;
+    $scope.selectedRecipeIndex = -1;
 
-    $scope.newIngredientCount = [0, 0, 2];
-    $scope.newIngredientUnit = "";
-    $scope.newIngredientName = "";
-    $scope.newPrepStep = "";
-    $scope.newCookStep = "";
+    $scope.newIngredient = {
+        count: [0, 0, 2],
+        unit: "",
+        name: ""
+    };
+    $scope.newStep = "";
 
-    $scope.editingIngredientIndex = -1;
-    $scope.editingPrepIndex = -1;
-    $scope.editingCookIndex = -1;
     $scope.editingIngredient = false;
-    $scope.editingPrep = false;
-    $scope.editingCook = false;
+    $scope.editingIngredientIndex = -1;
+    $scope.editingStepIndex = -1;
+    $scope.editingStep = false;
     $scope.textIngredients = "";
-    $scope.textPrep = "";
-    $scope.textCook = "";
 
-    $scope.showSharePage = false;
-    $scope.showShareLink = false;
     $scope.shareEmail = "";
     $scope.shareCanEdit = false;
     $scope.showShareEdit = false;
@@ -58,93 +65,62 @@
     $scope.loading = false;
 
     updateRecipes = function () {
-        $scope.$apply(function () {
-            $scope.user = authService.getUser();
-            $scope.loading = true;
-            console.log("updating recipes for " + $scope.user);
-            $scope.recipes = [];
-            console.log($scope.recipes.length);
-            $http.get("/api/Recipe?user=".concat($scope.user)).success(function (data) {
-                allRecipes = data;
-                for (var i = 0 ; i < allRecipes.length ; i++) {
-                    if (allRecipes[i].owner === $scope.user) {
-                        console.log("owner of " + allRecipes[i].name);
-                        tempRecipe = { recipe: allRecipes[i] };
-                        $scope.recipes.push(tempRecipe.recipe);
-                        $scope.recipes[$scope.recipes.length - 1].ownership = "owner";
-                    }
-                    else {
-                        for (var n = 0 ; n < allRecipes[i].editors.length ; n++) {
-                            if (allRecipes[i].editors[n] === $scope.user) {
-                                console.log("editor of " + allRecipes[i].name);
-                                tempRecipe = { recipe: allRecipes[i] };
-                                $scope.recipes.push(tempRecipe.recipe);
-                                $scope.recipes[$scope.recipes.length - 1].ownership = "editor";
-                            }
-                        }
-                        for (var n = 0 ; n < allRecipes[i].viewers.length ; n++) {
-                            if (allRecipes[i].viewers[n] === $scope.user) {
-                                console.log("viewer of " + allRecipes[i].name);
-                                tempRecipe = { recipe: allRecipes[i] };
-                                $scope.recipes.push(tempRecipe.recipe);
-                                $scope.recipes[$scope.recipes.length - 1].ownership = "viewer";
-                            }
-                        }
-                    }
-                }
-                console.log("finished getting recipes");
-                $http.get("/api/Ingredients?user=".concat($scope.user)).success(function (data) {
-                    $scope.ingredients = data;
-                    console.log("we have " + $scope.ingredients.length + " ingredients for " + $scope.user);
-                    console.log("finished getting ingredients");
-                });
+        $scope.user = authService.getUser();
+        $scope.loading = true;
+        $scope.recipes = [];
+        $http.get("/api/Recipe?user=".concat($scope.user))
+            .success(function (allRecipes) {
+                $scope.recipes = allRecipes;
                 $scope.loading = false;
             });
-        })
+        $http.get("/api/Ingredients/get?user=" + $scope.user)
+            .success(function (data) {
+                $scope.ingredients = data.ingredients;
+            });
     }
+
     $scope.selectRecipe = function (index) {
         $scope.showDisplayTable = true;
         $scope.showEditingTable = false;
         $scope.showShareLink = true;
         $scope.showSharePage = false;
         $scope.selectedRecipe = $scope.recipes[index];
-        selectedRecipeIndex = index;
-        $scope.deleteIngredientList = [];
+        $scope.selectedRecipeIndex = index;
     }
     $scope.showShareRecipe = function () {
         $scope.showDisplayTable = false;
         $scope.showEditingTable = false;
         $scope.showSharePage = true;
-        if ($scope.recipes[selectedRecipeIndex].ownership === "owner") {
+        if ($scope.recipes[$scope.selectedRecipeIndex].owner === $scope.user) {
             $scope.showShareEdit = true;
         }
         $scope.showShareLink = false;
     }
     $scope.shareRecipe = function () {
         if ($scope.shareCanEdit) {
-            if ($scope.recipes[selectedRecipeIndex].ownership === "owner") {
-                $scope.recipes[selectedRecipeIndex].editors.push($scope.shareEmail);
+            if ($scope.recipes[$scope.selectedRecipeIndex].owner === $scope.user) {
+                $scope.recipes[$scope.selectedRecipeIndex].editors.push($scope.shareEmail);
             }
             else {
                 window.alert("only the owner can share the ability to edit.");
-                return;
             };
         }
         else {
-            $scope.recipes[selectedRecipeIndex].viewers.push($scope.shareEmail);
+            $scope.recipes[$scope.selectedRecipeIndex].viewers.push($scope.shareEmail);
         };
-        $http.put("/api/Recipe", $scope.recipes[selectedRecipeIndex]);
-        window.alert($scope.recipes[selectedRecipeIndex].name + " shared with " + $scope.shareEmail);
+        $http.put("/api/Recipe", $scope.recipes[$scope.selectedRecipeIndex]);
+        window.alert($scope.recipes[$scope.selectedRecipeIndex].name + " shared with " + $scope.shareEmail);
         $scope.showSharePage = false;
         $scope.showShareLink = true;
         $scope.showShareEdit = false;
     }
     $scope.addIngredient = function () {
-        var newIngredient = { count: [$scope.newIngredientCount[0], $scope.newIngredientCount[1], $scope.newIngredientCount[2]], unit: $scope.newIngredientUnit, name: $scope.newIngredientName };
-        $scope.editingRecipe.ingredients.push(newIngredient);
-        $scope.newIngredientCount = [0, 0, 2];
-        $scope.newIngredientUnit = "";
-        $scope.newIngredientName = "";
+        $scope.editingRecipe.ingredients.push($scope.newIngredient);
+        $scope.newIngredient = {
+            count: [0, 0, 2],
+            unit: "",
+            name: ""
+        };
     }
     $scope.addTextIngredients = function () {
         $scope.ingredientArray = $scope.textIngredients.split(/\n/);
@@ -214,26 +190,17 @@
         }
         $scope.textIngredients = "";
     }
-    $scope.addPrepStep = function () {
-        var stepArray = $scope.newPrepStep.split(/\n/);
-        for (var i = 0; i < stepArray.length; i++) {
-            $scope.editingRecipe.prep.push({ step: stepArray[i] });
-        }
-        $scope.newPrepStep = "";
+
+    $scope.addStep = function () {
+        angular.forEach($scope.newStep.split(/\n/), function(newStep) {
+            $scope.editingRecipe.steps.push(newStep);
+        });
+        $scope.newStep = "";
     }
-    $scope.addCookStep = function () {
-        var stepArray = $scope.newCookStep.split(/\n/);
-        for (var i = 0; i < stepArray.length; i++) {
-            $scope.editingRecipe.cook.push({
-                step: stepArray[i]
-            });
-        }
-        $scope.newCookStep = "";
-    }
+
     $scope.saveRecipe = function () {
         var isInIngredients = false;
-        var newIngredient = {};
-        var alreadyThere = true;
+        var newIngredients = [];
         //for each ingredient in editing recipe check to see if it's already in the ingredient list
         for (var i = 0 ; i < $scope.editingRecipe.ingredients.length ; i++) {
             for (var n = 0 ; n < $scope.ingredients.length ; n++) {
@@ -245,81 +212,91 @@
             if (!isInIngredients) {
                 console.log("there was a new ingredient to add")
                 console.log("namely, " + $scope.editingRecipe.ingredients[i].name);
-                newIngredient = { user: $scope.user, name: $scope.editingRecipe.ingredients[i].name, store: -1 };
-                $scope.ingredients.push(newIngredient);
-                $http.post("/api/Ingredients", newIngredient);
+                newIngredients.push({ name: $scope.editingRecipe.ingredients[i].name, store: -1 });
             }
             isInIngredients = false;
         }
-        //delete any ingredients from deleteIngredients array
+        //add any new ingredients
+        if (newIngredients.length) $http.put("/api/Ingredients", { _id: $scope.user, ingredients: newIngredients });
+
+        //delete any ingredients
         for (var i = 0; i < $scope.deleteIngredientList.length; i++) {
-            $http.delete("/api/Ingredients?name=".concat($scope.deleteIngredientList[i], "&user=", $scope.user));
+            $http.delete("/api/Ingredients?ingredientName=".concat($scope.deleteIngredientList[i].name, "&user=", $scope.user));
         }
+        var totalTime = "".concat($scope.editingRecipe.stats.prepTime.hours + $scope.editingRecipe.stats.cookTime.hours, ":", $scope.editingRecipe.stats.prepTime.mins + $scope.editingRecipe.stats.cookTime.mins, ":00");
+        $scope.editingRecipe.stats.totalTime = totalTime;
+        $scope.editingRecipe.stats.prepTime = "".concat($scope.editingRecipe.stats.prepTime.hours, ":", $scope.editingRecipe.stats.prepTime.mins, ":00");
+        $scope.editingRecipe.stats.cookTime = "".concat($scope.editingRecipe.stats.cookTime.hours, ":", $scope.editingRecipe.stats.cookTime.mins, ":00");
 
         //check to see if recipe is already there
-        if (angular.equals($scope.editingRecipe._id, undefined)) {
-            alreadyThere = false;
-        }
-        if (!alreadyThere) {
+        if (typeof($scope.editingRecipe._id) === "undefined") {
             console.log("creating new recipe");
-            var success = $http.post("/api/Recipe", $scope.editingRecipe)
+            $http.post("/api/Recipe", $scope.editingRecipe)
                 .success(function (status) {
+                    $scope.showDisplayTable = false;
+                    updateRecipes();
+                    $scope.selectedRecipeIndex = $scope.recipes.length;
                 })
                 .error(function (status) {
                     console.log("something went wrong saving new recipe");
                 });
-            if (success) {
-                $scope.recipes.push($scope.editingRecipe);
-                $scope.showDisplayTable = false;
-                selectedRecipeIndex = $scope.recipes.length;
-            }
         }
         else {
-            if (confirm("Save changes to " + $scope.editingRecipe.name)) {
-                var success = $http.put("/api/Recipe", $scope.editingRecipe)
+            if (confirm("Saving changes to " + $scope.editingRecipe.name)) {
+                $http.put("/api/Recipe", $scope.editingRecipe)
                     .success(function (status) {
-                        console.log(status);
+                        updateRecipes();
+                        $scope.selectedRecipeIndex = $scope.recipes.length;
                     })
                     .error(function (status) {
                         console.log("something went wrong saving existing recipe");
                     });
-                if (success) {
-                    $scope.recipes[selectedRecipeIndex] = $scope.editingRecipe;
-                    $scope.showEditingTable = false;
-                }
             }
         }
-        $scope.editingRecipe = { name: "", ingredients: [], prep: [], cook: [], included: false, multiplier: 1, owner: $scope.user, editors: [], viewers: [] };
-        $scope.newIngredientCount = [0, 0, 2];
-        $scope.newIngredientUnit = "";
-        $scope.newIngredientName = "";
-        $scope.newPrepStep = "";
-        $scope.newCookStep = "";
+        $scope.editingRecipe = { name: "", ingredients: [], stats: { prepTime: "00:00:00", cookTime: "00:00:00" }, steps: [], included: false, multiplier: 1, owner: $scope.user, editors: [], viewers: [] };
+        $scope.newIngredient = {
+            count: [0, 0, 2],
+            unit: "",
+            name: ""
+        };
+        $scope.newStep = "";
         $scope.showDisplayTable = true;
         $scope.showEditingTable = false;
-        //updateRecipes();
     }
     $scope.addRecipe = function () {
-        $scope.editingRecipe = { name: "", ingredients: [], prep: [], cook: [], included: false, multiplier: 1, owner: $scope.user, editors: [], viewers: [] };
-        $scope.newIngredientCount = [0, 0, 2];
-        $scope.newIngredientUnit = "";
-        $scope.newIngredientName = "";
-        $scope.newPrepStep = "";
-        $scope.newCookStep = "";
+        $scope.editingRecipe = { name: "", ingredients: [], stats: {}, steps: [], included: false, multiplier: 1, owner: $scope.user, editors: [], viewers: [] };
+        $scope.editingRecipe.stats.prepTime = { hours: 0, mins: 0 };
+        $scope.editingRecipe.stats.cookTime = { hours: 0, mins: 0 };
+        $scope.newIngredient = {
+            count: [0, 0, 2],
+            unit: "",
+            name: ""
+        };
+        $scope.newStep = "";
         $scope.showDisplayTable = false;
         $scope.showEditingTable = true;
         $scope.showShareLink = false;
+        $scope.selectedRecipeIndex = -1;
     }
     $scope.editRecipe = function () {
-        $scope.showShareLink = false;
-        $scope.editingRecipe = $scope.recipes[selectedRecipeIndex];
-        $scope.newIngredientCount = [0, 0, 2];
-        $scope.newIngredientUnit = "";
-        $scope.newIngredientName = "";
-        $scope.newPrepStep = "";
-        $scope.newCookStep = "";
-        if ($scope.recipes[selectedRecipeIndex].ownership != "viewer") {
-            $scope.editingRecipe = $scope.recipes[selectedRecipeIndex];
+        if ($scope.recipes[$scope.selectedRecipeIndex].viewers.indexOf($scope.user) === -1) {
+            angular.copy($scope.recipes[$scope.selectedRecipeIndex], $scope.editingRecipe);
+            $scope.editingRecipe.stats.prepTime = {
+                hours: parseInt($scope.editingRecipe.stats.prepTime.slice(0, 2)),
+                mins: parseInt($scope.editingRecipe.stats.prepTime.slice(3, 5))
+            };
+            $scope.editingRecipe.stats.cookTime = {
+                hours: parseInt($scope.editingRecipe.stats.cookTime.slice(0, 2)),
+                mins: parseInt($scope.editingRecipe.stats.cookTime.slice(3, 5))
+            };
+
+            $scope.newIngredient = {
+                count: [0, 0, 2],
+                unit: "",
+                name: ""
+            };
+            $scope.newStep = "";
+            $scope.showShareLink = false;
             $scope.showDisplayTable = false;
             $scope.showEditingTable = true;
         }
@@ -328,22 +305,35 @@
         }
     }
     $scope.selectEditingIngredient = function (index) {
-        $scope.editingIngredient = true;
-        $scope.newIngredientCount = $scope.editingRecipe.ingredients[index].count;
-        $scope.newIngredientUnit = $scope.editingRecipe.ingredients[index].unit;
-        $scope.newIngredientName = $scope.editingRecipe.ingredients[index].name;
-        $scope.editingIngredientIndex = index;
+        if ($scope.editingIngredientIndex === index) {
+            $scope.editingIngredient = false;
+            $scope.newIngredient = {
+                count: [0, 0, 2],
+                unit: "",
+                name: ""
+            };
+            $scope.editingIngredientIndex = -1;
+        }
+        else {
+            $scope.editingIngredient = true;
+            $scope.newIngredient = $scope.editingRecipe.ingredients[index];
+            $scope.editingIngredientIndex = index;
+        }
     }
-    $scope.selectEditingPrep = function (index) {
-        $scope.editingPrep = true;
-        $scope.newPrepStep = $scope.editingRecipe.prep[index].step;
-        $scope.editingPrepIndex = index;
+
+    $scope.selectEditingStep = function (index) {
+        if ($scope.editingStepIndex === index) {
+            $scope.editingStep = false;
+            $scope.newStep = "";
+            $scope.editingStepIndex = -1;
+        }
+        else {
+            $scope.editingStep = true;
+            $scope.newStep = $scope.editingRecipe.steps[index];
+            $scope.editingStepIndex = index;
+        }
     }
-    $scope.selectEditingCook = function (index) {
-        $scope.editingCook = true;
-        $scope.newCookStep = $scope.editingRecipe.cook[index].step;
-        $scope.editingCookIndex = index;
-    }
+
     $scope.saveIngredient = function () {
         var wasInIngredients = false;
         var wasInOtherRecipe = false;
@@ -352,58 +342,37 @@
                 wasInIngredients = true;
             }
         }
+
         for (var i = 0; i < $scope.recipes.length; i++) {
             for (var n = 0; n < $scope.recipes[i].ingredients.length; n++) {
-                if ($scope.recipes[i].ingredients[n].name === $scope.editingRecipe.ingredients[$scope.editingIngredientIndex].name && i != selectedRecipeIndex) {
+                if ($scope.recipes[i].ingredients[n].name === $scope.editingRecipe.ingredients[$scope.editingIngredientIndex].name && i != $scope.selectedRecipeIndex) {
                     wasInOtherRecipe = true;
                 }
             }
         }
         if (!wasInOtherRecipe && wasInIngredients) {
             $scope.deleteIngredientList.push($scope.editingRecipe.ingredients[$scope.editingIngredientIndex].name);
-            console.log("will to delete " + $scope.editingRecipe.ingredients[$scope.editingIngredientIndex].name + " upon saving recipe");
+            console.log("will delete " + $scope.editingRecipe.ingredients[$scope.editingIngredientIndex].name + " upon saving recipe");
         }
 
-        $scope.editingRecipe.ingredients[$scope.editingIngredientIndex].count = $scope.newIngredientCount;
-        $scope.editingRecipe.ingredients[$scope.editingIngredientIndex].unit = $scope.newIngredientUnit;
-        $scope.editingRecipe.ingredients[$scope.editingIngredientIndex].name = $scope.newIngredientName;
+        $scope.editingRecipe.ingredients[$scope.editingIngredientIndex] = $scope.newIngredient;
         $scope.editingIngredient = false;
         $scope.editingIngredientIndex = -1;
-        $scope.newIngredientCount = [0, 0, 2];
-        $scope.newIngredientUnit = "";
-        $scope.newIngredientName = "";
+        $scope.newIngredient = {
+            count: [0, 0, 2],
+            unit: "",
+            name: ""
+        };
     }
-    $scope.unsaveIngredient = function () {
-        $scope.editingIngredient = false;
-        $scope.editingIngredientIndex = -1;
-        $scope.newIngredientCount = [0, 0, 2];
-        $scope.newIngredientUnit = "";
-        $scope.newIngredientName = "";
-    }
-    $scope.savePrepStep = function () {
-        $scope.editingRecipe.prep[$scope.editingPrepIndex].step = $scope.newPrepStep;
-        $scope.editingPrep = false;
-        $scope.newPrepStep = "";
-    }
-    $scope.unsavePrepStep = function () {
-        $scope.editingPrep = false;
-        $scope.editingPrepIndex = -1;
-        $scope.newPrepStep = "";
-    }
-    $scope.saveCookStep = function () {
-        $scope.editingRecipe.cook[$scope.editingCookIndex].step = $scope.newCookStep;
-        $scope.editingCook = false;
-        $scope.editingCookIndex = -1;
-        $scope.editingPrepIndex = -1;
-        $scope.newCookStep = "";
-    }
-    $scope.unsaveCookStep = function () {
-        $scope.editingCook = false;
-        $scope.editingCookIndex = -1;
-        $scope.newCookStep = "";
-    }
-    $scope.removeIngredient = function () {
 
+    $scope.saveStep = function () {
+        $scope.editingRecipe.steps[$scope.editingStepIndex] = $scope.newStep;
+        $scope.editingStep = false;
+        $scope.editingStepIndex = -1;
+        $scope.newStep = "";
+    }
+
+    $scope.removeIngredient = function () {
         var wasInIngredients = false;
         var wasInOtherRecipe = false;
         for (var i = 0; i < $scope.ingredients.length; i++) {
@@ -413,7 +382,7 @@
         }
         for (var i = 0; i < $scope.recipes.length; i++) {
             for (var n = 0; n < $scope.recipes[i].ingredients.length; n++) {
-                if ($scope.recipes[i].ingredients[n].name === $scope.editingRecipe.ingredients[$scope.editingIngredientIndex].name && i != selectedRecipeIndex) {
+                if ($scope.recipes[i].ingredients[n].name === $scope.editingRecipe.ingredients[$scope.editingIngredientIndex].name && i != $scope.selectedRecipeIndex) {
                     wasInOtherRecipe = true;
                 }
             }
@@ -422,66 +391,55 @@
             $scope.deleteIngredientList.push($scope.editingRecipe.ingredients[$scope.editingIngredientIndex].name);
             console.log("will to delete " + $scope.editingRecipe.ingredients[$scope.editingIngredientIndex].name + " upon saving recipe");
         }
-        var editingIngredients = []; //local temp list
+        $scope.editingRecipe.ingredients = [];
         for (var i = 0; i < $scope.editingRecipe.ingredients.length; i++) {
             if (i != $scope.editingIngredientIndex) {
-                editingIngredients.push($scope.editingRecipe.ingredients[i]);
+                $scope.editingRecipe.ingredients.push($scope.editingRecipe.ingredients[i]);
             }
         }
-        $scope.editingRecipe.ingredients = editingIngredients;
     }
-    $scope.removePrep = function (index) {
-        var editingPrep = []; //local temp list
-        for (var i = 0; i < $scope.editingRecipe.prep.length; i++) {
+    $scope.removeStep = function (index) {
+        var editingSteps = []; //local temp list
+        for (var i = 0; i < $scope.editingRecipe.steps.length; i++) {
             if (i != index) {
-                editingPrep.push($scope.editingRecipe.prep[i]);
+                editingSteps.push($scope.editingRecipe.steps[i]);
             }
         }
-        $scope.editingRecipe.prep = editingPrep;
+        $scope.editingRecipe.steps = editingSteps;
     };
-    $scope.removeCook = function (index) {
-        var editingCook = []; //local temp list
-        for (var i = 0; i < $scope.editingRecipe.cook.length; i++) {
-            if (i != index) {
-                editingCook.push($scope.editingRecipe.cook[i]);
-            }
-        }
-        $scope.editingRecipe.cook = editingCook;
-    };
+
     $scope.removeRecipe = function () {
-        var newRecipes = []; //local temp list
         var isInAnotherRecipe = false;
-        for (var i = 0; i < $scope.recipes.length; i++) {
-            if (i != selectedRecipeIndex) {
-                newRecipes.push($scope.recipes[i]);
-            }
-        }
-        if (confirm("This will permanently remove " + $scope.recipes[selectedRecipeIndex].name)) {
-            for (var i = 0; i < $scope.recipes[selectedRecipeIndex].ingredients.length; i++) {
-                for (var n = 0; n < newRecipes.length; n++) {
-                    for (var m = 0; m < newRecipes[n].ingredients.length; m++) {
-                        if (newRecipes[n].ingredients[m].name === $scope.recipes[selectedRecipeIndex].ingredients[i].name) {
+        _.remove($scope.recipes, function (recipe, index) {
+            return index === $scope.selectedRecipeIndex;
+        });
+        if (confirm("This will permanently remove " + $scope.selectedRecipe.name)) {
+            for (var i = 0; i < $scope.selectedRecipe.ingredients.length; i++) {
+                for (var n = 0; n < $scope.recipes.length; n++) {
+                    for (var m = 0; m < $scope.recipes[n].ingredients.length; m++) {
+                        if ($scope.recipes[n].ingredients[m].name === $scope.selectedRecipe.ingredients[i].name) {
                             isInAnotherRecipe = true;
                         }
                     }
                 }
-                console.log($scope.recipes[selectedRecipeIndex].ingredients[i].name);
+                console.log($scope.selectedRecipe.ingredients[i].name);
                 console.log(isInAnotherRecipe);
                 if (!isInAnotherRecipe) {
-                    console.log("deleting ingredient: " + $scope.recipes[selectedRecipeIndex].ingredients[i].name);
-                    var deleteURI = encodeURI("/api/Ingredients?name=".concat($scope.recipes[selectedRecipeIndex].ingredients[i].name, "&user=", $scope.user));
+                    console.log("deleting ingredient: " + $scope.selectedRecipe.ingredients[i].name);
+                    var deleteURI = encodeURI("/api/Ingredients?name=".concat($scope.selectedRecipe.ingredients[i].name, "&user=", $scope.user));
                     $http.delete(deleteURI);
                 }
             }
-            $http.delete("/api/Recipe?_id=".concat($scope.recipes[selectedRecipeIndex]._id)).success(function (status) {
+            $http.delete("/api/Recipe?_id=".concat($scope.selectedRecipe._id)).success(function (status) {
+                updateRecipes();
+                $scope.selectedRecipeIndex = 0;
+                $scope.showDisplayTable = false;
+                $scope.showEditingTable = false;
             })
             .error(function (status) {
                 console.log("something went wrong deleting a recipe");
+                console.log(status);
             });
-            $scope.recipes = newRecipes;
-            selectedRecipeIndex = 0;
-            $scope.showDisplayTable = false;
-            $scope.showEditingTable = false;
         }
     }
     $scope.moveIngredientUp = function () {
@@ -502,35 +460,18 @@
         $scope.editingRecipe.ingredients[$scope.editingIngredientIndex] = highIngredient;
         $scope.selectEditingIngredient($scope.editingIngredientIndex + 1);
     }
-    $scope.movePrepUp = function () {
-        var lowPrep = {}, prop;
-        for (prop in $scope.editingRecipe.prep[$scope.editingPrepIndex - 1]) {
-            lowPrep[prop] = $scope.editingRecipe.prep[$scope.editingPrepIndex - 1][prop];
-        }
-        $scope.editingRecipe.prep[$scope.editingPrepIndex - 1] = $scope.editingRecipe.prep[$scope.editingPrepIndex];
-        $scope.editingRecipe.prep[$scope.editingPrepIndex] = lowPrep;
-        $scope.selectEditingPrep($scope.editingPrepIndex - 1);
+
+    $scope.moveStepUp = function (index) {
+        var lowStep = $.extend({}, $scope.editingRecipe.steps[index - 1]);
+        $scope.editingRecipe.steps[index - 1] = $scope.editingRecipe.steps[index];
+        $scope.editingRecipe.steps[index] = lowStep;
+        $scope.selectEditingStep($scope.editingStepIndex - 1);
     }
-    $scope.movePrepDown = function () {
-        var highPrep = {}, prop;
-        for (prop in $scope.editingRecipe.prep[$scope.editingPrepIndex + 1]) {
-            highPrep[prop] = $scope.editingRecipe.prep[$scope.editingPrepIndex + 1][prop];
-        }
-        $scope.editingRecipe.prep[$scope.editingPrepIndex + 1] = $scope.editingRecipe.prep[$scope.editingPrepIndex];
-        $scope.editingRecipe.prep[$scope.editingPrepIndex] = highPrep;
-        $scope.selectEditingPrep($scope.editingPrepIndex + 1);
-    }
-    $scope.moveCookUp = function (index) {
-        var lowCook = $.extend({}, $scope.editingRecipe.cook[index - 1]);
-        $scope.editingRecipe.cook[index - 1] = $scope.editingRecipe.cook[index];
-        $scope.editingRecipe.cook[index] = lowCook;
-        $scope.selectEditingCook($scope.editingCookIndex - 1);
-    }
-    $scope.moveCookDown = function (index) {
-        var highCook = $.extend({}, $scope.editingRecipe.cook[index + 1]);
-        $scope.editingRecipe.cook[index + 1] = $scope.editingRecipe.cook[index];
-        $scope.editingRecipe.cook[index] = highCook;
-        $scope.selectEditingCook($scope.editingCookIndex + 1);
+    $scope.moveStepDown = function (index) {
+        var highStep = $.extend({}, $scope.editingRecipe.steps[index + 1]);
+        $scope.editingRecipe.steps[index + 1] = $scope.editingRecipe.steps[index];
+        $scope.editingRecipe.steps[index] = highStep;
+        $scope.selectEditingStep($scope.editingStepIndex + 1);
 
     }
 }]);

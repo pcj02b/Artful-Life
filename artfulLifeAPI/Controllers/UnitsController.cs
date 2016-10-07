@@ -11,7 +11,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Web.Http;
 
-namespace artfulLifeAPI.Controllers
+namespace artfulLifeAPI.ApiControllers
 {
     public class UnitsController : ApiController
     {
@@ -19,57 +19,72 @@ namespace artfulLifeAPI.Controllers
         public string dbpassword = "cloakd";
 
         // GET api/Units
-        public async Task<IEnumerable<Models.Units>> Get()
+        public async Task<IEnumerable<Unit>> Get()
         {
             var client = new MongoClient("mongodb://" + dbuser + ":" + dbpassword + "@ds036698.mongolab.com:36698/artful-life");
             var db = client.GetDatabase("artful-life");
-            var units = db.GetCollection<Models.Units>("Units");
+            var units = db.GetCollection<Unit>("Units");
             var filter = new BsonDocument();
-            var projection = Builders<Models.Units>.Projection.Exclude("_id");
-            var output = await units.Find(filter).Project<Models.Units>(projection).ToListAsync();
-            return output;
+            var projection = Builders<Unit>.Projection.Exclude("_id");
+            return await units.Find(filter).Project<Unit>(projection).ToListAsync();
         }
 
         // GET api/Units/5
-        public async Task<Models.Units> Get(string unitName)
+        public async Task<Unit> Get(string Name)
         {
             var client = new MongoClient("mongodb://" + dbuser + ":" + dbpassword + "@ds036698.mongolab.com:36698/artful-life");
             var db = client.GetDatabase("artful-life");
-            var units = db.GetCollection<Models.Units>("Units");
-            return (from unit in await units.Find(r => r.unit == unitName).ToListAsync()
-                    select unit).FirstOrDefault();
+            var units = db.GetCollection<Unit>("Units");
+            return await units.Find(r => r.name == Name).FirstAsync();
         }
 
         // POST api/Units
-        public async Task<bool> Post([FromBody]Models.Units value)
+        public async Task<bool> Post([FromBody]Unit value)
         {
             var client = new MongoClient("mongodb://" + dbuser + ":" + dbpassword + "@ds036698.mongolab.com:36698/artful-life");
             var db = client.GetDatabase("artful-life");
-            var units = db.GetCollection<Models.Units>("Units");
+            var units = db.GetCollection<Unit>("Units");
             await units.InsertOneAsync(value);
             return true;
         }
 
         // PUT api/Units/5
-        public async Task<bool> Put([FromBody]Models.Units value)
+        public async Task<bool> Put([FromBody]Unit value)
         {
             var client = new MongoClient("mongodb://" + dbuser + ":" + dbpassword + "@ds036698.mongolab.com:36698/artful-life");
             var db = client.GetDatabase("artful-life");
-            var recipes = db.GetCollection<Models.Units>("Units");
-            var filter = new BsonDocument("unit", value.unit);
+            var recipes = db.GetCollection<Unit>("Units");
+            var filter = new BsonDocument("Name", value.name);
             await recipes.ReplaceOneAsync(filter, value);
             return true;
         }
 
         // DELETE api/Units/5
-        public async Task<bool> Delete(string unit)
+        public async Task<bool> Delete(string Name)
         {
             var client = new MongoClient("mongodb://" + dbuser + ":" + dbpassword + "@ds036698.mongolab.com:36698/artful-life");
             var db = client.GetDatabase("artful-life");
-            var recipes = db.GetCollection<Models.Units>("Units");
-            var filter = new BsonDocument("unit", unit);
+            var recipes = db.GetCollection<Unit>("Units");
+            var filter = new BsonDocument("Name", Name);
             await recipes.DeleteOneAsync(filter);
             return true;
+        }
+
+        public async Task Migrate(string user)
+        {
+            var client = new MongoClient("mongodb://" + dbuser + ":" + dbpassword + "@ds036698.mongolab.com:36698/artful-life");
+            var db = client.GetDatabase("artful-life");
+            var oldUnitsCollection = db.GetCollection<OldUnits>("Old Units");
+            var filter = new BsonDocument();
+            var projection = Builders<OldUnits>.Projection.Exclude("_id");
+            var oldUnits = await oldUnitsCollection.Find(filter).Project<OldUnits>(projection).ToListAsync();
+            var newUnitsCollection = db.GetCollection<Unit>("Units");
+            await newUnitsCollection.InsertManyAsync((from unit in oldUnits
+                                                     select new Unit
+                                                     {
+                                                         name = unit.unit,
+                                                         names = unit.name
+                                                     }).ToArray());
         }
     }
 }

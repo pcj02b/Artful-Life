@@ -7,33 +7,85 @@
     $http.get("/api/Units").success(function (data) {
         $scope.units = data;
     })
-    $scope.getFromJSON = function () {
-        $http.get("/Data/ingredients.json")
-            .success(function (data) {
-                $scope.ingredients = data.ingredients;
-            })
-            .error(function (status) {
-                window.alert(status);
-            });
-    }
-    $scope.seedData = function () {
-        for (var i = 0; i < $scope.ingredients.length; i++) {
-            $http.post("/api/Ingredients", $scope.user, $scope.ingredients[i]);
-        };
-    };
 
-    $scope.migrateIngredients = function () {
-        $http.post("/api/Ingredients?user=" + $scope.user);
+    $scope.selectSortType = function (type) {
+        switch (type) {
+            case 'letter':
+                $scope.byLetter = !$scope.byLetter;
+                $scope.byMeal = false;
+                $scope.byMeat = false;
+                break;
+            case 'meal':
+                $scope.byMeal = !$scope.byMeal;
+                $scope.byLetter = false;
+                $scope.byMeat = false;
+                break;
+            case 'meat':
+                $scope.byMeat = !$scope.byMeat;
+                $scope.byLetter = false;
+                $scope.byMeal = false;
+                break;
+            default:
+                $scope.byMeat = false;
+                $scope.byLetter = false;
+                $scope.byMeal = false;
+        }
     }
-    $scope.migrateRecipes = function () {
-        $http.post("/api/Recipe?user=" + $scope.user);
+
+    $scope.alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
+    $scope.selectedLetter = "";
+    $scope.selecteMeal = "";
+    $scope.selectLetter = function (letter) {
+        if ($scope.selectedLetter === letter) {
+            $scope.selectedLetter = null;
+        }
+        else {
+            $scope.selectedLetter = letter;
+        }
     }
-    $scope.migrateStores = function () {
-        $http.post("/api/Store?user=" + $scope.user);
+    $scope.letterHasRecipes = function (letter) {
+        return _.some($scope.recipes, function (recipe) {
+            return $scope.recipeInLetter(recipe.name, letter);
+        });
+    };
+    $scope.mealHasRecipes = function (meal) {
+        return _.some($scope.recipes, function (recipe) {
+            return recipe.stats.meal === meal;
+        });
+    };
+    $scope.recipeInLetter = function (recipeName, letter) {
+        return recipeName.toLowerCase().indexOf(letter.toLowerCase()) === 0;
     }
-    $scope.migrateUnits = function () {
-        $http.post("/api/Units?user=" + $scope.user);
+
+    $scope.meals = ["Breakfast", "Lunch", "Dinner", "Snack", "Other"];
+    $scope.mealHasRecipes = function (meal) {
+        return _.some($scope.recipes, function (recipe) {
+            return recipe.stats.meal === meal;
+        });
+    };
+    $scope.selectMeal = function (meal) {
+        if ($scope.selectedMeal === meal) {
+            $scope.selectedMeal = null;
+        }
+        else {
+            $scope.selectedMeal = meal;
+        }
     }
+    $scope.meats = ["Beef", "Chicken", "Seafood", "Vegetarian", "Other"];
+    $scope.meatHasRecipes = function (meat) {
+        return _.some($scope.recipes, function (recipe) {
+            return recipe.stats.meat === meat;
+        });
+    };
+    $scope.selectMeat = function (meat) {
+        if ($scope.selectedMeat === meat) {
+            $scope.selectedMeat = null;
+        }
+        else {
+            $scope.selectedMeat = meat;
+        }
+    }
+
     $scope.showDisplayTable = false;
     $scope.showEditingTable = false;
     $scope.showShareLink = false;
@@ -79,13 +131,23 @@
             });
     }
 
-    $scope.selectRecipe = function (index) {
-        $scope.showDisplayTable = true;
-        $scope.showEditingTable = false;
-        $scope.showShareLink = true;
-        $scope.showSharePage = false;
-        $scope.selectedRecipe = $scope.recipes[index];
-        $scope.selectedRecipeIndex = index;
+    $scope.selectRecipe = function (recipeID) {
+        if ($scope.selectedRecipe._id === recipeID) {
+            $scope.showDisplayTable = false;
+            $scope.showEditingTable = false;
+            $scope.selectedRecipe = {};
+        }
+        else {
+            $scope.showDisplayTable = true;
+            $scope.showEditingTable = false;
+            $scope.selectedRecipe = _.find($scope.recipes, function (recipe, index) {
+                if (recipe._id === recipeID) {
+                    return true;
+                    $scope.selectedRecipeIndex = index;
+                }
+                return false;
+            });
+        }
     }
     $scope.showShareRecipe = function () {
         $scope.showDisplayTable = false;

@@ -7,32 +7,31 @@
         },
         isSignedIn: function () {
             return signedIn
+        },
+        signOut: function () {
+            var auth2 = gapi.auth2.getAuthInstance();
+            auth2.signOut().then(function () {
+                console.log('User signed out.');
+                currentUser = undefined;
+                signedIn = false;
+                if (typeof (updateShopper) != "undefined") {
+                    updateShopper();
+                    console.log("ran update Shopper")
+                }
+                if (typeof (updateRecipes) != "undefined") {
+                    updateRecipes();
+                    console.log("ran update Recipes")
+                }
+                if (typeof (updateCooking) != "undefined") {
+                    updateCooking();
+                    console.log("ran update Cooking")
+                }
+                if (typeof (updateMain) != "undefined") {
+                    updateMain();
+                    console.log("ran update main");
+                }
+            });
         }
-    }
-
-    service.signOut = function () {
-        var auth2 = gapi.auth2.getAuthInstance();
-        auth2.signOut().then(function () {
-            console.log('User signed out.');
-            currentUser = undefined;
-            signedIn = false;
-            if (typeof (updateShopper) != "undefined") {
-                updateShopper();
-                console.log("ran update Shopper")
-            }
-            if (typeof (updateRecipes) != "undefined") {
-                updateRecipes();
-                console.log("ran update Recipes")
-            }
-            if (typeof (updateCooking) != "undefined") {
-                updateCooking();
-                console.log("ran update Cooking")
-            }
-            if (typeof (updateMain) != "undefined") {
-                updateMain();
-                console.log("ran update main");
-            }
-        });
     }
 
     onSignIn = function (googleUser) {

@@ -1,0 +1,96 @@
+﻿h1 {
+    font-size: 5em;
+    margin: 0px;
+}
+
+h2 {
+    font-size: 1.75em;
+    margin: 0px;
+}
+
+h3 {
+    font-size: 1.2em;
+    margin: 0px;
+}
+
+h4 {
+    font-family: "Waiting for the Sunrise";
+    font-size: 28pt;
+    text-align: center;
+    margin: 0;
+}
+
+h5, h6 {
+    font-size: 1em;
+    margin: 0px;
+}
+
+.alert {
+    color: red;
+    font-weight: bold;
+}
+
+.clearfix:after {
+    content: ".";
+    clear: both;
+    display: block;
+    height: 0;
+    visibility: hidden;
+}
+
+section {
+    aside {
+        width: 250px;
+        height: 100%;
+        background-color: lightgrey;
+        margin: 0;
+        padding: 4px;
+        line-height: 24px;
+        text-align: center;
+        box-sizing: border-box;
+        overflow: auto;
+
+        p {
+            margin: 0;
+            padding: 2px 0;
+
+            a.bold {
+                font-weight: 700;
+            }
+        }
+
+        .title {
+            font-weight: bold;
+            font-size: 17pt;
+            border-bottom: 1px solid $primary-purple;
+        }
+
+        ul {
+            margin: 0;
+            padding: 0;
+            list-style-type: none;
+
+            li {
+                width: 100%;
+                display: block;
+                color: black;
+                font-size: 17pt;
+            }
+
+            &.recipes {
+                li {
+                    border-bottom: 1px dotted grey;
+                    padding: 5px 0;
+
+                    &:last-of-type {
+                        border-bottom: none;
+                    }
+                }
+            }
+
+            &.menu {
+                border-top: 1px solid $primary-purple;
+            }
+        }
+    }
+}

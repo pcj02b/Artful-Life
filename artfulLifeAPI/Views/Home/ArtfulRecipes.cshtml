@@ -1,12 +1,40 @@
-﻿<section ng-controller="recipeCtrl" class="clearfix">
-    <aside>
-        <ul>
-            <li class="title">Recipes</li>
-            <li class="lineBottom" ng-repeat="recipe in recipes" ng-click="selectRecipe($index)" ng-class="{'purple-back' : selectedRecipeIndex === $index}">
-                <a href="">{{recipe.name}}</a>
-            </li>
-        </ul>
-        <ul>
+﻿<section ng-controller="recipeCtrl" class="recipes">
+    <aside class="clearfix">
+        <p class="title">Recipes</p>
+        <p><a href="" ng-click="selectSortType('letter')" ng-class="{bold : byLetter}">by Letter</a></p>
+        <div class="type" ng-show="byLetter">
+            <div ng-repeat="letter in alphabet" ng-show="letterHasRecipes(letter)">
+                <p><a href="" ng-click="selectLetter(letter)" ng-class="{bold : selectedLetter === letter}">{{letter}}</a></p>
+                <ul class="recipes" ng-show="selectedLetter === letter">
+                    <li ng-repeat="recipe in recipes | orderBy : 'name'" ng-class="{'purple-back' : recipe._id === selectedRecipe._id}" ng-if="recipeInLetter(recipe.name, letter)">
+                        <a href="" ng-click="selectRecipe(recipe._id)">{{recipe.name}}</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <p><a href="" ng-click="selectSortType('meal')" ng-class="{bold : byMeal}">by Meal</a></p>
+        <div class="type" ng-show="byMeal">
+            <div ng-repeat="meal in meals" ng-show="mealHasRecipes(meal)">
+                <p><a href="" ng-click="selectMeal(meal)">{{meal}}</a></p>
+                <ul class="recipes" ng-show="selectedMeal === meal">
+                    <li ng-repeat="recipe in recipes | orderBy : 'name'" ng-class="{'purple-back' : recipe._id === selectedRecipe._id}" ng-if="recipe.stats.meal === meal">
+                        <a href="" ng-click="selectRecipe(recipe._id)">{{recipe.name}}</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <p><a href="" ng-click="selectSortType('meat')" ng-class="{bold : byMeat}">by Meat</a></p>
+        <div class="type" ng-show="byMeat">
+            <div ng-repeat="meat in meats" ng-show="meatHasRecipes(meat)">
+                <p><a href="" ng-click="selectMeat(meat)">{{meat}}</a></p>
+                <ul class="recipes" ng-show="selectedMeat === meat">
+                    <li ng-repeat="recipe in recipes | orderBy : 'name'" ng-class="{'purple-back' : recipe._id === selectedRecipe._id}" ng-if="recipe.stats.meat === meat">
+                        <a href="" ng-click="selectRecipe(recipe._id)">{{recipe.name}}</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <ul class="menu">
             <li><a href="" ng-hide="showEditingTable" ng-click="addRecipe()">Add Recipe</a></li>
             <li><a href="" ng-show="showDisplayTable" ng-click="editRecipe()">Edit Recipe</a></li>
             <li><a href="" ng-show="showEditingTable" ng-click="saveRecipe()">Save Recipe</a></li>
@@ -14,16 +42,9 @@
         </ul>
     </aside>
     <article>
-        @*<button ng-click="getFromJSON()">get from JSON</button>
-            <button ng-click="seedData()">send data to Mongo</button>*@
-        @*<button href="" ng-click="migrateIngredients()">Migrate Ingredients</button>
-        <button href="" ng-click="migrateRecipes()">Migrate Recipes</button>
-        <button href="" ng-click="migrateStores()">Migrate Stores</button>
-        <button href="" ng-click="migrateUnits()">Migrate Units</button>*@
         <h4>@ViewBag.Title</h4>
         <h4 ng-show="loading"><img src="../Images/loading.gif" width="49" height="50" /></h4>
         <p><b>The Idea: </b>Click a recipe to view, edit or delete.  Or create a new recipe by using the copy and paste feature or manually inputting a recipe.</p>
-        <br style="height:22px" ng-show="showTable" />
         <!--Display Table-->
         <table class="recipe" ng-show="showDisplayTable">
             <tr>
@@ -126,39 +147,33 @@
                     <div class="stat">
                         <label for="meal">Meal: </label>
                         <select name="meal" ng-model="editingRecipe.stats.meal">
-                            <option>Breakfast</option>
-                            <option>Lunch</option>
-                            <option>Dinner</option>
-                            <option>Snack</option>
+                            <option ng-value="meal" ng-repeat="meal in meals">{{meal}}</option>
                         </select>
                     </div>
                     <div class="stat">
                         <label for="meat">Meat: </label>
                         <select name="meat" ng-model="editingRecipe.stats.meat">
-                            <option>Beef</option>
-                            <option>Chicken</option>
-                            <option>Seafood</option>
-                            <option>Vegetarian</option>
+                            <option ng-value="meat" ng-repeat="meat in meats">{{meat}}</option>
                         </select>
                     </div>
                     <div class="stat">
                         <label>Prep Time: </label>
-                        <label for="prepHours">Hr</label>
+                        <label for="prepHours">Hours</label>
                         <select name="prepHours" ng-model="editingRecipe.stats.prepTime.hours">
                             <option ng-repeat="hour in [0,1,2,3,4,5,6,7,8,9,10,11,12]" value="{{hour}}">{{hour}}</option>
                         </select>
-                        <label for="prepMins">Min</label>
+                        <label for="prepMins">Minutes</label>
                         <select name="prepMins" ng-model="editingRecipe.stats.prepTime.mins">
                             <option ng-repeat="mins in [0,5,10,15,20,25,30,35,40,45,50,55,60]" value="{{mins}}">{{mins}}</option>
                         </select>
                     </div>
                     <div class="stat">
                         <label>Cook Time: </label>
-                        <label for="cookHours">Hr</label>
+                        <label for="cookHours">Hours</label>
                         <select name="cookHours" ng-model="editingRecipe.stats.cookTime.hours">
                             <option ng-repeat="hour in [0,1,2,3,4,5,6,7,8,9,10,11,12]" value="{{hour}}">{{hour}}</option>
                         </select>
-                        <label for="cookMins">Min</label>
+                        <label for="cookMins">Minutes</label>
                         <select name="precookMinspMins" ng-model="editingRecipe.stats.cookTime.mins">
                             <option ng-repeat="mins in [0,5,10,15,20,25,30,35,40,45,50,55,60]" value="{{mins}}">{{mins}}</option>
                         </select>

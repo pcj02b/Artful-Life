@@ -206,6 +206,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\HelpPage\HelpPage.css" />
+    <Content Include="Content\assets\css\Site.css" />
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_glass_55_fbf9ee_1x400.png" />
@@ -279,6 +280,18 @@
     <Content Include="Data\stores.json" />
     <Content Include="Data\ingredients.json" />
     <Content Include="Data\units.json" />
+    <Content Include="Content\assets\css\global.css" />
+    <Content Include="Content\assets\css\global.css.scss" />
+    <Content Include="Content\assets\css\global_1.css" />
+    <Content Include="Content\assets\css\partials\base - Copy.css" />
+    <Content Include="Content\assets\css\partials\base.css" />
+    <Content Include="Content\assets\css\_sass\global.scss" />
+    <Content Include="Content\assets\css\_sass\partials\_layout.scss" />
+    <Content Include="Content\assets\css\_sass\partials\_variables.scss" />
+    <Content Include="Content\assets\css\_sass\partials\_recipes.scss" />
+    <Content Include="Content\assets\css\_sass\partials\_shopping.scss" />
+    <Content Include="Content\assets\css\_sass\partials\_cooking.scss" />
+    <Content Include="Content\assets\css\_sass\partials\_generic.scss" />
     <None Include="Properties\PublishProfiles\artfullife - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\artfullife.pubxml" />
     <None Include="Scripts\jquery-1.8.2.intellisense.js" />
@@ -318,7 +331,6 @@
       <DependentUpon>Web.config</DependentUpon>
     </Content>
     <Content Include="Areas\HelpPage\Views\_ViewStart.cshtml" />
-    <Content Include="Content\Site.css" />
     <Content Include="Images\accent.png" />
     <Content Include="Images\bullet.png" />
     <Content Include="Images\heroAccent.png" />

@@ -1,86 +1,4 @@
-﻿html, body {
-    font-family: Josefin Slab;
-    margin: 0;
-}
-
-header{
-    margin:0; 
-    padding:0;
-    text-align:center;
-}
-nav{
-    background-color:grey;
-    border:1px solid black;
-    margin:0px;
-    padding:0px;
-}
-nav ul{
-    text-align:center;
-    list-style-type:none;
-    padding:0;
-    overflow:hidden;
-    margin:0;
-    width:100%;
-    box-sizing:border-box;
-}
-nav li {
-    float:left;
-    width:14.28%;
-    min-width:100px;
-}
-nav a{
-    color:white;
-    padding-top:12px;
-    text-decoration:none;
-    font-size:x-large;
-    height:40px;
-    display:block;
-}
-nav a:hover, a:active{
-    background-color:rgba(180, 60, 180, 0.9);
-}
-
-.clearfix:after {
-    content: ".";
-    clear: both;
-    display: block;
-    height: 0;
-    visibility: hidden;
-}
-h1 {
-    font-size: 5em;
-    margin:0px; 
-}
-
-h2 {
-    font-size: 1.75em;
-    margin:0px; 
-}
-h3 {
-    font-size: 1.2em;
-    margin:0px; 
-}
-
-h4{
-    font-family:"Waiting for the Sunrise";
-    font-size:28pt;
-    text-align:center;
-    margin:0;
-}
-
-h5, h6 {
-    font-size: 1em;
-    margin:0px; 
-}
-
-hr{color:rgb(180, 60, 180);}
-
-.alert {
-    color:red;
-    font-weight:bold;
-}
-
-/* main layout
+﻿/* main layout
 ----------------------------------------------------------*/
 .link:hover{
     background-color: rgba(180, 60, 180, 0.75);
@@ -98,23 +16,7 @@ hr{color:rgb(180, 60, 180);}
     background-color:rgba(180, 60, 180, 0.9);
 }
 
-aside{
-    float: left;
-    width: 200px;
-    height: 100%;
-    background-color:lightgrey;
-    margin: 0;
-    padding: 4px;
-    line-height:28px;
-    text-align:center;
-    box-sizing:border-box;
-    overflow:auto;
-}
-aside ul{
-    margin:0px;
-    padding:0px;
-    list-style-type:none;
-}
+
 aside ul p.store{
     font-weight:bold;
     border-bottom:1px solid grey;
@@ -122,53 +24,13 @@ aside ul p.store{
 aside.stores{
     float:right;
 }
-.noHighlight:hover{
-    background-color:initial;
-}
-aside li {
-    width: 100%;
-    display: block;
+
+aside a {
+    text-decoration: none;
     color: black;
     font-size: 17pt;
 }
-aside li.title{
-    border-bottom:2px solid rgba(180, 60, 180, 0.9);
-    padding-bottom:2px;
-    font-weight:bold;
-}
-aside li.title:hover{
-    background-color:initial;
-}
 
-aside li.lineBottom:last-child{
-    border-bottom:2px solid rgba(180, 60, 180, 0.9);
-    padding-bottom:2px;
-}
-aside li.lineTop{
-    border-top:2px solid rgba(180, 60, 180, 0.9);
-}
-li.stores:last-child{
-    border-bottom:1px solid grey;
-}
-aside li.ingredient:last-child{
-        border-bottom:1px solid grey;
-}
-aside a{
-    text-decoration:none;
-    padding:0px 8px;
-    color:black;
-    font-size:17pt;
-}
-
-aside p{
-    margin:0px;
-    padding:0px;
-}
-section{
-    margin:0px; 
-    padding:0px;
-    box-sizing:border-box;
-}
 section.home {
     padding: 10px;
 }
@@ -248,22 +110,6 @@ table.store td.delete{
     font-weight:bold;
     text-align:center;
 }
-
-
-/* site title
-----------------------------------------------------------*/
-
-/* login
-----------------------------------------------------------*/
-
-/* menu
-----------------------------------------------------------*/
-
-/* page elements
-----------------------------------------------------------*/
-/* featured */
-
-/* features */
 
 /* ordered list */
 ol.round {

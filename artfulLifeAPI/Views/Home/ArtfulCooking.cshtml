@@ -3,7 +3,7 @@
         <ul>
             <li ng-show="showPrep" ng-click="showPrep = false" class="title-link">Prep Instructions</li>
             <li ng-hide="showPrep" ng-click="showPrep = true" class="title-link">Cooking Instructions</li>
-            <li ng-repeat="recipe in recipes" class="noHighlight">
+            <li ng-repeat="recipe in recipes">
                 <span ng-show="recipe.included">
                     {{recipe.name}}
                     x

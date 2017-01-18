@@ -1,18 +1,19 @@
 ﻿$(document).ready(function () {
-    var windowHeightValue = $(window).outerHeight(false);
-    var headerHeightValue = $("header").height();
-    var navHeightValue = $("nav").height();
-    var sectionHeightValue = windowHeightValue - headerHeightValue - navHeightValue - 2;
-    var sectionHeight = sectionHeightValue + "px";
+    var windowHeightValue,
+        headerHeightValue,
+        navHeightValue,
+        sectionHeightValue,
+        updatePage = function () {
+            windowHeightValue = $(window).outerHeight(false);
+            headerHeightValue = $("header").height();
+            navHeightValue = $("nav").height();
+            sectionHeightValue = windowHeightValue - headerHeightValue - navHeightValue;
+            $("section").css("height", sectionHeightValue + "px");
+        };
 
-    $("section").css("height", sectionHeight);
+    updatePage();
 
     $(window).resize(function () {
-        windowHeightValue = $(window).height();
-        headerHeightValue = $("header").height();
-        navHeightValue = $("nav").height();
-        sectionHeightValue = windowHeightValue - headerHeightValue - navHeightValue - 2;
-        sectionHeight = sectionHeightValue + "px";
-        $("section").css("height", sectionHeight);
+        updatePage();
     });
 });

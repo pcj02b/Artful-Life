@@ -1,0 +1,62 @@
+﻿section.home {
+    padding: 10px;
+
+    ol.round {
+        list-style-type: none;
+        padding-left: 0;
+
+        li {
+            margin: 25px 0;
+            padding-left: 45px;
+
+            &.zero {
+                background: url("../images/orderedList0.png") no-repeat;
+            }
+
+            &.one {
+                background: url("../images/orderedList1.png") no-repeat;
+            }
+
+            &.two {
+                background: url("../images/orderedList2.png") no-repeat;
+            }
+
+            &.three {
+                background: url("../images/orderedList3.png") no-repeat;
+            }
+
+            &.four {
+                background: url("../images/orderedList4.png") no-repeat;
+            }
+
+            &.five {
+                background: url("../images/orderedList5.png") no-repeat;
+            }
+        }
+    }
+
+    @media only screen and (max-width: 800px) {
+        ol.round {
+            list-style-type: none;
+            padding-left: 0;
+
+            li {
+                padding-left: 10px;
+                margin: 25px 0;
+
+                &.zero,
+                &.one,
+                &.two,
+                &.three,
+                &.four,
+                &.five,
+                &.six,
+                &.seven,
+                &.eight,
+                &.nine {
+                    background: none;
+                }
+            }
+        }
+    }
+}

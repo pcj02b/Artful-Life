@@ -39,7 +39,7 @@
             <li>@Html.ActionLink("Resourceful", "ArtfulResourceful", "Home", new { area = "" }, null)</li>
             <li>@Html.ActionLink("Tips", "TipsAndAdvise", "Home", new { area = "" }, null)</li>
             <li>
-                <div class="g-signin2" data-onsuccess="onSignIn" @*style="float:none"*@ ng-hide="signedIn()"></div>
+                <div class="g-signin2" data-onsuccess="onSignIn" ng-hide="signedIn()"></div>
                 <a href="" ng-click="signOut()" ng-show="signedIn()">Sign out</a>
             </li>
             @*<li>@Html.ActionLink("API", "Index", "Help", new { area = "" }, null)</li>*@

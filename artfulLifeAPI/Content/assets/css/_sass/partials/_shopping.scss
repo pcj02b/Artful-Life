@@ -1,2 +1,34 @@
-﻿body {
+﻿section.shopping {
+    aside {
+
+        ul {
+            .store {
+                font-weight: bold;
+                border-bottom: 1px solid grey;
+            }
+        }
+
+        &.recipes {
+            float: left;
+        }
+
+        &.stores {
+            float: right;
+        }
+    }
+
+    article {
+        width: calc(100% - 500px);
+
+        table.store {
+            p {
+                font-weight: bold;
+            }
+
+            td.delete {
+                font-weight: bold;
+                text-align: center;
+            }
+        }
+    }
 }

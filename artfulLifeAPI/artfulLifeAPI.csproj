@@ -207,6 +207,7 @@
   <ItemGroup>
     <Content Include="Areas\HelpPage\HelpPage.css" />
     <Content Include="Content\assets\css\Site.css" />
+    <Content Include="Content\Gruntfile.js" />
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_glass_55_fbf9ee_1x400.png" />
@@ -283,7 +284,6 @@
     <Content Include="Content\assets\css\global.css" />
     <Content Include="Content\assets\css\global.css.scss" />
     <Content Include="Content\assets\css\global_1.css" />
-    <Content Include="Content\assets\css\partials\base - Copy.css" />
     <Content Include="Content\assets\css\partials\base.css" />
     <Content Include="Content\assets\css\_sass\global.scss" />
     <Content Include="Content\assets\css\_sass\partials\_layout.scss" />
@@ -292,11 +292,17 @@
     <Content Include="Content\assets\css\_sass\partials\_shopping.scss" />
     <Content Include="Content\assets\css\_sass\partials\_cooking.scss" />
     <Content Include="Content\assets\css\_sass\partials\_generic.scss" />
+    <Content Include="Content\assets\css\_sass\partials\_home.scss" />
+    <Content Include="Content\config.rb" />
+    <Content Include="Content\Gemfile" />
+    <Content Include="Content\Gemfile.lock" />
+    <Content Include="Content\package.json" />
+    <Content Include="Content\README.md" />
     <None Include="Properties\PublishProfiles\artfullife - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\artfullife.pubxml" />
     <None Include="Scripts\jquery-1.8.2.intellisense.js" />
-    <Content Include="Images\deleteIcon.png" />
-    <Content Include="Images\loading.gif" />
+    <Content Include="Content\assets\images\deleteIcon.png" />
+    <Content Include="Content\assets\images\loading.gif" />
     <Content Include="Scripts\controllers\cookingController.js" />
     <Content Include="Scripts\controllers\mainController.js" />
     <Content Include="Scripts\controllers\recipeApp.js" />
@@ -331,19 +337,19 @@
       <DependentUpon>Web.config</DependentUpon>
     </Content>
     <Content Include="Areas\HelpPage\Views\_ViewStart.cshtml" />
-    <Content Include="Images\accent.png" />
-    <Content Include="Images\bullet.png" />
-    <Content Include="Images\heroAccent.png" />
-    <Content Include="Images\orderedList0.png" />
-    <Content Include="Images\orderedList1.png" />
-    <Content Include="Images\orderedList2.png" />
-    <Content Include="Images\orderedList3.png" />
-    <Content Include="Images\orderedList4.png" />
-    <Content Include="Images\orderedList5.png" />
-    <Content Include="Images\orderedList6.png" />
-    <Content Include="Images\orderedList7.png" />
-    <Content Include="Images\orderedList8.png" />
-    <Content Include="Images\orderedList9.png" />
+    <Content Include="Content\assets\images\accent.png" />
+    <Content Include="Content\assets\images\bullet.png" />
+    <Content Include="Content\assets\images\heroAccent.png" />
+    <Content Include="Content\assets\images\orderedList0.png" />
+    <Content Include="Content\assets\images\orderedList1.png" />
+    <Content Include="Content\assets\images\orderedList2.png" />
+    <Content Include="Content\assets\images\orderedList3.png" />
+    <Content Include="Content\assets\images\orderedList4.png" />
+    <Content Include="Content\assets\images\orderedList5.png" />
+    <Content Include="Content\assets\images\orderedList6.png" />
+    <Content Include="Content\assets\images\orderedList7.png" />
+    <Content Include="Content\assets\images\orderedList8.png" />
+    <Content Include="Content\assets\images\orderedList9.png" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Views\Web.config" />
     <Content Include="Views\_ViewStart.cshtml" />

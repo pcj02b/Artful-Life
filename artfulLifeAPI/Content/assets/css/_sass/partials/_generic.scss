@@ -38,6 +38,14 @@ h5, h6 {
     visibility: hidden;
 }
 
+.selected{
+    background-color:rgba(180, 60, 180, 0.75)
+}
+
+.bold {
+    font-weight: 700;
+}
+
 section {
     aside {
         width: 250px;
@@ -53,10 +61,12 @@ section {
         p {
             margin: 0;
             padding: 2px 0;
+        }
 
-            a.bold {
-                font-weight: 700;
-            }
+        a {
+            text-decoration: none;
+            color: black;
+            font-size: 17pt;
         }
 
         .title {
@@ -90,6 +100,24 @@ section {
 
             &.menu {
                 border-top: 1px solid $primary-purple;
+            }
+        }
+    }
+
+    article {
+        table {
+            th {
+                font-size: 24pt;
+                text-align: center;
+            }
+
+            td {
+                font-size: 14pt;
+            }
+
+            th, td {
+                margin: 2px;
+                border: 1px solid black;
             }
         }
     }

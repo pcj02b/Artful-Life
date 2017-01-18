@@ -2,10 +2,6 @@
     aside {
         float: left;
 
-        .title {
-            background: url(/Images/close1.png) center right;
-        }
-
         .type {
             border: solid grey;
             border-width: 1px 0;
@@ -21,5 +17,57 @@
 
     article {
         width: calc(100% - 250px);
+
+        table.recipe {
+            width: 100%;
+
+            th {
+                textarea {
+                    min-width: 250px;
+                    width: calc(100% - 6px);
+                    font-family: Josefin Slab;
+                    font-size: 24px;
+                    text-align: center;
+                    height: 24px;
+                }
+            }
+
+            td {
+                textarea {
+                    width: calc(100% - 2px);
+                    padding: 0px;
+                }
+
+                &.steps {
+                    min-width: 250px;
+                    max-width: 400px;
+
+                    li {
+                        margin: 5px 0;
+                    }
+                }
+            }
+
+            p {
+                font-weight: 700;
+            }
+
+            a {
+                text-decoration: none;
+                color: black;
+            }
+
+            form {
+                border: 1px solid black;
+            }
+
+            .stat {
+                margin: 10px 0;
+            }
+
+            ul.ingredients li {
+                margin: 5px 0;
+            }
+        }
     }
 }

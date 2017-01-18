@@ -45,7 +45,17 @@ h5, h6 {
   visibility: hidden;
 }
 
-/* line 42, _sass/partials/_generic.scss */
+/* line 41, _sass/partials/_generic.scss */
+.selected {
+  background-color: rgba(180, 60, 180, 0.75);
+}
+
+/* line 45, _sass/partials/_generic.scss */
+.bold {
+  font-weight: 700;
+}
+
+/* line 50, _sass/partials/_generic.scss */
 section aside {
   width: 250px;
   height: 100%;
@@ -57,46 +67,117 @@ section aside {
   box-sizing: border-box;
   overflow: auto;
 }
-/* line 53, _sass/partials/_generic.scss */
+/* line 61, _sass/partials/_generic.scss */
 section aside p {
   margin: 0;
   padding: 2px 0;
 }
-/* line 57, _sass/partials/_generic.scss */
-section aside p a.bold {
-  font-weight: 700;
+/* line 66, _sass/partials/_generic.scss */
+section aside a {
+  text-decoration: none;
+  color: black;
+  font-size: 17pt;
 }
-/* line 62, _sass/partials/_generic.scss */
+/* line 72, _sass/partials/_generic.scss */
 section aside .title {
   font-weight: bold;
   font-size: 17pt;
   border-bottom: 1px solid rgba(180, 60, 180, 0.75);
 }
-/* line 68, _sass/partials/_generic.scss */
+/* line 78, _sass/partials/_generic.scss */
 section aside ul {
   margin: 0;
   padding: 0;
   list-style-type: none;
 }
-/* line 73, _sass/partials/_generic.scss */
+/* line 83, _sass/partials/_generic.scss */
 section aside ul li {
   width: 100%;
   display: block;
   color: black;
   font-size: 17pt;
 }
-/* line 81, _sass/partials/_generic.scss */
+/* line 91, _sass/partials/_generic.scss */
 section aside ul.recipes li {
   border-bottom: 1px dotted grey;
   padding: 5px 0;
 }
-/* line 85, _sass/partials/_generic.scss */
+/* line 95, _sass/partials/_generic.scss */
 section aside ul.recipes li:last-of-type {
   border-bottom: none;
 }
-/* line 91, _sass/partials/_generic.scss */
+/* line 101, _sass/partials/_generic.scss */
 section aside ul.menu {
   border-top: 1px solid rgba(180, 60, 180, 0.75);
+}
+/* line 109, _sass/partials/_generic.scss */
+section article table th {
+  font-size: 24pt;
+  text-align: center;
+}
+/* line 114, _sass/partials/_generic.scss */
+section article table td {
+  font-size: 14pt;
+}
+/* line 118, _sass/partials/_generic.scss */
+section article table th, section article table td {
+  margin: 2px;
+  border: 1px solid black;
+}
+
+/* line 1, _sass/partials/_home.scss */
+section.home {
+  padding: 10px;
+}
+/* line 4, _sass/partials/_home.scss */
+section.home ol.round {
+  list-style-type: none;
+  padding-left: 0;
+}
+/* line 8, _sass/partials/_home.scss */
+section.home ol.round li {
+  margin: 25px 0;
+  padding-left: 45px;
+}
+/* line 12, _sass/partials/_home.scss */
+section.home ol.round li.zero {
+  background: url("../images/orderedList0.png") no-repeat;
+}
+/* line 16, _sass/partials/_home.scss */
+section.home ol.round li.one {
+  background: url("../images/orderedList1.png") no-repeat;
+}
+/* line 20, _sass/partials/_home.scss */
+section.home ol.round li.two {
+  background: url("../images/orderedList2.png") no-repeat;
+}
+/* line 24, _sass/partials/_home.scss */
+section.home ol.round li.three {
+  background: url("../images/orderedList3.png") no-repeat;
+}
+/* line 28, _sass/partials/_home.scss */
+section.home ol.round li.four {
+  background: url("../images/orderedList4.png") no-repeat;
+}
+/* line 32, _sass/partials/_home.scss */
+section.home ol.round li.five {
+  background: url("../images/orderedList5.png") no-repeat;
+}
+@media only screen and (max-width: 800px) {
+  /* line 39, _sass/partials/_home.scss */
+  section.home ol.round {
+    list-style-type: none;
+    padding-left: 0;
+  }
+  /* line 43, _sass/partials/_home.scss */
+  section.home ol.round li {
+    padding-left: 10px;
+    margin: 25px 0;
+  }
+  /* line 47, _sass/partials/_home.scss */
+  section.home ol.round li.zero, section.home ol.round li.one, section.home ol.round li.two, section.home ol.round li.three, section.home ol.round li.four, section.home ol.round li.five, section.home ol.round li.six, section.home ol.round li.seven, section.home ol.round li.eight, section.home ol.round li.nine {
+    background: none;
+  }
 }
 
 /* line 1, _sass/partials/_layout.scss */
@@ -155,28 +236,104 @@ section {
   padding: 0;
   box-sizing: border-box;
 }
+/* line 53, _sass/partials/_layout.scss */
+section article {
+  height: 100%;
+  overflow: auto;
+}
 
 /* line 2, _sass/partials/_recipes.scss */
 section.recipes aside {
   float: left;
 }
 /* line 5, _sass/partials/_recipes.scss */
-section.recipes aside .title {
-  background: url(/Images/close1.png) center right;
-}
-/* line 9, _sass/partials/_recipes.scss */
 section.recipes aside .type {
   border: solid grey;
   border-width: 1px 0;
   margin: 0 4px;
 }
-/* line 14, _sass/partials/_recipes.scss */
+/* line 10, _sass/partials/_recipes.scss */
 section.recipes aside .type .recipes {
   border: dashed grey;
   border-width: 1px 0;
   margin: 0 4px;
 }
-/* line 22, _sass/partials/_recipes.scss */
+/* line 18, _sass/partials/_recipes.scss */
 section.recipes article {
   width: calc(100% - 250px);
+}
+/* line 21, _sass/partials/_recipes.scss */
+section.recipes article table.recipe {
+  width: 100%;
+}
+/* line 25, _sass/partials/_recipes.scss */
+section.recipes article table.recipe th textarea {
+  min-width: 250px;
+  width: calc(100% - 6px);
+  font-family: Josefin Slab;
+  font-size: 24px;
+  text-align: center;
+  height: 24px;
+}
+/* line 36, _sass/partials/_recipes.scss */
+section.recipes article table.recipe td textarea {
+  width: calc(100% - 2px);
+  padding: 0px;
+}
+/* line 41, _sass/partials/_recipes.scss */
+section.recipes article table.recipe td.steps {
+  min-width: 250px;
+  max-width: 400px;
+}
+/* line 45, _sass/partials/_recipes.scss */
+section.recipes article table.recipe td.steps li {
+  margin: 5px 0;
+}
+/* line 51, _sass/partials/_recipes.scss */
+section.recipes article table.recipe p {
+  font-weight: 700;
+}
+/* line 55, _sass/partials/_recipes.scss */
+section.recipes article table.recipe a {
+  text-decoration: none;
+  color: black;
+}
+/* line 60, _sass/partials/_recipes.scss */
+section.recipes article table.recipe form {
+  border: 1px solid black;
+}
+/* line 64, _sass/partials/_recipes.scss */
+section.recipes article table.recipe .stat {
+  margin: 10px 0;
+}
+/* line 68, _sass/partials/_recipes.scss */
+section.recipes article table.recipe ul.ingredients li {
+  margin: 5px 0;
+}
+
+/* line 5, _sass/partials/_shopping.scss */
+section.shopping aside ul .store {
+  font-weight: bold;
+  border-bottom: 1px solid grey;
+}
+/* line 11, _sass/partials/_shopping.scss */
+section.shopping aside.recipes {
+  float: left;
+}
+/* line 15, _sass/partials/_shopping.scss */
+section.shopping aside.stores {
+  float: right;
+}
+/* line 20, _sass/partials/_shopping.scss */
+section.shopping article {
+  width: calc(100% - 500px);
+}
+/* line 24, _sass/partials/_shopping.scss */
+section.shopping article table.store p {
+  font-weight: bold;
+}
+/* line 28, _sass/partials/_shopping.scss */
+section.shopping article table.store td.delete {
+  font-weight: bold;
+  text-align: center;
 }

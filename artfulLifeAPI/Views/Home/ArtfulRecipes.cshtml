@@ -6,7 +6,7 @@
             <div ng-repeat="letter in alphabet" ng-show="letterHasRecipes(letter)">
                 <p><a href="" ng-click="selectLetter(letter)" ng-class="{bold : selectedLetter === letter}">{{letter}}</a></p>
                 <ul class="recipes" ng-show="selectedLetter === letter">
-                    <li ng-repeat="recipe in recipes | orderBy : 'name'" ng-class="{'purple-back' : recipe._id === selectedRecipe._id}" ng-if="recipeInLetter(recipe.name, letter)">
+                    <li ng-repeat="recipe in recipes | orderBy : 'name'" ng-class="{'selected' : recipe._id === selectedRecipe._id}" ng-if="recipeInLetter(recipe.name, letter)">
                         <a href="" ng-click="selectRecipe(recipe._id)">{{recipe.name}}</a>
                     </li>
                 </ul>
@@ -17,7 +17,7 @@
             <div ng-repeat="meal in meals" ng-show="mealHasRecipes(meal)">
                 <p><a href="" ng-click="selectMeal(meal)">{{meal}}</a></p>
                 <ul class="recipes" ng-show="selectedMeal === meal">
-                    <li ng-repeat="recipe in recipes | orderBy : 'name'" ng-class="{'purple-back' : recipe._id === selectedRecipe._id}" ng-if="recipe.stats.meal === meal">
+                    <li ng-repeat="recipe in recipes | orderBy : 'name'" ng-class="{'selected' : recipe._id === selectedRecipe._id}" ng-if="recipe.stats.meal === meal">
                         <a href="" ng-click="selectRecipe(recipe._id)">{{recipe.name}}</a>
                     </li>
                 </ul>
@@ -28,7 +28,7 @@
             <div ng-repeat="meat in meats" ng-show="meatHasRecipes(meat)">
                 <p><a href="" ng-click="selectMeat(meat)">{{meat}}</a></p>
                 <ul class="recipes" ng-show="selectedMeat === meat">
-                    <li ng-repeat="recipe in recipes | orderBy : 'name'" ng-class="{'purple-back' : recipe._id === selectedRecipe._id}" ng-if="recipe.stats.meat === meat">
+                    <li ng-repeat="recipe in recipes | orderBy : 'name'" ng-class="{'selected' : recipe._id === selectedRecipe._id}" ng-if="recipe.stats.meat === meat">
                         <a href="" ng-click="selectRecipe(recipe._id)">{{recipe.name}}</a>
                     </li>
                 </ul>
@@ -43,7 +43,7 @@
     </aside>
     <article>
         <h4>@ViewBag.Title</h4>
-        <h4 ng-show="loading"><img src="../Images/loading.gif" width="49" height="50" /></h4>
+        <h4 ng-show="loading"><img src="~/Content/assets/images/loading.gif" width="49" height="50" /></h4>
         <p><b>The Idea: </b>Click a recipe to view, edit or delete.  Or create a new recipe by using the copy and paste feature or manually inputting a recipe.</p>
         <!--Display Table-->
         <table class="recipe" ng-show="showDisplayTable">
@@ -55,7 +55,7 @@
             <tr>
                 <td rowspan="2">
                     <p>Ingredients:</p>
-                    <ul id="ingredient">
+                    <ul>
                         <li ng-repeat="ingredient in selectedRecipe.ingredients">
                             <span>{{ingredient.count[0]}}</span>
                             <span ng-hide="ingredient.count[1]==0"> {{ingredient.count[1]}}/{{ingredient.count[2]}}</span>
@@ -92,24 +92,24 @@
         <table class="recipe" ng-show="showEditingTable">
             <tr>
                 <th colspan="2">
-                    <textarea class="recipeName" placeholder="Recipe name" ng-model="editingRecipe.name"></textarea>
+                    <textarea placeholder="Recipe name" ng-model="editingRecipe.name"></textarea>
                 </th>
             </tr>
             <tr>
                 <td rowspan="2">
                     <form>
-                        <textarea placeholder='Copy and paste ingredients here, i.e. "3 oz butter"' ng-model="textIngredients" style="height:auto"></textarea>
+                        <textarea placeholder='Copy and paste ingredients here, i.e. "3 oz butter"' ng-model="textIngredients"></textarea>
                         <button ng-click="addTextIngredients()">add</button>
                     </form>
                     <p>Ingredients:</p>
                     <ul class="ingredients">
-                        <li ng-repeat="x in editingRecipe.ingredients"  ng-class="{'purple-back' : editingIngredientIndex === $index}">
-                            <span ng-click="selectEditingIngredient($index)" class="link">
+                        <li ng-repeat="x in editingRecipe.ingredients" >
+                            <a href="" ng-click="selectEditingIngredient($index)" ng-class="{bold : editingIngredientIndex === $index}">
                                 <span ng-hide="x.count[0]==0">{{x.count[0]}}</span>
                                 <span ng-hide="x.count[1]==0"> {{x.count[1]}}/{{x.count[2]}}</span>
                                 <span ng-hide="x.count[0]==0 && x.count[1]==0"> </span>
                                 <span>{{x.unit}} {{x.name}}</span>
-                            </span>
+                            </a>
                         </li>
                     </ul>
                     <hr />
@@ -184,8 +184,8 @@
                 <td class="steps">
                     <p>Cooking Instructions:</p>
                     <ol>
-                        <li ng-repeat="step in editingRecipe.steps" ng-click="selectEditingStep($index)">
-                            <span class="link" ng-class="{'purple-back' : editingStepIndex === $index}">{{step}}</span>
+                        <li ng-repeat="step in editingRecipe.steps" ng-click="selectEditingStep($index)"  ng-class="{bold : editingStepIndex === $index}">
+                            <span class="link">{{step}}</span>
                         </li>
                     </ol>
                     <hr />

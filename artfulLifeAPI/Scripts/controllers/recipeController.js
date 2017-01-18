@@ -142,8 +142,8 @@
             $scope.showEditingTable = false;
             $scope.selectedRecipe = _.find($scope.recipes, function (recipe, index) {
                 if (recipe._id === recipeID) {
-                    return true;
                     $scope.selectedRecipeIndex = index;
+                    return true;
                 }
                 return false;
             });
@@ -153,25 +153,25 @@
         $scope.showDisplayTable = false;
         $scope.showEditingTable = false;
         $scope.showSharePage = true;
-        if ($scope.recipes[$scope.selectedRecipeIndex].owner === $scope.user) {
+        if ($scope.selectedRecipe.owner === $scope.user) {
             $scope.showShareEdit = true;
         }
         $scope.showShareLink = false;
     }
     $scope.shareRecipe = function () {
         if ($scope.shareCanEdit) {
-            if ($scope.recipes[$scope.selectedRecipeIndex].owner === $scope.user) {
-                $scope.recipes[$scope.selectedRecipeIndex].editors.push($scope.shareEmail);
+            if ($scope.selectedRecipe.owner === $scope.user) {
+                $scope.selectedRecipe.editors.push($scope.shareEmail);
             }
             else {
                 window.alert("only the owner can share the ability to edit.");
             };
         }
         else {
-            $scope.recipes[$scope.selectedRecipeIndex].viewers.push($scope.shareEmail);
+            $scope.selectedRecipe.viewers.push($scope.shareEmail);
         };
-        $http.put("/api/Recipe", $scope.recipes[$scope.selectedRecipeIndex]);
-        window.alert($scope.recipes[$scope.selectedRecipeIndex].name + " shared with " + $scope.shareEmail);
+        $http.put("/api/Recipe", $scope.selectedRecipe);
+        window.alert($scope.selectedRecipe.name + " shared with " + $scope.shareEmail);
         $scope.showSharePage = false;
         $scope.showShareLink = true;
         $scope.showShareEdit = false;
@@ -341,8 +341,8 @@
         $scope.selectedRecipeIndex = -1;
     }
     $scope.editRecipe = function () {
-        if ($scope.recipes[$scope.selectedRecipeIndex].viewers.indexOf($scope.user) === -1) {
-            angular.copy($scope.recipes[$scope.selectedRecipeIndex], $scope.editingRecipe);
+        if ($scope.selectedRecipe.viewers.indexOf($scope.user) === -1) {
+            angular.copy($scope.selectedRecipe, $scope.editingRecipe);
             $scope.editingRecipe.stats.prepTime = {
                 hours: parseInt($scope.editingRecipe.stats.prepTime.slice(0, 2)),
                 mins: parseInt($scope.editingRecipe.stats.prepTime.slice(3, 5))

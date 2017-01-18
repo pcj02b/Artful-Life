@@ -33,6 +33,7 @@
     }
 
     $scope.alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
+    $scope.meals = ["Breakfast", "Lunch", "Dinner", "Snack", "Other"];
     $scope.selectedLetter = "";
     $scope.selecteMeal = "";
     $scope.selectLetter = function (letter) {
@@ -57,12 +58,6 @@
         return recipeName.toLowerCase().indexOf(letter.toLowerCase()) === 0;
     }
 
-    $scope.meals = ["Breakfast", "Lunch", "Dinner", "Snack", "Other"];
-    $scope.mealHasRecipes = function (meal) {
-        return _.some($scope.recipes, function (recipe) {
-            return recipe.stats.meal === meal;
-        });
-    };
     $scope.selectMeal = function (meal) {
         if ($scope.selectedMeal === meal) {
             $scope.selectedMeal = null;

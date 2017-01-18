@@ -1,6 +1,11 @@
 ﻿section.recipes {
     aside {
         float: left;
+
+        .title {
+            background: url(/Images/close1.png) center right;
+        }
+
         .type {
             border: solid grey;
             border-width: 1px 0;

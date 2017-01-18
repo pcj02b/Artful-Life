@@ -160,19 +160,23 @@ section {
 section.recipes aside {
   float: left;
 }
-/* line 4, _sass/partials/_recipes.scss */
+/* line 5, _sass/partials/_recipes.scss */
+section.recipes aside .title {
+  background: url(/Images/close1.png) center right;
+}
+/* line 9, _sass/partials/_recipes.scss */
 section.recipes aside .type {
   border: solid grey;
   border-width: 1px 0;
   margin: 0 4px;
 }
-/* line 9, _sass/partials/_recipes.scss */
+/* line 14, _sass/partials/_recipes.scss */
 section.recipes aside .type .recipes {
   border: dashed grey;
   border-width: 1px 0;
   margin: 0 4px;
 }
-/* line 17, _sass/partials/_recipes.scss */
+/* line 22, _sass/partials/_recipes.scss */
 section.recipes article {
   width: calc(100% - 250px);
 }

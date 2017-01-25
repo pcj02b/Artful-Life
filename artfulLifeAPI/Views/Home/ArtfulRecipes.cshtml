@@ -1,5 +1,6 @@
 ﻿<section ng-controller="recipeCtrl" class="recipes">
-    <aside class="clearfix">
+    <aside ng-hide="hideAside">
+        <div class="triangle" ng-click="hideAside = !hideAside"></div>
         <p class="title">Recipes</p>
         <p><a href="" ng-click="selectSortType('letter')" ng-class="{bold : byLetter}">by Letter</a></p>
         <div class="type" ng-show="byLetter">
@@ -41,9 +42,12 @@
             <li><a href="" ng-show="showDisplayTable" ng-click="removeRecipe()">Remove Recipe</a></li>
         </ul>
     </aside>
-    <article>
+    <aside class="collapse" ng-show="hideAside">
+        <div class="triangle" ng-click="hideAside = !hideAside"></div>
+    </aside>
+    <article ng-class="{expand: hideAside}">
         <h4>@ViewBag.Title</h4>
-        <h4 ng-show="loading"><img src="../Images/loading.gif" width="49" height="50" /></h4>
+        <h4 ng-show="loading"><img src="~/Content/assets/images/loading.gif" width="49" height="50" /></h4>
         <p><b>The Idea: </b>Click a recipe to view, edit or delete.  Or create a new recipe by using the copy and paste feature or manually inputting a recipe.</p>
         <!--Display Table-->
         <table class="recipe" ng-show="showDisplayTable">
@@ -138,7 +142,7 @@
                     </form>
                     <form ng-show="editingIngredient">
                         <span ng-show="editingIngredientIndex!=(editingRecipe.ingredients.length-1)" title="move ingredient down"><a href="" ng-click="moveIngredientDown()">down</a></span>
-                        <span title="delete"><a href="" ng-click="removeIngredient()"><img src="../Images/deleteIcon.png" alt="delete item" height="15" width="15" /></a></span>
+                        <span title="delete"><a href="" ng-click="removeIngredient()"><img src="~/Content/assets/images/deleteIcon.png" alt="delete item" height="15" width="15" /></a></span>
                         <span ng-show="editingIngredientIndex!=0" title="move ingredient up"><a href="" ng-click="moveIngredientUp()">up</a></span>
                     </form>
                 </td>
@@ -199,7 +203,7 @@
                     </form>
                     <form ng-show="editingStep">
                         <span ng-show="editingStepIndex != (editingRecipe.steps.length - 1)" title="move step down"><a href="" ng-click="moveStepDown(editingStepIndex)">down</a></span>
-                        <span><a href="" ng-click="removeStep(editingStepIndex)" title="remove step"><img src="../Images/deleteIcon.png" height="15" width="15" /></a></span>
+                        <span><a href="" ng-click="removeStep(editingStepIndex)" title="remove step"><img src="~/Content/assets/images/deleteIcon.png" height="15" width="15" /></a></span>
                         <span ng-show="editingStepIndex != 0" title="move step up"><a href="" ng-click="moveStepUp(editingStepIndex)">up</a></span>
                     </form>
                 </td>

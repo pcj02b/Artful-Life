@@ -245,28 +245,53 @@ section article {
 /* line 2, _sass/partials/_recipes.scss */
 section.recipes aside {
   float: left;
+  position: relative;
 }
-/* line 5, _sass/partials/_recipes.scss */
+/* line 6, _sass/partials/_recipes.scss */
+section.recipes aside.collapse {
+  width: 35px;
+}
+/* line 9, _sass/partials/_recipes.scss */
+section.recipes aside.collapse .triangle {
+  transform: rotate(180deg);
+}
+/* line 14, _sass/partials/_recipes.scss */
+section.recipes aside .triangle {
+  position: absolute;
+  top: 4px;
+  right: 5px;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 12.5px 25px 12.5px 0;
+  border-color: transparent #333 transparent transparent;
+  cursor: pointer;
+}
+/* line 26, _sass/partials/_recipes.scss */
 section.recipes aside .type {
   border: solid grey;
   border-width: 1px 0;
   margin: 0 4px;
 }
-/* line 10, _sass/partials/_recipes.scss */
+/* line 31, _sass/partials/_recipes.scss */
 section.recipes aside .type .recipes {
   border: dashed grey;
   border-width: 1px 0;
   margin: 0 4px;
 }
-/* line 18, _sass/partials/_recipes.scss */
+/* line 39, _sass/partials/_recipes.scss */
 section.recipes article {
   width: calc(100% - 250px);
 }
-/* line 21, _sass/partials/_recipes.scss */
+/* line 42, _sass/partials/_recipes.scss */
+section.recipes article.expand {
+  width: calc(100% - 35px);
+}
+/* line 46, _sass/partials/_recipes.scss */
 section.recipes article table.recipe {
   width: 100%;
 }
-/* line 25, _sass/partials/_recipes.scss */
+/* line 50, _sass/partials/_recipes.scss */
 section.recipes article table.recipe th textarea {
   min-width: 250px;
   width: calc(100% - 6px);
@@ -275,38 +300,38 @@ section.recipes article table.recipe th textarea {
   text-align: center;
   height: 24px;
 }
-/* line 36, _sass/partials/_recipes.scss */
+/* line 61, _sass/partials/_recipes.scss */
 section.recipes article table.recipe td textarea {
   width: calc(100% - 2px);
   padding: 0px;
 }
-/* line 41, _sass/partials/_recipes.scss */
+/* line 66, _sass/partials/_recipes.scss */
 section.recipes article table.recipe td.steps {
   min-width: 250px;
   max-width: 400px;
 }
-/* line 45, _sass/partials/_recipes.scss */
+/* line 70, _sass/partials/_recipes.scss */
 section.recipes article table.recipe td.steps li {
   margin: 5px 0;
 }
-/* line 51, _sass/partials/_recipes.scss */
+/* line 76, _sass/partials/_recipes.scss */
 section.recipes article table.recipe p {
   font-weight: 700;
 }
-/* line 55, _sass/partials/_recipes.scss */
+/* line 80, _sass/partials/_recipes.scss */
 section.recipes article table.recipe a {
   text-decoration: none;
   color: black;
 }
-/* line 60, _sass/partials/_recipes.scss */
+/* line 85, _sass/partials/_recipes.scss */
 section.recipes article table.recipe form {
   border: 1px solid black;
 }
-/* line 64, _sass/partials/_recipes.scss */
+/* line 89, _sass/partials/_recipes.scss */
 section.recipes article table.recipe .stat {
   margin: 10px 0;
 }
-/* line 68, _sass/partials/_recipes.scss */
+/* line 93, _sass/partials/_recipes.scss */
 section.recipes article table.recipe ul.ingredients li {
   margin: 5px 0;
 }
